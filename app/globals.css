@@ -1,26 +1,168 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --bg: #0a0a0f;
+  --surface: #111118;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: #f1f5f9;
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-up         { animation: fade-up 0.6s ease forwards; }
+.animate-fade-up-delay   { animation: fade-up 0.6s ease 0.15s both; }
+.animate-fade-up-delay-2 { animation: fade-up 0.6s ease 0.3s  both; }
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  animation: marquee 35s linear infinite;
+}
+
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+/* Shiny gradient eyebrow */
+@keyframes shimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+
+.shiny-text {
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0.4) 20%,
+    rgba(255, 255, 255, 1) 45%,
+    rgba(165, 180, 252, 1) 50%,
+    rgba(255, 255, 255, 1) 55%,
+    rgba(255, 255, 255, 0.4) 80%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 6s linear infinite;
+}
+
+/* Slow drifting blobs */
+@keyframes drift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(40px, -30px) scale(1.08); }
+  66%      { transform: translate(-30px, 25px) scale(0.95); }
+}
+
+.drift-slow { animation: drift 22s ease-in-out infinite; }
+.drift-slower { animation: drift 30s ease-in-out infinite reverse; }
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.spin-slow { animation: spin-slow 60s linear infinite; }
+.spin-slower { animation: spin-slow 90s linear infinite reverse; }
+
+/* Glossy multi-colour skill pills with a sweeping sheen */
+.skill-pill {
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12), 0 0 10px var(--glow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.skill-pill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    110deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.22) 50%,
+    transparent 65%
+  );
+  transform: translateX(-160%);
+  animation: sheen 4.5s ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+@keyframes sheen {
+  0% { transform: translateX(-160%); }
+  55%, 100% { transform: translateX(160%); }
+}
+.skill-pill:hover {
+  transform: translateY(-2px) scale(1.04);
+  border-color: var(--c) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 0 24px var(--glow);
+}
+
+/* Pulsing glow for experience / education progression dots */
+@keyframes pulse-glow {
+  0%, 100% { filter: brightness(1); transform: scale(1); }
+  50% { filter: brightness(1.5); transform: scale(1.2); }
+}
+.glow-dot {
+  animation: pulse-glow 2.6s ease-in-out infinite;
+}
+
+/* Experience - glowing, dynamic company logo */
+@keyframes logo-pulse {
+  0%, 100% { filter: drop-shadow(0 0 4px rgba(199, 210, 254, 0.35)); }
+  50%      { filter: drop-shadow(0 0 12px rgba(129, 140, 248, 0.85)); }
+}
+.logo-glow {
+  animation: logo-pulse 3.2s ease-in-out infinite;
+}
+
+/* Experience - shiny animated company name */
+.exp-name {
+  background: linear-gradient(
+    100deg,
+    rgba(255, 255, 255, 0.6) 20%,
+    rgba(255, 255, 255, 1) 45%,
+    rgba(165, 180, 252, 1) 50%,
+    rgba(255, 255, 255, 1) 55%,
+    rgba(255, 255, 255, 0.6) 80%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: shimmer 5s linear infinite;
+}
+
+/* Experience - softly glowing role title */
+.exp-title {
+  color: #e0e7ff;
+  text-shadow: 0 0 12px rgba(129, 140, 248, 0.35);
+  transition: text-shadow 0.3s ease;
+}
+.group\/exp:hover .exp-title {
+  text-shadow: 0 0 18px rgba(129, 140, 248, 0.7);
+}
+
+/* Maradona photo, lightly sketched, behind article cards */
+.maradona-sketch {
+  filter: grayscale(0.15) contrast(1.06) brightness(1.04) saturate(1.1);
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }
