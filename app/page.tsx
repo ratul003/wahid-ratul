@@ -133,9 +133,9 @@ const socials = [
 const projects = [
   {
     title: "Product Intelligence Platform",
-    description: "End-to-end analytics architecture spanning event instrumentation, warehouse-native metrics, and agentic AI measurement across Optimizely's product suite.",
+    description: "End-to-end analytics architecture spanning event instrumentation, warehouse-native metrics, and agentic AI measurement across a B2B experimentation platform's product suite.",
     color: "#6366f1",
-    label: "Analytics · Optimizely",
+    label: "Analytics · Enterprise SaaS",
     href: "https://product-intelligence-platform.vercel.app",
     Icon: IconRadar,
   },
@@ -143,15 +143,15 @@ const projects = [
     title: "Data Engineering Foundation",
     description: "Three-layer Snowflake architecture with parallel ELT services, Kimball star schema modeling, and Reverse ETL patterns for operational data activation.",
     color: "#10b981",
-    label: "Data Engineering · Optimizely",
+    label: "Data Engineering · Enterprise SaaS",
     href: "https://data-engineering-foundation.vercel.app",
     Icon: IconLayers,
   },
   {
     title: "Experimentation Science",
-    description: "Statistical framework behind Optimizely's L1 metrics, 5K impression thresholding, dual frequentist/Bayesian inference, and Dev Agent quality findings.",
+    description: "Statistical framework behind a B2B experimentation platform's L1 metrics, 5K impression thresholding, dual frequentist/Bayesian inference, and Dev Agent quality findings.",
     color: "#f59e0b",
-    label: "Experimentation · Optimizely",
+    label: "Experimentation · Enterprise SaaS",
     href: "https://experimentation-science.vercel.app",
     Icon: IconFlask,
   },
@@ -159,7 +159,7 @@ const projects = [
     title: "Systems Architecture",
     description: "Two architectural decision records: Mixpanel → warehouse-native migration and a BigQuery evaluation, with egress cost analysis and migration strategy.",
     color: "#f43f5e",
-    label: "Architecture · Optimizely",
+    label: "Architecture · Enterprise SaaS",
     href: "https://systems-architecture.vercel.app",
     Icon: IconCompass,
   },
@@ -167,7 +167,7 @@ const projects = [
     title: "When Demand Exceeds Supply",
     description: "Real-time demand-supply intelligence engine for two-sided marketplaces, with health scoring, surge pricing, and AI escalation routing.",
     color: "#06b6d4",
-    label: "Open Source · Coto",
+    label: "Open Source · Marketplace",
     href: "https://when-demand-exceeds-supply.vercel.app",
     Icon: IconBalance,
   },
@@ -175,7 +175,7 @@ const projects = [
     title: "Rank, Reward, Retain",
     description: "Expert scoring system using TOPSIS across five criteria, with dynamic revenue optimization and creator analytics, driving a 23% improvement in expert quality.",
     color: "#8b5cf6",
-    label: "Open Source · Coto",
+    label: "Open Source · Marketplace",
     href: "https://rank-reward-retain.vercel.app",
     Icon: IconGem,
   },
@@ -183,7 +183,7 @@ const projects = [
     title: "Cost-Benefit Optimization of Stacking",
     description: "Finding the order-stacking level where algorithmic dispatch stops paying for itself, cost vs. customer experience, modeled in BigQuery, R, and Tableau.",
     color: "#f97316",
-    label: "Applied Analytics · foodpanda",
+    label: "Applied Analytics · Food Delivery",
     href: "https://cost-benefit-optimization.vercel.app",
     Icon: IconChart,
   },
@@ -477,7 +477,7 @@ export default function Home() {
                 Economist and Statistician by training. Data Scientist turned Product Manager in practice. I&apos;ve spent the last several years at the intersection of data and product, running analytics infrastructure, experimentation, pricing strategy, and GTM analytics at Optimizely.
               </p>
               <p className="text-white/75 leading-relaxed mb-10 text-sm">
-                On the side, I do analytics consultancy for early-stage startups, helping them build data foundations before they know they need them. Most recently, I helped Coto design and launch their Live On-Demand Platform Service and Analytics Framework from scratch.
+                On the side, I do analytics consultancy for early-stage startups, helping them build data foundations before they know they need them. Most recently, I helped an on-demand expert marketplace design and launch their live on-demand platform and analytics framework from scratch.
               </p>
               <div className="space-y-4">
                 {skillGroups.map((g) => (
