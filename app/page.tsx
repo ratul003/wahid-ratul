@@ -262,7 +262,7 @@ const articles = [
     topic: "Football · Politics · Economics",
     date: "June 2026",
     excerpt: "What does a sporting tournament reveal about power, money, and who gets to write history? A deep dive into FIFA's grip on global football, Germany's statistical case for 2026, and what Monte Carlo models say when politics meets sport.",
-    href: "https://medium.com/@wahidtratul",
+    href: "https://fifa-wc2026-simulator.vercel.app/#article",
     color: "#34d399",
     image: "/maradona.png",
     imageAlt: "Diego Maradona lifting the 1986 World Cup trophy",
@@ -474,10 +474,10 @@ export default function Home() {
             {/* Left */}
             <div>
               <p className="text-white/75 leading-relaxed mb-4 text-sm">
-                Economist and Statistician by training. Data Scientist turned Product Manager in practice. I&apos;ve spent the last several years at the intersection of data and product, running analytics infrastructure, experimentation, pricing strategy, and GTM analytics at Optimizely.
+                I turn empirical evidence into business growth. As a data scientist turned product manager, I&apos;ve orchestrated multimillion-dollar revenue gains: the pricing and packaging models, the incentive frameworks that move customers and partners, and the decision systems that tell a business its next move and the reason behind it.
               </p>
               <p className="text-white/75 leading-relaxed mb-10 text-sm">
-                On the side, I do analytics consultancy for early-stage startups, helping them build data foundations before they know they need them. Most recently, I helped an on-demand expert marketplace design and launch their live on-demand platform and analytics framework from scratch.
+                My expertise spans SaaS pricing and packaging, product analytics, and the restless tempo of on-demand marketplace operations, across global tech and e-commerce. Lately I have gone deep on agentic AI: building AI-native workflows that automate UAT, data reporting, system integrations, and the operational work that used to need a human in the loop.
               </p>
               <div className="space-y-4">
                 {skillGroups.map((g) => (
@@ -680,7 +680,7 @@ export default function Home() {
                   <p className="text-xs text-white/65 mb-4 leading-snug">{a.subtitle}</p>
                   <p className="text-xs text-white/70 leading-relaxed">{a.excerpt}</p>
                   <div className="mt-5 flex items-center gap-1.5 text-[11px] text-white/60 group-hover:text-white transition-colors">
-                    <span>Read on Medium</span>
+                    <span>Read the article</span>
                     <ArrowUpRight />
                   </div>
                 </div>
