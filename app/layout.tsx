@@ -10,13 +10,13 @@ const geist = Geist({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://wahid-ratul.vercel.app"),
-  title: "Wahid Tawsif Ratul — Data Scientist & Product Manager",
+  title: "Wahid Tawsif Ratul · Data Scientist & Product Manager",
   description:
     "Data Scientist turned Product Manager. Economist and Statistician by training. I build the systems that connect product behavior to business outcomes.",
   keywords: ["Wahid Tawsif Ratul", "Data Scientist", "Product Manager", "Analytics Engineer", "Statistics", "Optimizely", "Product Analytics"],
   authors: [{ name: "Wahid Tawsif Ratul" }],
   openGraph: {
-    title: "Wahid Tawsif Ratul — Data Scientist & Product Manager",
+    title: "Wahid Tawsif Ratul · Data Scientist & Product Manager",
     description:
       "Data Scientist turned Product Manager. I build the systems that connect product behavior to business outcomes.",
     url: "https://wahid-ratul.vercel.app",
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Wahid Tawsif Ratul — Data Scientist & Product Manager",
+    title: "Wahid Tawsif Ratul · Data Scientist & Product Manager",
     description: "Data Scientist turned Product Manager. Building systems that connect product behavior to business outcomes.",
   },
 };
