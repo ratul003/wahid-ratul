@@ -366,8 +366,6 @@ export default function Home() {
       {/* ── Nav ── */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.06] bg-[#0a0a0f]/90 backdrop-blur-md">
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-end gap-5">
-          <a href="/resume" className="text-sm text-white/70 hover:text-white transition-colors">Résumé</a>
-          <div className="w-px h-4 bg-white/10" />
           <div className="flex items-center gap-5">
             {socials.map(({ label, href, Icon }) => (
               <a
