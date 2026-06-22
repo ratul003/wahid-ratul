@@ -283,6 +283,7 @@ const research = [
     description: "A linear-model random algorithm for detecting bivariate directional dependence, the asymmetry ordinary correlation can't see.",
     color: "#a855f7",
     href: "https://research-directional-dependence.vercel.app",
+    image: "/projects/research-directional-dependence.jpg",
   },
   {
     title: "Directional Dependence via Copulas",
@@ -290,6 +291,7 @@ const research = [
     description: "Concomitants of order statistics on copulas, with Monte Carlo data designed to keep causal bias out of the directional estimate.",
     color: "#14b8a6",
     href: "https://research-copulas-directional-depend.vercel.app",
+    image: "/projects/research-copulas-directional-dependence.jpg",
   },
   {
     title: "Cognitive Change & Neuropsychology",
@@ -297,6 +299,7 @@ const research = [
     description: "Survey-weighted logistic regression on two NHANES cycles of CERAD, AFT & DSST testing to model cognitive change across gender and race.",
     color: "#0ea5e9",
     href: "https://research-nhanes-cognitive.vercel.app",
+    image: "/projects/research-nhanes-cognitive.jpg",
   },
 ];
 
@@ -727,21 +730,38 @@ export default function Home() {
                 href={r.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col rounded-lg border border-white/[0.07] p-4 bg-white/[0.02] hover:border-white/[0.15] hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 ease-out"
+                className="group relative flex flex-col rounded-lg border border-white/[0.07] overflow-hidden min-h-[250px] hover:border-white/[0.15] hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 ease-out"
                 style={{ boxShadow: `inset 0 1px 0 ${r.color}1a` }}
               >
-                <div
-                  className="w-7 h-[3px] rounded-full mb-4 transition-all duration-300 group-hover:w-12"
-                  style={{ background: r.color, boxShadow: `0 0 10px ${r.color}aa` }}
-                />
-                <p className="text-[9px] uppercase tracking-[0.14em] font-semibold mb-1.5" style={{ color: r.color + "cc" }}>
-                  {r.role}
-                </p>
-                <h3 className="text-[13px] font-semibold text-white mb-2 leading-snug">{r.title}</h3>
-                <p className="text-[11px] text-white/55 leading-relaxed flex-1">{r.description}</p>
-                <div className="mt-3 flex items-center gap-1.5 text-[10px] text-white/40 group-hover:text-white/75 transition-colors">
-                  <span>View case study</span>
-                  <ArrowUpRight />
+                {/* Photo background, sitting inside the card box */}
+                <div className="absolute inset-0 pointer-events-none">
+                  <Image
+                    src={r.image}
+                    alt={r.title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                    style={{ objectPosition: "50% 40%" }}
+                  />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, #0a0a0f 16%, rgba(10,10,15,0.82) 52%, rgba(10,10,15,0.42) 100%)" }} />
+                  <div className="absolute inset-x-0 top-0 h-px" style={{ background: `linear-gradient(90deg, transparent, ${r.color}77, transparent)` }} />
+                </div>
+
+                {/* Content sits at the bottom, over the image */}
+                <div className="relative z-10 flex flex-col flex-1 justify-end p-4">
+                  <div
+                    className="w-7 h-[3px] rounded-full mb-4 transition-all duration-300 group-hover:w-12"
+                    style={{ background: r.color, boxShadow: `0 0 10px ${r.color}aa` }}
+                  />
+                  <p className="text-[9px] uppercase tracking-[0.14em] font-semibold mb-1.5" style={{ color: r.color + "cc" }}>
+                    {r.role}
+                  </p>
+                  <h3 className="text-[13px] font-semibold text-white mb-2 leading-snug">{r.title}</h3>
+                  <p className="text-[11px] text-white/60 leading-relaxed line-clamp-3">{r.description}</p>
+                  <div className="mt-3 flex items-center gap-1.5 text-[10px] text-white/55 group-hover:text-white/90 transition-colors">
+                    <span>View case study</span>
+                    <ArrowUpRight />
+                  </div>
                 </div>
               </a>
             ))}
