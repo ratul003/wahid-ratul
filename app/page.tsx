@@ -474,10 +474,10 @@ export default function Home() {
             {/* Left */}
             <div>
               <p className="text-white/75 leading-relaxed mb-4 text-sm">
-                I turn empirical evidence into business growth. As a data scientist turned product manager, I&apos;ve orchestrated multimillion-dollar revenue gains: the pricing and packaging models, the incentive frameworks that move customers and partners, and the decision systems that tell a business its next move and the reason behind it.
+                Economist and Statistician by training. Data Scientist turned Product Manager in practice.
               </p>
               <p className="text-white/75 leading-relaxed mb-10 text-sm">
-                My expertise spans SaaS pricing and packaging, product analytics, and the restless tempo of on-demand marketplace operations, across global tech and e-commerce. Lately I have gone deep on agentic AI: building AI-native workflows that automate UAT, data reporting, system integrations, and the operational work which requires human intervention.
+                I build the systems that close the gap between what product teams believe about their users and what&apos;s actually true.
               </p>
               <div className="space-y-4">
                 {skillGroups.map((g) => (
