@@ -137,6 +137,7 @@ const projects = [
     color: "#6366f1",
     label: "Analytics · Enterprise SaaS",
     href: "https://product-intelligence-platform.vercel.app",
+    image: "/projects/product-intelligence-platform.jpg",
     Icon: IconRadar,
   },
   {
@@ -145,6 +146,7 @@ const projects = [
     color: "#10b981",
     label: "Data Engineering · Enterprise SaaS",
     href: "https://data-engineering-foundation.vercel.app",
+    image: "/projects/data-engineering-foundation.jpg",
     Icon: IconLayers,
   },
   {
@@ -153,6 +155,7 @@ const projects = [
     color: "#f59e0b",
     label: "Experimentation · Enterprise SaaS",
     href: "https://experimentation-science.vercel.app",
+    image: "/projects/experimentation-science.jpg",
     Icon: IconFlask,
   },
   {
@@ -161,6 +164,7 @@ const projects = [
     color: "#f43f5e",
     label: "Architecture · Enterprise SaaS",
     href: "https://systems-architecture.vercel.app",
+    image: "/projects/systems-architecture.jpg",
     Icon: IconCompass,
   },
   {
@@ -169,6 +173,7 @@ const projects = [
     color: "#06b6d4",
     label: "Pricing Analytics · On-Demand Marketplace",
     href: "https://when-demand-exceeds-supply.vercel.app",
+    image: "/projects/when-demand-exceeds-supply.jpg",
     Icon: IconBalance,
   },
   {
@@ -177,6 +182,7 @@ const projects = [
     color: "#8b5cf6",
     label: "Incentive Design · On-Demand Marketplace",
     href: "https://rank-reward-retain.vercel.app",
+    image: "/projects/rank-reward-retain.jpg",
     Icon: IconGem,
   },
   {
@@ -185,6 +191,7 @@ const projects = [
     color: "#f97316",
     label: "Applied Analytics · Food Delivery",
     href: "https://cost-benefit-optimization.vercel.app",
+    image: "/projects/cost-benefit-optimization.jpg",
     Icon: IconChart,
   },
 ];
@@ -602,14 +609,28 @@ export default function Home() {
                 href={p.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group flex flex-col rounded-lg border border-white/[0.07] overflow-hidden hover:border-white/[0.15] hover:scale-[1.03] hover:-translate-y-1 transition-all duration-300 ease-out"
+                className="group relative flex flex-col rounded-lg border border-white/[0.07] overflow-hidden min-h-[250px] hover:border-white/[0.15] hover:scale-[1.03] hover:-translate-y-1 transition-all duration-300 ease-out"
               >
-                {/* Content */}
-                <div className="flex flex-col flex-1 p-3.5 bg-white/[0.02]">
+                {/* Photo background, sitting inside the card box */}
+                <div className="absolute inset-0 pointer-events-none">
+                  <Image
+                    src={p.image}
+                    alt={p.title}
+                    fill
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                    style={{ objectPosition: "50% 40%" }}
+                  />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, #0a0a0f 16%, rgba(10,10,15,0.82) 52%, rgba(10,10,15,0.42) 100%)" }} />
+                  <div className="absolute inset-x-0 top-0 h-px" style={{ background: `linear-gradient(90deg, transparent, ${p.color}77, transparent)` }} />
+                </div>
+
+                {/* Content sits at the bottom, over the image */}
+                <div className="relative z-10 flex flex-col flex-1 justify-end p-3.5">
                   <div className="flex items-center gap-2 mb-2">
                     <div
                       className="flex items-center justify-center w-7 h-7 rounded-md flex-shrink-0 transition-transform duration-300 ease-out group-hover:scale-110"
-                      style={{ background: `${p.color}1a`, border: `1px solid ${p.color}33` }}
+                      style={{ background: `${p.color}1a`, border: `1px solid ${p.color}33`, backdropFilter: "blur(4px)" }}
                     >
                       <span className="scale-[0.6]">
                         <p.Icon color={p.color} />
@@ -620,8 +641,8 @@ export default function Home() {
                     </p>
                   </div>
                   <h3 className="text-[13px] font-semibold text-white mb-1.5 leading-snug">{p.title}</h3>
-                  <p className="text-[11px] text-white/55 leading-relaxed flex-1 line-clamp-4">{p.description}</p>
-                  <div className="mt-3 flex items-center gap-1.5 text-[10px] text-white/45 group-hover:text-white/80 transition-colors">
+                  <p className="text-[11px] text-white/60 leading-relaxed line-clamp-3">{p.description}</p>
+                  <div className="mt-3 flex items-center gap-1.5 text-[10px] text-white/55 group-hover:text-white/90 transition-colors">
                     <span>View project</span>
                     <ArrowUpRight />
                   </div>
