@@ -408,7 +408,7 @@ export default function Home() {
               <div className="animate-fade-up-delay-2 flex items-start gap-6 mb-10">
                 <div className="w-8 h-px bg-white/30 mt-[10px] flex-shrink-0" />
                 <p className="text-sm sm:text-base text-white/70 max-w-md leading-relaxed">
-                  Economist and Statistician by training. I build the systems that close the gap between what product teams believe about their users and what&apos;s actually true.
+                  I turn empirical evidence into business growth: the pricing models, the incentive frameworks that move customers and partners, and the decision systems that tell a business its next move and the reason behind it.
                 </p>
               </div>
               <div className="animate-fade-up-delay-2 flex flex-wrap items-center gap-3">
