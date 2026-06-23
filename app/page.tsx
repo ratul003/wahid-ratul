@@ -186,10 +186,10 @@ const projects = [
     Icon: IconGem,
   },
   {
-    title: "Cost-Benefit Optimization of Stacking",
-    description: "Finding the order-stacking level where algorithmic dispatch stops paying for itself, cost vs. customer experience, modeled in BigQuery, R, and Tableau.",
+    title: "Cost-Benefit Optimization of Order Assignment",
+    description: "Finding the order-assignment intensity where algorithmic dispatch reaches equilibrium between delivery cost and customer experience, with a live metric console and per-city bands, modeled in BigQuery, R, and Tableau.",
     color: "#f97316",
-    label: "Applied Analytics · Food Delivery",
+    label: "Applied Analytics · On-Demand Marketplace",
     href: "https://cost-benefit-optimization.vercel.app",
     image: "/projects/cost-benefit-optimization.jpg",
     Icon: IconChart,
