@@ -1,0 +1,100 @@
+<p>It was almost midnight on a Sunday, and I nearly walked a wrong number into a leadership review.</p>
+
+<p>Not on purpose. The number looked great. A reactivation campaign that had supposedly won back 12% of the customers who'd gone quiet. Green arrow, clean win, the kind of slide that gets a channel more budget and gives the whole room a target to chase for a quarter. The review was in 9 hours. The slide was done, and honestly it was good.</p>
+
+<p>That was the problem. It was a little too good, and something about it kept nagging at me, so I checked. That is the only reason I am writing this instead of quietly hoping nobody ever re-ran the numbers.</p>
+
+<p>To explain why I was even still at my desk at that hour, second-guessing my own good news, I have to back up. This is really a story about waiting.</p>
+
+<h2>The dependency tax</h2>
+
+<p>For most of my career the slow part of the job was never the thinking. I usually knew the answer, or at least knew how to get it, pretty fast. The problem was that getting it needed someone else, and that someone had a queue, and the queue did not care about my Tuesday.</p>
+
+<p>I am a product manager. On paper the job is decisions. In practice, for years, it was more like standing at the edge of a track holding a baton and watching it move through hands that were not mine. The number I needed was sitting in a warehouse I could have queried myself, except the query belonged to the data team's sprint. The fix I could describe down to the line was 3 sprints deep in someone's backlog. A dashboard, a lifecycle email, a landing page, each one a ticket, and each ticket meant waiting.</p>
+
+<p>I never blamed anyone for it. The people I worked with were good, and busy in the way good people are busy. It was just how the work moved, through too many hands, none of them mine to hurry.</p>
+
+<p>I started calling it the dependency tax, mostly in my own head, so I would stop taking it personally. You never see it on a dashboard, which is part of why it costs so much. Nobody tracks the days a decision spends sitting on a shelf. You only feel it later, in the answers that come back a week too late to use.</p>
+
+<p>I had learned this lesson long before I was ever a PM. I ran logistics and analytics at foodpanda for a while, and the whole job was a race against the dinner rush. Datadog gave me a live sliver of what was happening, but the numbers I actually made calls on lived in Tableau, and Tableau only caught up the next day. So I was always a step behind my own operation. I would watch average delivery time drift from 26 minutes toward 29, know it meant riders were stacked wrong or spread too thin, and not be able to prove it until the shift it belonged to was already over. It is a strange kind of useless, being handed the exact right answer about a moment that is already gone. You do not really forget that feeling. You just spend the next few years watching it happen again in slower, better-dressed ways.</p>
+
+<p>And the part that got to me was that I could do most of this myself. I trained as a data scientist before I was ever a PM. I can write the SQL, build the pipeline, model a funnel, stand up a dashboard, run an experiment and read it out straight. What I did not have was the hours to do all of that and still actually be the PM. So I did what everyone does. I filed the ticket and got in line.</p>
+
+<p>I do not put this next part on a r&eacute;sum&eacute;, but the waiting changes you after a while. You stop chasing the questions you cannot get answered in time. You let calls get made on gut, because whatever evidence you would bring is going to land the week after the decision anyway. Little by little you start deciding what is worth knowing based on what you can find out fast enough. I did not like who that was turning me into. I wanted the gap between a good question and a good answer to be mine.</p>
+
+<h2>The turn</h2>
+
+<p>What changed wasn't a tool. It was deciding to use one differently.</p>
+
+<p>I stopped treating Claude Code like a chatbot and started treating it like the place I actually work. I ended up calling the whole setup Claude-ing, which sounds sillier than it is. The point is that the thing standing between a question and a finished answer stopped being a queue and started being me.</p>
+
+<p>The setup itself is boring, which is kind of the point. There is a short file of working rules that loads every time. Under that, one file per area, analytics, growth, product, each holding only what that area needs. Under those, the individual metric definitions and queries and playbooks, which only get pulled in when something actually reaches for them. And a layer of tools so it can touch the warehouse, the product analytics, the tracker, the messaging platform. That is most of it, really.</p>
+
+<figure>
+  <img src="/writing/the-night-i-deleted-the-best-slide-in-the-deck/repo-tree.png" alt="The Claude-ing file tree: a root rules file, one folder per area, and definitions underneath, loaded on demand">
+  <figcaption>The whole setup. A rules file that loads every session, a folder per area, and everything else pulled in only when a task reaches for it.</figcaption>
+</figure>
+
+<p>It took me a while to believe what that adds up to. I build the whole path now. The query, the pipeline under it, a little server when I need something that does not exist yet, a dashboard on a real internal URL, a clickable prototype for a discovery call, an experiment and the readout that grades it, a feature written and tested behind a flag and rolled out. Work that used to need 6 teams, moving through one person, with no handoff in the middle.</p>
+
+<p>Not a faster line. No line.</p>
+
+<h2>What it looks like on a Tuesday</h2>
+
+<p>The interesting part isn't the model. It's the loop around it.</p>
+
+<p>I type one sentence into a terminal. <em>Why did activation drop this week.</em> Then the cursor just sits there for a second.</p>
+
+<p>The first thing it does is not answer me. It reads where things stand, the progress notes, the git log, so I am not re-explaining last week. Then it plans, and pulls in context in layers: the rules, then the analytics file, then the one activation definition and the one playbook this question needs. Nothing else comes into the room. The messy part, the 40-row query dumps, the funnel slices, the 2 dead ends, goes to a subagent in its own clean context and comes back as a short writeup. Then it does the thing I care about most. It checks the number against the warehouse before it tells me anything.</p>
+
+<figure>
+  <img src="/writing/the-night-i-deleted-the-best-slide-in-the-deck/session-report.png" alt="A Claude-ing session investigating an activation drop: terminal tool calls pulling from Snowflake, and every number cited to its source of record">
+  <figcaption>One session, start to finish: the question, the tool calls, and every number checked against the warehouse before it reaches me.</figcaption>
+</figure>
+
+<p>A minute or so later I have the answer. The drop was real, it traced back to one platform release, and it was verified row by row. No ticket, no waiting until Thursday to find out. This is the data-scientist half of the job, and I run all of it myself now.</p>
+
+<p>The trick underneath is smaller than people make it sound. A model gets worse as its context fills up, a slow drift its builders call context rot. So I keep the window tight. The whole bundle for that activation question, the rules and the one domain file and the definition and playbook, came to about 2,500 tokens when I measured it against the real files instead of guessing on a slide. A session that loads everything just in case carries many times that, every turn. Smaller window, cheaper and sharper answer.</p>
+
+<h2>Back to the slide</h2>
+
+<p>So. That Sunday. The number that was too good.</p>
+
+<p>I did the annoying thing and went back to the warehouse to count the actual orders, the real distinct purchases, for that same week. They did not match. The report was claiming more reactivated orders than the marketplace had actually made, which is not a thing that should be possible.</p>
+
+<p>The query behind the funnel had joined the campaign sends to the orders on customer id. So a customer who got 3 sends and made 1 purchase came out the other end counted as 3. Across the whole cohort that inflated it by about 3 times. The real reactivation rate was closer to 4%. Not a 12% story. Just a normal, slightly boring 4%.</p>
+
+<p>I deleted the slide. The next morning I presented 4% and a plan instead of 12% and a headline that wasn't real.</p>
+
+<p>But the thing that actually kept me up wasn't the bug. Bugs happen. It was realizing that nothing in the process was built to catch it. That number had passed through every hand it was supposed to and landed on my desk with a green arrow on it. If I had been a little more tired that night, it clears me too and walks straight into that meeting. So I stopped looking at the query and started looking at the whole chain, the handoffs, the reviews, the quiet assumption that if a number made it this far it was probably fine. I did not panic about it, weirdly. I just got interested. And I decided the answer was not to move faster inside a system that could do that to me. It was to own the whole loop and put in the one check the chain never had.</p>
+
+<p>Nobody in that room ever found out how close they came to chasing a target that did not exist and pointing real budget at a channel that was, honestly, average. Which is sort of the point. The verification that matters most is the kind nobody ever sees.</p>
+
+<h2>The part I was scared of</h2>
+
+<p>Here is what all that waiting had actually taught me. Slow was never the thing I was afraid of. Fast and wrong was. Being confidently wrong in front of the people who trust you for the number is the one mistake a one-person setup cannot really survive.</p>
+
+<p>Doing a lot of jobs is easy to fake, and someone doing 8 jobs badly is worse than someone doing 2 well, because now the mistakes have your name on them and there is no second team downstream to catch them. So the part I put the most care into isn't a pipeline or a dashboard. It is the rule sitting underneath all of them.</p>
+
+<p>Now everything gets checked. Every metric points at its source of truth. Nothing goes out until it agrees with the warehouse. When something comes back surprising, the instruction is to stop and flag it, not ship it and hope. That one rule is the whole difference between being a jack of all trades and being something people actually trust. Breadth without checking is just confidence in a nicer shirt.</p>
+
+<h2>I was still the bottleneck</h2>
+
+<p>For a while, even after I got fast, I was still just a faster bottleneck. Leadership would ask me things, I would go find the answers, and the queue just moved from the data team's desk to mine. So I built a self-serve analyzer. People ask in plain English and get back a cited answer in one shot, with the governed definitions already baked in, so it is the same answer I would have given them, minus the wait for me.</p>
+
+<figure>
+  <img src="/writing/the-night-i-deleted-the-best-slide-in-the-deck/analyzer.png" alt="The self-serve leadership analyzer: plain-English questions answered from governed data, every reply citing its source">
+  <figcaption>The self-serve analyzer. Anyone asks in plain English and gets a cited answer from governed data, with no wait for me.</figcaption>
+</figure>
+
+<p>On the project site I called that one "zero analysts," to be provocative. It does not mean what it sounds like. Not that analysts should go away, the opposite. When the routine questions answer themselves, the analysts I work with get their time back for the hard, ambiguous problems that actually need a human. A good answer shouldn't have to sit in anyone's queue.</p>
+
+<p>I did not automate a company down to one person, and I never wanted to. I still work with people. I still argue in meetings and still get talked out of bad ideas by better ones. What changed is smaller and bigger than automation. I can bring the true answer into the room on the day it is needed, instead of the week after.</p>
+
+<p>That, it turns out, was what I was after the whole time. Not speed exactly, and definitely not the thrill of wearing every hat. I was tired of being right too late to matter, which is really just a slower way of being wrong. And a little tired of the version of me that had stopped bothering to try.</p>
+
+<p>The waiting is over. Not the work, the work I like. But the waiting is done, and for the first time in a long time I am actually glad to be the one holding the baton.</p>
+
+<hr>
+
+<p>If you want to see these sessions actually run, and copy the files to build your own version, it is all here: <a href="https://claude-ing.vercel.app">claude-ing.vercel.app</a></p>

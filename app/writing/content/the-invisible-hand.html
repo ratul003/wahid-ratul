@@ -1,0 +1,109 @@
+<p>The headlines this month all sound like a funeral. Tesla started rationing AI to its own engineers at $200 a week. Uber burned its entire 2026 AI budget by April and its CTO said, out loud, "the budget I thought I would need is blown away already." Microsoft pulled its engineers off the expensive coding tools and pushed them back onto cheaper in-house ones. Meta caught staff burning through tokens so fast it started a shame-leaderboard someone nicknamed Cloudonomics.</p>
+
+<p>The framing everywhere is that AI is collapsing, and that China is quietly winning the wreckage. I read a week of it and felt something oddly specific. Not surprise. Recognition. Underneath the panic there is no technology story at all. There is an economics story, an old one, and I had watched a small version of it play out on a logistics floor in Dhaka in 2022.</p>
+
+<h2>The bill that looked like a bargain</h2>
+
+<p>Back then I ran analytics for foodpanda during a company-wide push to cut delivery cost. The lever everyone loved was stacking: give one rider two or three orders on the same trip instead of one. On paper it is free money. Same rider, same fuel, more orders delivered. Cost per order drops. Every slide pointed the same way, so the order came down to stack more, everywhere.</p>
+
+<p>I was the one who had to measure what actually happened, and the picture that came back was not the one on the slides. Stacking correlated with delivery time at 0.82, and with customer satisfaction at negative 0.78. Push it up 10 percent and the average delivery slid from about 26 minutes to 28 and a half. In a dense market that half is not free. It is a late dinner, a refund, a customer who quietly stops opening the app. The "cheaper" order was quietly manufacturing a more expensive customer.</p>
+
+<p>The number that mattered was never cost per order. It was cost per delivered outcome, the order that landed hot and kept the customer. Measure that, and the best stacking level was not "as high as possible." It was 20 to 25 percent, and everything above it bought a discount on one line by lighting a fire on another nobody was watching.</p>
+
+<figure>
+  <img src="/writing/the-invisible-hand/stacking-curve.png" alt="Two curves against order stacking level: cost per order falling steadily, cost per kept customer bottoming out at 20 to 25 percent and rising after">
+  <figcaption>The trap, drawn from my foodpanda stacking analysis. Cost per order keeps falling, so the deck said push harder. Cost per kept customer bottoms out around 20 to 25 percent and climbs after that. Optimize the wrong curve and you feel like a genius right up until the refunds land.</figcaption>
+</figure>
+
+<p>That is the entire AI cost story of 2026, and I only recognized it because I had already paid tuition on it once.</p>
+
+<h2>The cheaper it got, the more we burned</h2>
+
+<p>The shape is simple. Price a thing per tiny unit, the unit looks trivially cheap, so nobody governs how many get used. Then usage scales in a way the pricing never assumed, and one day the bill lands like a bomb.</p>
+
+<p>For me the unit was an order on a rider's bag. For everyone in those headlines it is a token, and tokens have gotten absurdly cheap: inference that matched GPT-3.5 cost about $20 per million tokens in late 2022 and about seven cents two years later, a 280x drop. That should have shrunk every bill. It did the opposite, for a reason an economist named in 1865. William Stanley Jevons noticed that as steam engines got more efficient and coal got cheaper to burn, Britain burned more of it, not less. Cheaper per unit meant a hundred new uses, and total consumption climbed. His paradox now holds for intelligence.</p>
+
+<p>The tokens got cheap, but the work got hungry. Reasoning and agent workloads burn 5 to 30 times more tokens per task than a plain chatbot, and at Uber <a href="https://fortune.com/2026/05/26/uber-coo-ai-spending-tokens-claude-code/">power users were spending $500 to $2,000 a month each</a>, with 84 percent of engineers on the tools. Anthropic priced a plan at a flat $200 a month and watched some users pull 10 billion tokens in a month. A behavioral economist would have called that in advance: a flat fee removes the small wince of spending, and once a single token stops registering as a decision, you make them by the million without noticing. Price per token down, tokens per task up faster. Jevons, on an invoice.</p>
+
+<figure>
+  <img src="/writing/the-invisible-hand/jevons.png" alt="A scissors chart from 2022 to 2026: price per token falling steeply while tokens consumed rise steeply, the two curves crossing">
+  <figcaption>The Jevons paradox, in tokens. The price of a unit of intelligence collapsed, 280x in two years, and that is exactly why the total bill exploded: cheap enough to stop rationing, so consumption ran ahead of the price cut. Britain did the same thing with coal in 1865.</figcaption>
+</figure>
+
+<p>So the CFO finds the invoice and reads it as an AI problem. It is not. It is a units problem. These companies buy tokens and sell outcomes, shipped features, resolved tickets, closed reviews, and almost none of them were measuring the second thing. They optimized the number on the receipt instead of the one that makes money. The stacking mistake, with an Nvidia logo on it.</p>
+
+<h2>What the winners actually did</h2>
+
+<p>Here the "China is winning" story gets lazy, and one layer down it gets interesting.</p>
+
+<p>Yes, companies are moving to Chinese open-weight models, and yes, they are good now. On <a href="https://www.cnbc.com/2026/06/26/openai-anthropic-new-ai-spending-reality-as-users-shift-to-efficiency.html">Artificial Analysis' battery of ten evaluations</a>, Claude runs about $4,811, DeepSeek $1,071, and GLM $544, and GLM lands within a point of Claude Opus on the hard agentic benchmark. Chinese models went from about 1 percent of usage on OpenRouter in 2024 to more than 60 percent by May 2026. Meituan, a food delivery company, <a href="https://venturebeat.com/technology/meituan-open-sources-longcat-2-0-the-1-6t-near-frontier-agentic-coding-model-thats-been-leading-openrouter-trained-entirely-on-chinese-chips">open-sourced a 1.6-trillion-parameter model</a> trained end to end on domestic Chinese chips, no banned Nvidia hardware in the stack. That one should cost the export-control people some sleep.</p>
+
+<p>But look at how the companies that actually cut their bills did it, because it was not a model swap.</p>
+
+<p>Coinbase halved its AI spend, reported everywhere as "Coinbase switched to Chinese models." The models helped. What did as much work was caching: they <a href="https://analyticsindiamag.com/ai-news/coinbase-cuts-ai-spend-by-half-with-open-weight-models-smarter-routing">took their cache hit rate from 5 percent to 60 percent</a>, before a single model changed. And 91 percent of engineers never hit the old limits, so this was never rationing. It was refusing to pay full price to answer the same question twice.</p>
+
+<p>Airbnb did not switch to China either. It built a router across 13 models, OpenAI, Alibaba's Qwen, Google, open source, and sends each job to the cheapest one that can do it. Qwen handles the flood of routine support; the frontier models get the sliver that needs them. Resolution time went from nearly three hours to six seconds. The honest headline was "route by task," not "picked a side."</p>
+
+<p>And it is not a toggle. Lindy moved fully off Anthropic to DeepSeek and saves millions, but its founder said the switch was "100x more work than we thought," six to nine months of evaluation and re-engineering. Anyone selling a one-afternoon escape from your AI bill is selling stacking-is-free-money again.</p>
+
+<p>I run a small version of this every day, so I am not admiring it from a distance. My setup doesn't shove everything at the model; it loads context in layers and reaches for the one definition a question needs, about 2,500 tokens where a load-everything session carries ten times that. A tighter prompt is usually the sharper one, and it happens to be cheaper.</p>
+
+<p>And the thing that makes any of it safe is the half of economics I actually practice for a living: you do not declare the cheap model good enough, you test whether it is. Hold the expensive model as the control, send a slice of real traffic to the cheaper challenger, promote it only if the quality holds. Skip that and routing has a quiet failure mode, an answer a little worse in a way no dashboard flags, surfacing a week later as a churned customer. Which means the CFO's question was never an accounting question. It is an experiment: what is my cost per outcome, measured against a control, not read off a price list.</p>
+
+<p>So the playbook under the panic is boring and old. Know your cost per outcome. Cache the repeats. Route each job to the cheapest thing that clears the bar. Picture a pyramid: a wide cheap base doing the routine 80 percent, a thin frontier cap for the hard 10 to 15 percent. The Chinese models matter because they make that base worth building. They are the efficient default, not the strategy. And I had been saying route by task as if it were only ever a fact about models.</p>
+
+<figure>
+  <img src="/writing/the-invisible-hand/tier-pyramid.png" alt="A three-tier routing pyramid: a wide cheap workhorse base, a mid tier, and a narrow gold frontier cap, with cost per token rising toward the top">
+  <figcaption>The routing pyramid. Most work goes to the cheap base; the frontier cap is a luxury tier you spend on the few tasks that need it. Route by task, not by brand.</figcaption>
+</figure>
+
+<h2>The same cut, drawn on people</h2>
+
+<p>Here is where I stopped feeling clever about the cost math and started feeling something colder.</p>
+
+<p>Route by task means you break a job into tasks and send each to the cheapest thing that can do it. Beautiful, when the tasks are code reviews and the cheap thing is a model. The same idea, exactly, when the tasks are somebody's whole week.</p>
+
+<p>For two centuries our tools were the kind that made a worker worth more, the combine harvester that let one farmer do the work of twenty. What the market is buying now, one task at a time, is the other kind, the harvester with nobody in the seat. Salesforce says it slowed hiring engineers and lawyers because the AI can do the work. IBM handed part of its HR department to software. That is not capital making people more productive. That is capital taking the seat.</p>
+
+<p>A team at MIT measured how far this reaches. Their <a href="https://www.media.mit.edu/projects/iceberg/overview/">Iceberg Index</a> starts from the point I keep circling: the real unit was never the job, it is the task inside it. A lawyer doesn't vanish, the hours she spent on routine contracts quietly shrink. Weighted by how much wage value AI can already technically do, the visible tip, the tech layoffs everyone writes about, is 2.2 percent of the US labor market, about $211 billion. Across the whole economy it jumps to 11.7 percent, roughly $1.2 trillion, five times bigger and sitting under industries that have never made an anxious headline. For computer and math work, AI can technically do about 94 percent of the tasks and today does about a third. Entry-level postings are already down 35 percent since early 2023.</p>
+
+<figure>
+  <img src="/writing/the-invisible-hand/iceberg.png" alt="An iceberg diagram: a small tip labelled tech layoffs at 2.2 percent above the waterline, a much larger submerged mass labelled the rest of the economy at 11.7 percent and $1.2 trillion">
+  <figcaption>MIT's Iceberg Index. The tech layoffs everyone argues about are the tip, 2.2 percent of wage value. The same automatable tasks sit inside finance, HR, legal and admin work all over the economy, 11.7 percent, and our official numbers stop at the waterline.</figcaption>
+</figure>
+
+<p>Sit with the symmetry. Coinbase's router sends a code review to a cheap model and keeps the architecture call for a human. The economy is running the same function, one task at a time, deciding which slices of your job clear the bar for a machine and which still need you. The gateway and the labor market are the same algorithm at different scales: cheapest capable executor, per task. I spent a paragraph admiring that algorithm for saving money. It cannot tell a token from a person.</p>
+
+<p>And it does not land evenly. The tasks that can't be routed, the nurse's half hour with a patient, the plumber at the pipe, the teacher in the room, don't get more productive, so their cost keeps rising while everything cognitive gets cheaper around them. A string quartet needs the same four players it needed in 1865, which is why live music only ever gets pricier, and it is why care, teaching and the trades will too. The economy splits into two speeds, and the slow half is the part we can't live without.</p>
+
+<figure>
+  <img src="/writing/the-invisible-hand/two-speed.png" alt="A diverging chart over time: cognitive work falling toward cheap, human work rising toward costly, the gap between them shaded and widening">
+  <figcaption>Baumol's cost disease, sped up. As AI drives cognitive work toward the floor, the work it can't touch, care, teaching, the trades, keeps getting relatively more expensive. Two speeds, and the slow one is the half we can't live without.</figcaption>
+</figure>
+
+<h2>The floor I was standing on</h2>
+
+<p>Economics Explained, walking through this, names the first dominoes plainly. Call centers in Manila. Data entry workers in Dhaka. A single slot in a server rack, it argues, could replace either, and the work would reshore to whoever owns the rack. The IMF puts 89 percent of the Philippines' outsourced service jobs at high risk. Bangladesh has around 80,000 people doing the same work.</p>
+
+<p>That work sat in Dhaka for one reason: it was cheaper there. A server rack breaks that logic, because a rack has no wage and no country. The moment it can do the task, the work stops flowing to the cheapest city and starts flowing to whoever owns the compute.</p>
+
+<p>Dhaka is my city. I ran the cost-per-outcome math on a floor there, in a building full of exactly the roles that sentence is about. I was the analyst drawing the line between the work worth full price and the work you send somewhere cheaper. I did it by hand, for one company, over dinner rushes. The thing eating those jobs now is that same line, drawn by a machine, at the scale of a country, on the city where I learned to draw it.</p>
+
+<h2>The invisible hand</h2>
+
+<p>So here is the one thing I actually believe, learned first from a spreadsheet full of delivery times and confirmed twice since.</p>
+
+<p>Nobody in those headlines has an AI problem. They have a measurement problem in an AI costume. On the invoice, the mismeasured unit is tokens instead of outcomes. On the workforce, it is jobs instead of tasks. Same error, twice, and the unit you refuse to count is the one that decides everything.</p>
+
+<figure>
+  <img src="/writing/the-invisible-hand/wrong-unit.png" alt="Two panels, the invoice and the workforce, each with a lit gold box for the counted unit (tokens, jobs) and a dark box for the ignored unit that matters (outcomes, tasks)">
+  <figcaption>The whole mistake in one frame. On the invoice we count tokens and ignore outcomes; on the workforce we count jobs and ignore tasks. The unit sitting in the dark is the one that was paying the bills.</figcaption>
+</figure>
+
+<p>We keep making it for reasons behavioral economics already named. Goodhart's law: the moment a measure becomes a target, we optimize the number and let go of the thing it stood for. The streetlight effect: we look under the lamp because that is where the light is. Tokens and headcounts stand in the light, easy to bill, easy to put on a slide. Outcomes and tasks sit in the dark, which is exactly where the value went. We don't count the wrong unit because we are careless. We count it because it is the one the light is on.</p>
+
+<p>Adam Smith gave us the hopeful version two and a half centuries ago: everyone chasing their own interest, and the market, as if led by an invisible hand, turning all that self-interest into a richer whole. What runs now is the same hand doing a colder thing. It no longer trades work between people. It hands their work off, task by task, to whatever does it cheapest, a model, a server rack, a cheaper country, back again. An invisible hand-off. And like every invisible hand before it, it optimizes exactly the number you feed it and nothing else. It cannot tell a kept customer from a churned one, or a token from a person. It only knows which unit you told it to count.</p>
+
+<p>AI isn't collapsing. A pricing model met a usage curve nobody governed, and a labor market is meeting a routing function nobody voted for, and both are the same move: optimize the cheap unit, ignore the expensive one, find out later which was which. If you are staring at your own version of the invoice, don't ask which model is cheapest. Ask what your real unit is, and whether you are the one measuring it or the one being measured.</p>
+
+<p>I found that out at 26 minutes drifting toward 28 and a half, four years before anyone said the word token to me. The bill always comes for the unit you refused to count. This time the unit might be you.</p>

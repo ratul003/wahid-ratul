@@ -166,3 +166,65 @@ body {
     scroll-behavior: auto !important;
   }
 }
+
+/* ── Long-form article body (injected HTML) ─────────────────────────────── */
+.article-prose {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.19rem;
+  line-height: 1.75;
+  color: rgba(241, 245, 249, 0.86);
+}
+.article-prose p { margin: 0 0 1.5em; }
+.article-prose > p:first-of-type { font-size: 1.28rem; color: rgba(241, 245, 249, 0.95); }
+.article-prose h2,
+.article-prose h3,
+.article-prose h4 {
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  color: #ffffff;
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+.article-prose h2 { font-size: 1.9rem; font-weight: 700; margin: 2.4em 0 0.6em; }
+.article-prose h3 { font-size: 1.35rem; font-weight: 600; margin: 2em 0 0.5em; color: #e0e7ff; }
+.article-prose h4 { font-size: 1.1rem; font-weight: 600; margin: 1.8em 0 0.5em; color: #c7d2fe; }
+.article-prose a { color: #a5b4fc; text-decoration: underline; text-underline-offset: 2px; transition: color 0.2s ease; }
+.article-prose a:hover { color: #c7d2fe; }
+.article-prose strong { color: #ffffff; font-weight: 600; }
+.article-prose em { font-style: italic; }
+.article-prose ul, .article-prose ol { margin: 0 0 1.5em; padding-left: 1.4em; }
+.article-prose li { margin-bottom: 0.5em; }
+.article-prose blockquote {
+  margin: 1.8em 0;
+  padding: 0.2em 0 0.2em 1.2em;
+  border-left: 3px solid rgba(129, 140, 248, 0.6);
+  color: rgba(241, 245, 249, 0.72);
+  font-style: italic;
+}
+.article-prose blockquote p { margin: 0; }
+.article-prose hr {
+  border: none;
+  text-align: center;
+  margin: 2.6em 0;
+}
+.article-prose hr::before {
+  content: "· · ·";
+  letter-spacing: 0.6em;
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 1.1rem;
+}
+.article-prose figure { margin: 2.4em 0; }
+.article-prose figure img {
+  width: 100%;
+  display: block;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.article-prose figcaption {
+  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-style: italic;
+  color: rgba(241, 245, 249, 0.45);
+  text-align: center;
+  line-height: 1.5;
+  margin-top: 0.7em;
+}

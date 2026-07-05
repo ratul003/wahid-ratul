@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+import { articles as hostedArticles } from "./writing/articles";
 
 // ── Project icons ──────────────────────────────────────────────────────────────
 
@@ -262,19 +264,18 @@ const marqueeItems = skillGroups.flatMap((g) =>
   g.items.map((label) => ({ label, color: g.color }))
 );
 
-const articles = [
-  {
-    title: "The Game That Outlived Empires",
-    subtitle: "FIFA Corruption, Late-Stage Capitalism, Why Germany, and Who Wins in 2026",
-    topic: "Football · Politics · Economics",
-    date: "June 2026",
-    excerpt: "What does a sporting tournament reveal about power, money, and who gets to write history? A deep dive into FIFA's grip on global football, Germany's statistical case for 2026, and what Monte Carlo models say when politics meets sport.",
-    href: "https://fifa-wc2026-simulator.vercel.app/#article",
-    color: "#34d399",
-    image: "/maradona.png",
-    imageAlt: "Diego Maradona lifting the 1986 World Cup trophy",
-  },
-];
+// Hosted on-site at /writing/<slug>; single source of truth in ./writing/articles.ts
+const articles = hostedArticles.map((a) => ({
+  title: a.title,
+  subtitle: a.subtitle,
+  topic: a.topic,
+  date: a.date,
+  excerpt: a.excerpt,
+  href: `/writing/${a.slug}`,
+  color: a.color,
+  image: a.cover,
+  imageAlt: a.coverAlt,
+}));
 
 const research = [
   {
@@ -671,11 +672,9 @@ export default function Home() {
           </div>
           <div className="grid md:grid-cols-2 gap-3">
             {articles.map((a) => (
-              <a
+              <Link
                 key={a.title}
                 href={a.href}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="group relative flex flex-col rounded-xl border border-white/[0.08] overflow-hidden min-h-[420px] hover:border-white/[0.2] hover:-translate-y-0.5 transition-all duration-300 ease-out"
               >
                 {/* Sketched photo background, sitting inside the card box */}
@@ -706,7 +705,7 @@ export default function Home() {
                     <ArrowUpRight />
                   </div>
                 </div>
-              </a>
+              </Link>
             ))}
           </div>
         </div>
