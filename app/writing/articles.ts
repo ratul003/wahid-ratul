@@ -20,9 +20,9 @@ export type Article = {
 export const articles: Article[] = [
   {
     slug: "the-invisible-hand",
-    title: "The Invisible Hand",
+    title: "The Invisible Hand: When AI meets Market Forces",
     subtitle:
-      "When AI meets economics, the market quietly stops trading work between people and starts handing it to machines, one task at a time.",
+      "The market quietly stops trading work between people and starts handing it to machines, one task at a time.",
     topic: "AI · Economics · Behavioral Economics",
     date: "July 2026",
     readTime: "11 min read",
