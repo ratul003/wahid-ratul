@@ -130,9 +130,47 @@ const socials = [
   { label: "Email", href: "mailto:wahidtratul@gmail.com", Icon: IconEmail },
 ];
 
+function IconTerminal({ color }: { color: string }) {
+  return (
+    <svg width="32" height="32" viewBox="0 0 28 28" fill="none">
+      <rect x="3" y="5" width="22" height="18" rx="2.5" stroke={color} strokeWidth="1.5" />
+      <path d="M8 11l3.5 3-3.5 3" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M14.5 17.5h5" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function IconTrophy({ color }: { color: string }) {
+  return (
+    <svg width="32" height="32" viewBox="0 0 28 28" fill="none">
+      <path d="M8 4h12v5a6 6 0 0 1-12 0V4z" stroke={color} strokeWidth="1.5" strokeLinejoin="round" />
+      <path d="M8 6H5a2 2 0 0 0 0 4h3.4M20 6h3a2 2 0 0 1 0 4h-3.4" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
+      <path d="M14 15v3.5M10.5 23h7M11 23a3 3 0 0 1 6 0" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
 // ── Data ──────────────────────────────────────────────────────────────────────
 
 const projects = [
+  {
+    title: "Claude-ing WorkOS",
+    description: "An AI operating layer where one PM builds the whole stack — the pipeline, an MCP server, the dashboard, the experiment — with no handoff. Tiered-context Claude Code with a live IDE demo you can run session by session.",
+    color: "#F5A524",
+    label: "AI Operating Layer · Personal",
+    href: "https://claude-ing.vercel.app",
+    image: "/projects/claude-ing-workos.jpg",
+    Icon: IconTerminal,
+  },
+  {
+    title: "World Cup 2026 Simulator",
+    description: "A one-million-run Monte Carlo simulation of the 2026 World Cup, re-run live in the browser on every load, paired with an essay on FIFA, power, and Germany's statistical case for the title.",
+    color: "#2dd4bf",
+    label: "Monte Carlo Simulation · Personal",
+    href: "https://fifa-wc2026-simulator.vercel.app",
+    image: "/maradona.png",
+    Icon: IconTrophy,
+  },
   {
     title: "Product Intelligence Platform",
     description: "End-to-end analytics architecture spanning event instrumentation, warehouse-native metrics, and agentic AI measurement across a B2B experimentation platform's product suite.",
