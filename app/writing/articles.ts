@@ -61,7 +61,7 @@ export const articles: Article[] = [
     cover: "/maradona.png",
     coverAlt: "Diego Maradona lifting the 1986 World Cup trophy",
     links: [
-      { label: "Run the World Cup simulator", href: "https://fifa-wc2026-simulator.vercel.app" },
+      { label: "Run the World Cup simulator", href: "https://fifa-wc2026-simulator.vercel.app/#cr" },
       {
         label: "Read on Medium",
         href: "https://medium.com/@wahidtratul/the-game-that-outlived-empires-7f527356d418",

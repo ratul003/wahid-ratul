@@ -167,7 +167,7 @@ const projects = [
     description: "A one-million-run Monte Carlo simulation of the 2026 World Cup, re-run live in the browser on every load, paired with an essay on FIFA, power, and Germany's statistical case for the title.",
     color: "#2dd4bf",
     label: "Monte Carlo Simulation · Personal",
-    href: "https://fifa-wc2026-simulator.vercel.app",
+    href: "https://fifa-wc2026-simulator.vercel.app/#cr",
     image: "/maradona.png",
     Icon: IconTrophy,
   },
