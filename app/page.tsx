@@ -326,9 +326,11 @@ const roles: Role[] = [
         title: "Product Manager",
         period: "2026 - present",
         impact: [
-          "Own product end to end for a **16K-moves/month** B2B2C marketplace: roadmap, analytics, experimentation and CRM.",
-          "Built the first funnel analytics for the largest revenue channel, joining **1.4M+ call records** to **880K+ moves** and reconciling to finance within **0.1%**.",
-          "Leading the HubSpot service migration on **9 AI classification and routing workflows** (**94% precision**, **80% of tickets zero-touch**), absorbing **2.8× volume at flat headcount**.",
+          "Own product end to end for a B2B2C marketplace moving **16K households a month** on energy, broadband and insurance referral commission.",
+          "Building the digital move journey against a **£1M ARR target in 6 months**: deals fetched live by API, personalising **40K+ mover emails** at a **52.9% open rate**.",
+          "Built the company's first funnel analytics for phone sales, its largest revenue channel: **1.4M call records** stitched to **880K moves**, with attribution covering **~90% of phone revenue**.",
+          "Moved Service Ops off a 28-tab spreadsheet into HubSpot ticketing behind **9 AI workflows**: **49K tickets** routed at **94% precision**, **80% closing untouched**, **2.8× the moves** at flat headcount.",
+          "Founded WorkOS, the company's agentic operating layer: Claude wired to **15+ production systems**, with SSO-gated dashboards replacing enterprise BI.",
         ],
         links: [{ label: "Claude-ing WorkOS", href: "https://claude-ing.vercel.app", color: CS.workos }],
       },
@@ -343,9 +345,11 @@ const roles: Role[] = [
         title: "Analytics Engineer, Product",
         period: "2024 - 2026",
         impact: [
-          "Delivered the system of record for product metrics: **1.2M+ daily events** across **10+ SaaS products**, governed by an **8-step event-gating process**.",
-          "Cut annual churn **$5M** with models over **500K+ users**, briefed quarterly to the CEO and Insight Partners; NLP agents removed **85% of ad-hoc analyst requests**.",
-          "Set the frequentist and Bayesian experimentation standard behind ship/kill calls, including a 5K-impression gate at **80% power**.",
+          "Delivered the company's system of record for product metrics: **1.2M+ daily events**, **10+ SaaS products**, **70+ self-serving stakeholders**, under an **8-step event-gating process**.",
+          "Authored the architecture decisions behind it: Mixpanel to warehouse-native across **8 product teams in 6 months**, and a Snowflake-to-BigQuery evaluation tracing **80-90% of cost** to egress.",
+          "Engineered the **3-layer warehouse**: 4 parallel ELT services, a Kimball star schema, reverse ETL pushing metrics into Salesforce and Gainsight.",
+          "Cut annual churn **$5M** with churn and adoption models over **500K+ users**, briefed quarterly to the CEO and Insight Partners; NLP agents eliminated **85% of ad-hoc analyst requests**.",
+          "Set the frequentist and Bayesian experimentation standard behind ship/kill calls: a 5K-impression gate at **80% power** and a **+16% qualification lift (58% to 74%)** that became the cross-sell proof point.",
         ],
         links: [
           { label: "Product Intelligence", href: "https://product-intelligence-platform.vercel.app", color: CS.pip },
@@ -355,17 +359,17 @@ const roles: Role[] = [
         ],
       },
       {
-        title: "Sr. Analyst, Go-To-Market",
+        title: "Senior Analyst, Go-To-Market Analytics",
         period: "2023 - 2024",
         impact: [
-          "Set C-suite KPI targets by forecast, delivering **12% YoY ARR growth** at **+7% over benchmark**, and cut leadership decision time **30%** with real-time Power BI over a **$50M+ pipeline**.",
+          "Set C-suite KPI targets by forecast, delivering **12% YoY ARR growth** at **7% above the DXP benchmark**, and cut leadership decision time **30%** over a **$50M+ pipeline**.",
         ],
       },
       {
-        title: "Sr. Analyst, Pricing Strategy & Operations",
+        title: "Senior Analyst, Pricing Strategy & Operations",
         period: "2023",
         impact: [
-          "Re-priced a global DXP serving **100K+ B2B customers** from freemium to pay-per-use over **15+ A/B tests**: **40% gross margin** hit, **LTV +28%**, **$12M upsell** unlocked.",
+          "Re-priced a global DXP (**100K+ B2B customers**) from freemium to pay-per-use over **15+ A/B tests**: **40% gross margin** hit, **LTV +28%**, **$12M upsell** unlocked.",
         ],
       },
     ],
@@ -379,8 +383,9 @@ const roles: Role[] = [
         title: "Analytics Consultant",
         period: "2024 - 2025",
         impact: [
-          "Improved expert quality **23%** across **3M+ consultations** with a TOPSIS ranking model scoring **500+ expert partners**.",
+          "Raised expert quality **23%** across **3M+ consultations** with a TOPSIS model ranking **500+ partners** (300+ verified) on 5 weighted criteria.",
           "Held **95% supply retention** through scale-up with a dynamic pay engine: **30-90% revenue-share bands** plus performance multipliers.",
+          "Built the real-time demand-supply engine running daily operations: health scoring, surge pricing and incentive orchestration in one control loop.",
         ],
         links: [
           { label: "Rank, Reward, Retain", href: "https://rank-reward-retain.vercel.app", color: CS.rank },
@@ -398,8 +403,9 @@ const roles: Role[] = [
         title: "Assistant Manager, Logistics & Analytics",
         period: "2021 - 2023",
         impact: [
-          "Owned last-mile operations for **2M+ monthly orders** across 5 verticals; ML fleet forecasting compounded **3% monthly KPI gains** at **75%+ on-time** delivery.",
-          "Generated **€100K+/mo incremental revenue** and **+21% basket size** with surge pricing across **64 cities**; raised a **16K-rider fleet's** performance **20%**.",
+          "Owned last-mile operations for **2M+ monthly orders** across 5 verticals, serving **50+ ops stakeholders**; ML fleet forecasting compounded **3% monthly KPI gains** at **75%+ on-time** delivery.",
+          "Proved by regression that algorithmic order stacking loses money past a **20-24% band**, refunds overtaking rider savings; adopted as national dispatch policy.",
+          "Generated **€100K+/mo incremental revenue** and **+21% basket size** with surge pricing across **64 cities**; raised **16K-rider fleet** performance **20%** with automated tooling and compliance penalties.",
         ],
         links: [{ label: "Cost-Benefit Optimization", href: "https://cost-benefit-optimization.vercel.app", color: CS.cost }],
       },
