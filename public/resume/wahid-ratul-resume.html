@@ -6,7 +6,7 @@
     --green:#2e9e77; --green-d:#1d7a58; --mint:#d9f0e3; --mint2:#bfe6cf;
     --indigo:#4f46e5; --violet:#7c3aed; --cyan:#0891b2; --emerald:#047857; --amber:#b45309; --rose:#be123c; --orange:#ea580c; --gold:#ca8a04;
   }
-  html,body{ color:var(--body); font: 7.45pt/1.29 "Avenir Next",-apple-system,"Helvetica Neue",Arial,sans-serif; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  html,body{ color:var(--body); font: 7.65pt/1.29 "Avenir Next",-apple-system,"Helvetica Neue",Arial,sans-serif; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
   a{ color:inherit; text-decoration:none; }
   .page{ display:flex; min-height:284mm; }
 
@@ -54,6 +54,11 @@
   .tagband{ display:inline-block; background:linear-gradient(90deg,var(--mint),#e7f6ee); border-radius:3px; padding:2.5px 8px; margin-top:4px; font-size:6.6pt; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--green-d); }
   .tagband .sep{ color:var(--green); }
 
+  .pstrip{ display:flex; align-items:center; gap:5px; margin-top:5px; font-size:6.9pt; color:var(--body); }
+  .pstrip svg{ width:10px; height:10px; fill:none; stroke:var(--green-d); stroke-width:2; flex-shrink:0; }
+  .pstrip b{ color:var(--ink); }
+  .pstrip a b{ color:var(--green-d); }
+
   .mh{ display:flex; align-items:center; gap:6px; margin:9px 0 4px; }
   .mh .ic{ width:15px; height:15px; border-radius:4px; background:var(--mint); display:flex; align-items:center; justify-content:center; }
   .mh .ic svg{ width:9px; height:9px; fill:none; stroke:var(--green-d); stroke-width:2.2; }
@@ -87,7 +92,7 @@
     <a class="cl" href="mailto:wahidtratul@gmail.com"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>wahidtratul@gmail.com</a>
     <a class="cl" href="https://www.linkedin.com/in/wahidratul112296"><svg class="bi" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg><b>LinkedIn</b></a>
     <a class="cl" href="https://github.com/ratul003"><svg viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.5c0-1 .1-1.4-.5-2 2.8-.3 5.5-1.4 5.5-6a4.6 4.6 0 0 0-1.3-3.2 4.2 4.2 0 0 0-.1-3.2s-1.1-.3-3.5 1.3a12 12 0 0 0-6.3 0C6.6 2.3 5.5 2.6 5.5 2.6a4.2 4.2 0 0 0-.1 3.2A4.6 4.6 0 0 0 4 9c0 4.6 2.7 5.7 5.5 6-.6.6-.6 1.2-.5 2V21"/></svg><b>Github</b></a>
-    <a class="cl" href="https://wahid-ratul.vercel.app"><svg class="bi" viewBox="0 0 24 24"><path d="M12 2 L23 21 H1 Z"/></svg><b>Portfolio</b></a>
+    <a class="cl" href="https://wahid-ratul.vercel.app/?utm_source=resume&utm_medium=pdf"><svg class="bi" viewBox="0 0 24 24"><path d="M12 2 L23 21 H1 Z"/></svg><b>wahid-ratul.vercel.app</b></a>
     <a class="cl" href="https://medium.com/@wahidtratul"><svg class="bi" viewBox="0 0 24 24"><path d="M13.54 12a6.8 6.8 0 0 1-6.77 6.82A6.8 6.8 0 0 1 0 12a6.8 6.8 0 0 1 6.77-6.82A6.8 6.8 0 0 1 13.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.87 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75S24 8.83 24 12z"/></svg><b>Articles</b></a>
     <div class="cl" style="color:var(--green-d);font-weight:700"><svg viewBox="0 0 24 24"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Open to relocation / sponsorship</div>
 
@@ -116,7 +121,7 @@
     <p class="edu-note" style="margin-top:3px">· Mathematics minor</p>
     <p class="edu-note" style="margin-top:2px">· Faculty Assistantship</p>
     <p class="edu-note" style="margin-top:2px">· Scholar of the College Award</p>
-    <p class="edu-note" style="margin-top:2px">· HHMI / UROP research: <a href="https://research-copulas-directional-depend.vercel.app" style="color:#0d9488;font-weight:600">copulas ↗</a> · <a href="https://research-nhanes-cognitive.vercel.app" style="color:#0ea5e9;font-weight:600">NHANES ↗</a></p>
+    <p class="edu-note" style="margin-top:2px">· HHMI / UROP research: <a href="https://research-copulas-directional-depend.vercel.app/?utm_source=resume&utm_medium=pdf" style="color:#0d9488;font-weight:600">copulas ↗</a> · <a href="https://research-nhanes-cognitive.vercel.app/?utm_source=resume&utm_medium=pdf" style="color:#0ea5e9;font-weight:600">NHANES ↗</a></p>
 
     <div class="sh"><span class="ic"><svg viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span><span>Writing</span></div>
     <div class="wr"><a style="color:var(--rose)" href="https://medium.com/@wahidtratul/the-invisible-hand-bdbe66667977">The Invisible Hand ↗</a><p>What economics says about AI and work.</p></div>
@@ -126,6 +131,7 @@
   <main class="main">
     <div class="name">Wahid T. Ratul</div>
     <div class="tagband">Product Manager <span class="sep">•</span> Data Scientist <span class="sep">•</span> AI Enabler <span class="sep">•</span> Marketplace Operator</div>
+    <div class="pstrip"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg><span><b>Colored ↗ links</b> open published, interactive case studies — full portfolio: <a href="https://wahid-ratul.vercel.app/?utm_source=resume&utm_medium=pdf"><b style="white-space:nowrap">wahid-ratul.vercel.app</b></a></span></div>
 
     <div class="mh"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span><span>Experience</span></div>
 
@@ -133,14 +139,11 @@
       <div class="crow"><span class="c"><img src="https://www.google.com/s2/favicons?domain=justmovein.com&amp;sz=64" alt="">Just Move In</span><span class="loc">Remote</span></div>
       <div class="rrow"><span class="r">Product Manager</span><span class="d">2026 – Present</span></div>
       <ul>
-        <li>Own product end to end for a <b>16K-moves/month</b> B2B2C marketplace: roadmap, analytics, experimentation and CRM, working daily with <b>founders, Service Ops, Engineering and Growth</b>.</li>
-        <li>Building the <b>digital move journey</b>, targeting <b>£1M ARR in 6 months</b>: API-fed live broadband, energy and insurance deals in the customer journey; first release put personalised broadband offers into <b>40K+ mover emails</b>, A/B/C tested.</li>
-        <li>Architected the analytics stack: <b>Metabase pipelines wired to Claude over MCP</b>, cross-database data models, and <b>6 auth-gated dashboards on Vercel</b>, eliminating <b>enterprise BI spend</b>.</li>
-        <li>Built the <b>first funnel analytics</b> for the largest revenue channel: <b>1.4M+ call records</b> joined to <b>880K+ moves</b>, reconciled to finance within <b>0.1%</b>; it opens the sales floor's morning: <b>where yesterday leaked revenue, who to coach first</b>.</li>
-        <li>Leading the <b>HubSpot service migration</b>: Slack workflows <b>auto-creating tickets</b>, <b>Core-platform journey sync</b>, and <b>AI-powered chat</b> cutting agent dependency; automation absorbs <b>2.8× volume at flat headcount</b>, avoiding <b>£100-175K/yr</b> in hires.</li>
-        <li>Created a zero-engineering <b>partner-acquisition product in HubSpot</b>: branded landing page, capture form, live list and alerts, demo-ready for a <b>national surveyor partnership</b>.</li>
-        <li>Rebuilt <b>JMI's financial model in Claude</b>, unit economics and scenarios across every commission line: <b>board-level what-ifs answered same day</b>; plus <b>agentic tools</b> for stakeholder self-service on metrics and the funnel.</li>
-        <li>Founded <a href="https://claude-ing.vercel.app" style="color:var(--amber);font-weight:700">WorkOS ↗</a>, the company's agentic-workflow initiative: Claude integrated with <b>15+ production systems</b> for campaign QA, reporting and daily leadership briefings.</li>
+        <li>Own product <b>end to end</b> for a <b>16K-moves/month</b> B2B2C marketplace — roadmap, analytics, experimentation and CRM — working daily with founders, Service Ops, Engineering and Growth.</li>
+        <li>Building the <b>digital move journey</b> toward <b>£1M ARR in 6 months</b>: API-fed broadband, energy and insurance offers; first release put personalised deals into <b>40K+ mover emails</b>, A/B/C tested.</li>
+        <li>Built the first <b>funnel analytics</b> for the largest revenue channel: <b>1.4M+ call records</b> joined to <b>880K+ moves</b>, reconciled to finance within <b>0.1%</b>; per-agent attribution covers <b>~90% of phone revenue</b>.</li>
+        <li>Leading the <b>HubSpot service migration</b> with <b>9 AI classification and routing workflows</b> in production: absorbs <b>2.8× volume at flat headcount</b>, avoiding <b>£100-175K/yr</b> in hires.</li>
+        <li>Founded <a href="https://claude-ing.vercel.app/?utm_source=resume&utm_medium=pdf" style="color:var(--amber);font-weight:700">WorkOS ↗</a>, the company's agentic operating layer: Claude wired to <b>15+ production systems</b>; <b>6 SSO-gated dashboards</b> replaced enterprise BI; <b>board-level what-ifs answered same day</b>.</li>
       </ul>
     </div>
 
@@ -149,19 +152,19 @@
       <div class="tree">
         <div class="rrow"><span class="r">Analytics Engineer, Product Analytics</span><span class="d">2024 – 2026</span></div>
         <ul>
-          <li>Delivered the <a href="https://product-intelligence-platform.vercel.app" style="color:var(--indigo);font-weight:700">Product Intelligence Platform ↗</a>, the company's system of record for product metrics: warehouse-native analytics processing <b>1.2M+ daily events</b> across 10+ SaaS products, governed by an <b>8-step event-gating process</b> and L1/L2 metric design.</li>
-          <li>Drove the <b>Mixpanel to warehouse-native migration</b> across <b>8 product teams</b>, my own recommendation; decisions incl. the Snowflake-egress cost evaluation: <a href="https://systems-architecture.vercel.app" style="color:var(--rose);font-weight:700">Systems Architecture ↗</a>.</li>
-          <li>Engineered the 3-layer Raw → Transform → Reporting warehouse with <b>4 parallel ELT services</b>, a Kimball star schema and reverse ETL: <a href="https://data-engineering-foundation.vercel.app" style="color:var(--emerald);font-weight:700">Data Engineering Foundation ↗</a>.</li>
-          <li>Reduced annual churn <b>$5M</b> with models covering <b>500K+ users</b>, briefed quarterly to the <b>CEO and Insight Partners</b>; NLP agents for 70+ users eliminated <b>85% of ad-hoc analyst requests</b>.</li>
-          <li>Set the <b>frequentist + Bayesian experimentation standard</b> behind ship / kill decisions: <b>5K-impression threshold (80% power)</b>, <b>+16% agent-qualification lift (58% → 74%)</b>, the cross-sell proof point: <a href="https://experimentation-science.vercel.app" style="color:var(--gold);font-weight:700">Experimentation Science ↗</a>.</li>
+          <li>Delivered the <a href="https://product-intelligence-platform.vercel.app/?utm_source=resume&utm_medium=pdf" style="color:var(--indigo);font-weight:700">Product Intelligence Platform ↗</a>, the system of record for product metrics: <b>1.2M+ daily events</b> across 10+ SaaS products, governed by an <b>8-step event-gating process</b>.</li>
+          <li>Drove the <b>Mixpanel → warehouse-native migration</b> across <b>8 product teams</b>, from my recommendation to the Snowflake-egress cost case: <a href="https://systems-architecture.vercel.app/?utm_source=resume&utm_medium=pdf" style="color:var(--rose);font-weight:700">Systems Architecture ↗</a>.</li>
+          <li>Engineered the <b>3-layer warehouse</b>: 4 parallel ELT services, Kimball star schema, reverse ETL: <a href="https://data-engineering-foundation.vercel.app/?utm_source=resume&utm_medium=pdf" style="color:var(--emerald);font-weight:700">Data Engineering Foundation ↗</a>.</li>
+          <li>Cut annual churn <b>$5M</b> with models over <b>500K+ users</b>, briefed quarterly to the <b>CEO and Insight Partners</b>; NLP agents eliminated <b>85% of ad-hoc analyst requests</b>.</li>
+          <li>Set the <b>frequentist + Bayesian experimentation standard</b> behind ship/kill calls: 5K-impression gate (80% power), <b>+16% agent-qualification lift (58% → 74%)</b>: <a href="https://experimentation-science.vercel.app/?utm_source=resume&utm_medium=pdf" style="color:var(--gold);font-weight:700">Experimentation Science ↗</a>.</li>
         </ul>
         <div class="rrow"><span class="r">Regional Analyst, Go-To-Market Analytics</span><span class="d">2023 – 2024</span></div>
         <ul>
-          <li>Set C-suite KPI targets with predictive forecasting: <b>12% YoY ARR growth, +7% over benchmark</b>; cut leadership decision time <b>30%</b> with real-time Power BI over a <b>$50M+</b> pipeline.</li>
+          <li>Set C-suite KPI targets by forecast — <b>12% YoY ARR growth, +7% over benchmark</b> — and cut leadership decision time <b>30%</b> with real-time Power BI over a <b>$50M+ pipeline</b>.</li>
         </ul>
         <div class="rrow"><span class="r">Regional Analyst, Pricing Strategy &amp; Operations</span><span class="d">2023</span></div>
         <ul>
-          <li>Re-priced a global DXP serving <b>100K+ B2B customers</b> from freemium to pay-per-use across <b>15+ A/B tests</b>: hit the <b>40% gross-margin target</b>, lifted LTV <b>28%</b>, unlocked <b>$12M in upsell</b>.</li>
+          <li>Re-priced a global DXP (<b>100K+ B2B customers</b>) from freemium to pay-per-use over <b>15+ A/B tests</b>: <b>40% gross margin</b> hit, <b>LTV +28%</b>, <b>$12M upsell</b> unlocked.</li>
         </ul>
       </div>
     </div>
@@ -170,9 +173,9 @@
       <div class="crow"><span class="c"><img src="https://www.google.com/s2/favicons?domain=joincoto.com&amp;sz=64" alt="">Coto</span><span class="loc">Remote · Part-time</span></div>
       <div class="rrow"><span class="r">Analytics Consultant</span><span class="d">2024 – 2025</span></div>
       <ul>
-        <li>Improved expert quality <b>23%</b> across <b>3M+ consultations</b> with a <b>TOPSIS multi-factor ranking model</b> scoring <b>500+ expert partners (300+ verified)</b>: <a href="https://rank-reward-retain.vercel.app" style="color:var(--violet);font-weight:700">Rank, Reward, Retain ↗</a>.</li>
+        <li>Improved expert quality <b>23%</b> across <b>3M+ consultations</b> with a TOPSIS ranking model scoring <b>500+ expert partners</b>: <a href="https://rank-reward-retain.vercel.app/?utm_source=resume&utm_medium=pdf" style="color:var(--violet);font-weight:700">Rank, Reward, Retain ↗</a>.</li>
         <li>Held <b>95% supply retention</b> through scale-up with a dynamic pay engine: <b>30-90% revenue-share bands</b> plus performance multipliers.</li>
-        <li>Built the <b>real-time demand-supply engine</b> behind operations: marketplace health scoring, surge pricing and incentive orchestration: <a href="https://when-demand-exceeds-supply.vercel.app" style="color:var(--cyan);font-weight:700">When Demand Exceeds Supply ↗</a>.</li>
+        <li>Built the <b>real-time demand-supply engine</b>: marketplace health scoring, surge pricing, incentive orchestration: <a href="https://when-demand-exceeds-supply.vercel.app/?utm_source=resume&utm_medium=pdf" style="color:var(--cyan);font-weight:700">When Demand Exceeds Supply ↗</a>.</li>
       </ul>
     </div>
 
@@ -180,9 +183,9 @@
       <div class="crow"><span class="c"><img src="https://www.google.com/s2/favicons?domain=foodpanda.com&amp;sz=64" alt="">foodpanda | Delivery Hero</span><span class="loc">Dhaka, Bangladesh</span></div>
       <div class="rrow"><span class="r">Assistant Manager, Logistics &amp; Analytics</span><span class="d">2021 – 2023</span></div>
       <ul>
-        <li><b>Owned last-mile delivery operations</b> for <b>2M+ monthly orders</b> across 5 verticals; ML fleet-supply forecasting compounded <b>3% monthly KPI gains</b> at <b>75%+ on-time</b> delivery.</li>
-        <li>Ran the <b>cost-benefit optimization of algorithmic order stacking</b> (BigQuery / R): regression proof that refunds outweigh rider savings beyond a <b>20-24% band</b>, adopted as dispatch policy: <a href="https://cost-benefit-optimization.vercel.app" style="color:var(--orange);font-weight:700">Cost-Benefit Optimization ↗</a>.</li>
-        <li>Generated <b>€100K+/mo incremental revenue</b> and <b>+21% basket size</b> with surge pricing and demand controls across <b>64 cities</b>; raised <b>16K-rider fleet</b> performance <b>20%</b> with automated tooling.</li>
+        <li><b>Owned last-mile operations for 2M+ monthly orders</b> across 5 verticals; ML fleet forecasting compounded <b>3% monthly KPI gains</b> at <b>75%+ on-time</b> delivery.</li>
+        <li>Proved algorithmic order stacking loses money past a <b>20-24% band</b> (refunds outweigh rider savings); adopted as dispatch policy: <a href="https://cost-benefit-optimization.vercel.app/?utm_source=resume&utm_medium=pdf" style="color:var(--orange);font-weight:700">Cost-Benefit Optimization ↗</a>.</li>
+        <li>Generated <b>€100K+/mo incremental revenue</b> and <b>+21% basket size</b> with surge pricing across <b>64 cities</b>; raised <b>16K-rider fleet</b> performance <b>20%</b>.</li>
       </ul>
     </div>
 
