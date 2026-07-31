@@ -107,6 +107,29 @@ body {
     0 0 24px var(--glow);
 }
 
+/* Skill logo / glyph inside a pill - glows in its own brand hue */
+@keyframes mark-glow {
+  0%, 100% { filter: drop-shadow(0 0 2px var(--mglow)); }
+  50%      { filter: drop-shadow(0 0 7px var(--mglow)) brightness(1.15); }
+}
+.skill-mark {
+  animation: mark-glow 3.6s ease-in-out infinite;
+  animation-delay: var(--d, 0s);
+}
+.skill-pill:hover .skill-mark {
+  filter: drop-shadow(0 0 9px var(--mglow)) brightness(1.2);
+}
+
+/* Chips linking a role to its published case study */
+.case-chip {
+  transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+}
+.case-chip:hover {
+  transform: translateY(-1px);
+  border-color: var(--c);
+  box-shadow: 0 0 16px -3px var(--c);
+}
+
 /* Pulsing glow for experience / education progression dots */
 @keyframes pulse-glow {
   0%, 100% { filter: brightness(1); transform: scale(1); }

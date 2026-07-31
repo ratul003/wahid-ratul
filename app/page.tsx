@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { articles as hostedArticles } from "./writing/articles";
+import { MARKS } from "./skill-marks";
 
 // ── Project icons ──────────────────────────────────────────────────────────────
 
@@ -85,6 +86,69 @@ function ArrowUpRight() {
     <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
       <path d="M2 8L8 2M8 2H3.5M8 2V6.5" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
+  );
+}
+
+// ── Shared bits ───────────────────────────────────────────────────────────────
+
+/** A skill's logo (brand colour) or glyph (group colour), glowing in its own hue. */
+function SkillMark({ name, color, size = 14 }: { name: string; color: string; size?: number }) {
+  const mark = MARKS[name];
+  if (!mark) return null;
+  return (
+    <span
+      className="skill-mark inline-flex items-center justify-center flex-shrink-0"
+      style={{ "--mglow": (mark.hex ?? color) + "bb" } as React.CSSProperties}
+    >
+      {mark.render(color, size)}
+    </span>
+  );
+}
+
+/** Renders **wrapped** spans as emphasised figures. */
+function Impact({ text }: { text: string }) {
+  return (
+    <>
+      {text.split("**").map((chunk, i) =>
+        i % 2 === 1 ? (
+          <b key={i} className="font-semibold text-white/90">
+            {chunk}
+          </b>
+        ) : (
+          chunk
+        )
+      )}
+    </>
+  );
+}
+
+type CaseLink = { label: string; href: string; color: string };
+
+/** Chips linking a role to the published case studies it produced. */
+function CaseLinks({ links }: { links: CaseLink[] }) {
+  return (
+    <div className="flex flex-wrap gap-1.5 mt-2.5">
+      {links.map((l) => (
+        <a
+          key={l.href}
+          href={l.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="case-chip inline-flex items-center gap-1 text-[10px] font-semibold tracking-wide px-2 py-[3px] rounded-full border"
+          style={
+            {
+              color: l.color,
+              borderColor: l.color + "4d",
+              background: l.color + "12",
+              "--c": l.color,
+            } as React.CSSProperties
+          }
+        >
+          {l.label}
+          <ArrowUpRight />
+        </a>
+      ))}
+    </div>
   );
 }
 
@@ -236,48 +300,229 @@ const projects = [
   },
 ];
 
-const roles = [
+// Case-study colours reused by the experience links so a role points at the
+// published work it produced.
+const CS = {
+  workos: "#F5A524",
+  pip: "#6366f1",
+  def: "#10b981",
+  arch: "#f43f5e",
+  exp: "#f59e0b",
+  supply: "#06b6d4",
+  rank: "#8b5cf6",
+  cost: "#f97316",
+};
+
+type Position = { title: string; period: string; impact?: string[]; links?: CaseLink[] };
+type Role = { org: string; logo?: string; location?: string; positions: Position[] };
+
+const roles: Role[] = [
   {
     org: "Just Move In",
     logo: "https://www.google.com/s2/favicons?domain=justmovein.com&sz=64",
-    positions: [{ title: "Product Manager", period: "2026 - present" }],
+    location: "United Kingdom",
+    positions: [
+      {
+        title: "Product Manager",
+        period: "2026 - present",
+        impact: [
+          "Own product end to end for a **16K-moves/month** B2B2C marketplace: roadmap, analytics, experimentation and CRM.",
+          "Built the first funnel analytics for the largest revenue channel, joining **1.4M+ call records** to **880K+ moves** and reconciling to finance within **0.1%**.",
+          "Leading the HubSpot service migration on **9 AI classification and routing workflows** (**94% precision**, **80% of tickets zero-touch**), absorbing **2.8× volume at flat headcount**.",
+        ],
+        links: [{ label: "Claude-ing WorkOS", href: "https://claude-ing.vercel.app", color: CS.workos }],
+      },
+    ],
   },
   {
     org: "Optimizely",
     logo: "https://www.google.com/s2/favicons?domain=optimizely.com&sz=64",
+    location: "Hybrid · Dhaka",
     positions: [
-      { title: "Analytics Engineer, Product", period: "2024 - 2026" },
-      { title: "Sr. Analyst, Go-To-Market", period: "2023 - 2024" },
+      {
+        title: "Analytics Engineer, Product",
+        period: "2024 - 2026",
+        impact: [
+          "Delivered the system of record for product metrics: **1.2M+ daily events** across **10+ SaaS products**, governed by an **8-step event-gating process**.",
+          "Cut annual churn **$5M** with models over **500K+ users**, briefed quarterly to the CEO and Insight Partners; NLP agents removed **85% of ad-hoc analyst requests**.",
+          "Set the frequentist and Bayesian experimentation standard behind ship/kill calls, including a 5K-impression gate at **80% power**.",
+        ],
+        links: [
+          { label: "Product Intelligence", href: "https://product-intelligence-platform.vercel.app", color: CS.pip },
+          { label: "Data Engineering", href: "https://data-engineering-foundation.vercel.app", color: CS.def },
+          { label: "Systems Architecture", href: "https://systems-architecture.vercel.app", color: CS.arch },
+          { label: "Experimentation Science", href: "https://experimentation-science.vercel.app", color: CS.exp },
+        ],
+      },
+      {
+        title: "Sr. Analyst, Go-To-Market",
+        period: "2023 - 2024",
+        impact: [
+          "Set C-suite KPI targets by forecast, delivering **12% YoY ARR growth** at **+7% over benchmark**, and cut leadership decision time **30%** with real-time Power BI over a **$50M+ pipeline**.",
+        ],
+      },
+      {
+        title: "Sr. Analyst, Pricing Strategy & Operations",
+        period: "2023",
+        impact: [
+          "Re-priced a global DXP serving **100K+ B2B customers** from freemium to pay-per-use over **15+ A/B tests**: **40% gross margin** hit, **LTV +28%**, **$12M upsell** unlocked.",
+        ],
+      },
+    ],
+  },
+  {
+    org: "Coto",
+    logo: "https://www.google.com/s2/favicons?domain=coto.world&sz=64",
+    location: "Remote · Part-time",
+    positions: [
+      {
+        title: "Analytics Consultant",
+        period: "2024 - 2025",
+        impact: [
+          "Improved expert quality **23%** across **3M+ consultations** with a TOPSIS ranking model scoring **500+ expert partners**.",
+          "Held **95% supply retention** through scale-up with a dynamic pay engine: **30-90% revenue-share bands** plus performance multipliers.",
+        ],
+        links: [
+          { label: "Rank, Reward, Retain", href: "https://rank-reward-retain.vercel.app", color: CS.rank },
+          { label: "Demand Exceeds Supply", href: "https://when-demand-exceeds-supply.vercel.app", color: CS.supply },
+        ],
+      },
     ],
   },
   {
     org: "foodpanda",
     logo: "https://www.google.com/s2/favicons?domain=foodpanda.com&sz=64",
-    positions: [{ title: "Assistant Manager, Logistics & Analytics", period: "2021 - 2023" }],
+    location: "Dhaka, Bangladesh",
+    positions: [
+      {
+        title: "Assistant Manager, Logistics & Analytics",
+        period: "2021 - 2023",
+        impact: [
+          "Owned last-mile operations for **2M+ monthly orders** across 5 verticals; ML fleet forecasting compounded **3% monthly KPI gains** at **75%+ on-time** delivery.",
+          "Generated **€100K+/mo incremental revenue** and **+21% basket size** with surge pricing across **64 cities**; raised a **16K-rider fleet's** performance **20%**.",
+        ],
+        links: [{ label: "Cost-Benefit Optimization", href: "https://cost-benefit-optimization.vercel.app", color: CS.cost }],
+      },
+    ],
   },
   {
     org: "InsideMaps",
     logo: "https://www.google.com/s2/favicons?domain=insidemaps.com&sz=64",
-    positions: [{ title: "Product Analyst", period: "2020 - 2021" }],
+    location: "Mountain View, CA",
+    positions: [
+      {
+        title: "Product Analyst",
+        period: "2020 - 2021",
+        impact: [
+          "Cut operating costs **$150K/yr** and raised project completion **20%** with a MongoDB asset store and search engine over **10K+ HVAC assets**.",
+          "Improved project efficacy **27%** leading quality control across **120 offshore operators** for 3D-tour delivery.",
+        ],
+      },
+    ],
   },
   {
     org: "Wells Fargo",
     logo: "https://www.google.com/s2/favicons?domain=wellsfargo.com&sz=64",
-    positions: [{ title: "Accounting Operations Specialist", period: "2019 - 2020" }],
+    location: "Minneapolis, MN",
+    positions: [
+      {
+        title: "Accounting Operations Specialist",
+        period: "2019 - 2020",
+        impact: [
+          "Processed **$600M+ in monthly transactions**, resolved carrier commission discrepancies and cut cash loss **2%** through weekly client leadership reviews.",
+        ],
+      },
+    ],
   },
   {
     org: "Apple",
     logo: "https://www.google.com/s2/favicons?domain=apple.com&sz=64",
-    positions: [{ title: "Product Specialist", period: "2019" }],
+    location: "Minneapolis, MN",
+    positions: [
+      {
+        title: "Product Specialist",
+        period: "2019",
+        impact: [
+          "Genius Bar front line: advised and sold to customers, then set up, migrated and secured their devices.",
+        ],
+      },
+    ],
   },
 ];
 
-// Skills grouped by domain, each group shares a shining colour
+// University of Minnesota, Morris - the jobs held alongside the dual degree.
+type CampusRole = { title: string; period: string; detail: string; links?: CaseLink[] };
+
+const campusRoles: CampusRole[] = [
+  {
+    title: "Undergraduate Research Assistant",
+    period: "2016 - 2019",
+    detail:
+      "Four projects across probability, econometrics and biostatistics, funded by an HHMI grant and UROP twice: directional dependence through order statistics and copulas, conditional cash transfers and maternal health in Bangladesh, and survey-weighted models of NHANES cognitive testing.",
+    links: [
+      { label: "Directional Dependence", href: "https://research-directional-dependence.vercel.app", color: "#a855f7" },
+      { label: "Copulas", href: "https://research-copulas-directional-depend.vercel.app", color: "#14b8a6" },
+      { label: "NHANES Cognition", href: "https://research-nhanes-cognitive.vercel.app", color: "#0ea5e9" },
+    ],
+  },
+  {
+    title: "Research Analyst",
+    period: "2018 - 2019",
+    detail:
+      "Primary socio-economic data on 100+ Native American artists for a non-profit, grant proposals and a 50-town housing database for the Minnesota Chamber of Commerce, and clinical survey design with survival analysis for an anti-trafficking organisation.",
+  },
+  {
+    title: "Residence Hall Director",
+    period: "2018 - 2019",
+    detail: "Ran hall operations and supervised the resident advisor staff, owning policy and student development programming.",
+  },
+  {
+    title: "Teaching Assistant, Economics",
+    period: "2016 - 2017",
+    detail: "Principles of Microeconomics, Microeconomic Theory and Public Economics.",
+  },
+  {
+    title: "Project Management Intern",
+    period: "2016 - 2018",
+    detail: "Co-curricular and service-learning programmes with social organisations across rural Minnesota.",
+  },
+  {
+    title: "Residence Advisor",
+    period: "2017 - 2018",
+    detail: "Floor management, student counselling and community programming.",
+  },
+  {
+    title: "International Student Liaison",
+    period: "2016 - 2017",
+    detail: "Mentored and supported incoming international students.",
+  },
+  {
+    title: "New Student Orientation Group Leader",
+    period: "2016",
+    detail: "Led small-group discussion for new students through fall orientation.",
+  },
+  {
+    title: "Student Worker, Dining Services",
+    period: "2015 - 2016",
+    detail: "Campus dining operations with Sodexo.",
+  },
+];
+
+const honors = [
+  "Winner, Undergraduate Research Poster · Twin Cities ASA Fall Research Conference",
+  "Scholar of the College Award",
+  "Faculty Assistantship",
+  "UROP recipient ×2",
+  "HHMI research grant",
+];
+
+// Skills grouped by domain, each group shares a shining colour. Every label
+// resolves to a logo or glyph in ./skill-marks.
 const skillGroups = [
   {
     label: "AI / ML",
     color: "#a78bfa", // violet
-    items: ["Agentic AI", "LLMs", "Machine Learning", "Predictive Modeling", "Prompt Engineering"],
+    items: ["Agentic AI", "Claude Code", "MCP", "LLMs", "Machine Learning", "Predictive Modeling", "Prompt Engineering"],
   },
   {
     label: "Statistics & Data Science",
@@ -287,12 +532,12 @@ const skillGroups = [
   {
     label: "Data Engineering",
     color: "#34d399", // emerald
-    items: ["Snowflake", "dbt", "Segment", "Fivetran", "Airbyte", "Data Modeling"],
+    items: ["Snowflake", "dbt", "Segment", "Fivetran", "Airbyte", "BigQuery", "PostgreSQL", "MongoDB", "Data Modeling"],
   },
   {
     label: "Product & Analytics",
     color: "#fbbf24", // amber
-    items: ["Product Analytics & Operations", "Experimentation", "Marketplace Operations", "Business Intelligence", "Mixpanel", "Power BI", "Looker", "Tableau"],
+    items: ["Product Analytics & Operations", "Experimentation", "Marketplace Operations", "Business Intelligence", "Mixpanel", "Power BI", "Looker", "Tableau", "PostHog", "HubSpot"],
   },
 ];
 
@@ -504,11 +749,14 @@ export default function Home() {
             <span key={i} className="flex items-center">
               {marqueeItems.map((item, idx) => (
                 <span key={`${i}-${idx}`} className="flex items-center gap-5 px-5">
-                  <span
-                    className="text-[11px] uppercase tracking-[0.18em] font-semibold"
-                    style={{ color: item.color, textShadow: `0 0 14px ${item.color}77, 0 0 4px ${item.color}55` }}
-                  >
-                    {item.label}
+                  <span className="flex items-center gap-2">
+                    <SkillMark name={item.label} color={item.color} size={13} />
+                    <span
+                      className="text-[11px] uppercase tracking-[0.18em] font-semibold"
+                      style={{ color: item.color, textShadow: `0 0 14px ${item.color}77, 0 0 4px ${item.color}55` }}
+                    >
+                      {item.label}
+                    </span>
                   </span>
                   <span className="text-xs" style={{ color: item.color + "66" }}>✦</span>
                 </span>
@@ -525,10 +773,10 @@ export default function Home() {
             <span className="text-[11px] font-mono text-white/40">01</span>
             <p className="text-[11px] uppercase tracking-[0.2em] text-white/55">About</p>
           </div>
-          <div className="grid md:grid-cols-2 gap-16">
+          <div className="grid md:grid-cols-2 gap-x-16 gap-y-16 items-start">
 
-            {/* Left */}
-            <div>
+            {/* Left, row 1: bio + skills */}
+            <div className="md:col-start-1 md:row-start-1">
               <p className="text-white/75 leading-relaxed mb-4 text-sm">
                 I turn empirical evidence into business growth. As a Data Scientist turned Product Manager, I&apos;ve orchestrated multimillion-dollar revenue gains: the pricing and packaging models, the incentive frameworks that move customers and partners, and the decision systems that tell a business its next move and the reason behind it.
               </p>
@@ -547,7 +795,7 @@ export default function Home() {
                         return (
                           <span
                             key={s}
-                            className="skill-pill text-[11px] px-3 py-1.5 rounded-full border font-medium"
+                            className="skill-pill inline-flex items-center gap-1.5 text-[11px] pl-2 pr-3 py-1.5 rounded-full border font-medium"
                             style={
                               {
                                 color: c,
@@ -559,6 +807,7 @@ export default function Home() {
                               } as React.CSSProperties
                             }
                           >
+                            <SkillMark name={s} color={c} />
                             {s}
                           </span>
                         );
@@ -569,20 +818,23 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right */}
-            <div>
+            {/* Right, spanning both rows: experience */}
+            <div className="md:col-start-2 md:row-start-1 md:row-span-2">
               <p className="text-[11px] uppercase tracking-[0.2em] text-white/50 mb-7">Experience</p>
-              <div className="space-y-7 mb-12">
+              <div className="space-y-8">
                 {roles.map((company) => (
                   <div key={company.org} className="group/exp border-l border-white/10 pl-5">
-                    <div className="flex items-center gap-2.5 mb-2.5">
+                    <div className="flex items-center gap-2.5 mb-1">
                       {company.logo && (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img src={company.logo} alt={company.org} width={20} height={20} className="logo-glow rounded-sm object-contain flex-shrink-0" />
                       )}
                       <p className="exp-name text-sm font-bold">{company.org}</p>
+                      {company.location && (
+                        <span className="text-[10px] text-white/35 tracking-wide">{company.location}</span>
+                      )}
                     </div>
-                    <div className={`space-y-3 ${company.positions.length > 1 ? "relative pl-5" : ""}`}>
+                    <div className={`space-y-4 mt-3 ${company.positions.length > 1 ? "relative pl-5" : ""}`}>
                       {company.positions.length > 1 && (
                         <div
                           className="absolute left-1 top-2 bottom-2 w-px border-l border-dashed"
@@ -602,22 +854,41 @@ export default function Home() {
                           )}
                           <p className="exp-title text-sm font-medium leading-snug">{pos.title}</p>
                           <p className="text-xs text-white/45 mt-0.5">{pos.period}</p>
+                          {pos.impact && (
+                            <ul className="mt-2 space-y-1.5">
+                              {pos.impact.map((line) => (
+                                <li key={line} className="flex gap-2 text-[11.5px] leading-relaxed text-white/55">
+                                  <span
+                                    className="mt-[6px] w-[3px] h-[3px] rounded-full flex-shrink-0"
+                                    style={{ background: "#a5b4fc", boxShadow: "0 0 6px #818cf8" }}
+                                  />
+                                  <span>
+                                    <Impact text={line} />
+                                  </span>
+                                </li>
+                              ))}
+                            </ul>
+                          )}
+                          {pos.links && <CaseLinks links={pos.links} />}
                         </div>
                       ))}
                     </div>
                   </div>
                 ))}
               </div>
+            </div>
+            {/* Left, row 2: education and the jobs held alongside the degree */}
+            <div className="md:col-start-1 md:row-start-2">
+              <p className="text-[11px] uppercase tracking-[0.2em] text-white/50 mb-7">Education</p>
 
-              <p className="text-[11px] uppercase tracking-[0.2em] text-white/50 mb-6">Education</p>
               <div className="border-l border-white/10 pl-5">
-                <p className="text-sm font-semibold text-white/95">University of Minnesota</p>
-                <div className="flex items-center gap-2 mt-1">
+                <div className="flex items-center gap-2.5">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img src="https://www.google.com/s2/favicons?domain=umn.edu&sz=64" alt="UMN" width={16} height={16} className="rounded-sm object-contain flex-shrink-0" style={{ opacity: 0.75 }} />
-                  <p className="text-sm text-white/65">Bachelor&apos;s</p>
+                  <img src="https://www.google.com/s2/favicons?domain=umn.edu&sz=64" alt="University of Minnesota" width={20} height={20} className="logo-glow rounded-sm object-contain flex-shrink-0" />
+                  <p className="exp-name text-sm font-bold">University of Minnesota</p>
                 </div>
-                <div className="relative mt-2 pl-4">
+                <p className="text-xs text-white/45 mt-1.5">B.S. dual major · Morris, Minnesota · 2015 - 2019</p>
+                <div className="relative mt-3.5 pl-4">
                   <div
                     className="absolute left-[3px] top-2 bottom-2 w-px"
                     style={{ background: "linear-gradient(to bottom, #fcd34d, #f59e0b)", opacity: 0.7 }}
@@ -637,6 +908,39 @@ export default function Home() {
                         }
                       />
                       <p className={`text-xs ${item.minor ? "text-amber-200/55" : "text-amber-100/85"}`}>{item.label}</p>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex flex-wrap gap-1.5 mt-4">
+                  {honors.map((h) => (
+                    <span
+                      key={h}
+                      className="text-[10px] leading-relaxed px-2 py-[3px] rounded-full border border-amber-300/25 bg-amber-400/[0.07] text-amber-100/70"
+                    >
+                      {h}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <p className="text-[10px] uppercase tracking-[0.18em] text-white/40 mt-9 mb-4">
+                Nine roles held alongside the degree
+              </p>
+              <div className="relative pl-5 border-l border-white/10">
+                <div className="space-y-4">
+                  {campusRoles.map((role) => (
+                    <div key={role.title} className="relative">
+                      <span
+                        className="glow-dot absolute -left-[23px] top-[6px] w-1.5 h-1.5 rounded-full ring-2 ring-[#0a0a0f]"
+                        style={{ background: "#c7d2fe", boxShadow: "0 0 8px #818cf8cc" }}
+                      />
+                      <div className="flex flex-wrap items-baseline gap-x-2.5">
+                        <p className="text-[13px] font-medium text-white/85">{role.title}</p>
+                        <p className="text-[11px] text-white/40">{role.period}</p>
+                      </div>
+                      <p className="text-[11.5px] leading-relaxed text-white/50 mt-1">{role.detail}</p>
+                      {role.links && <CaseLinks links={role.links} />}
                     </div>
                   ))}
                 </div>
