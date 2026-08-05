@@ -14,6 +14,10 @@ export type Article = {
   color: string;
   cover: string;
   coverAlt: string;
+  /** Card image on /writing. Falls back to `cover` when absent. */
+  thumb?: string;
+  /** True when the body already opens with the cover, so the hero is skipped. */
+  coverInBody?: boolean;
   links?: ArticleLink[];
 };
 
@@ -32,6 +36,8 @@ export const articles: Article[] = [
     cover: "/writing/ten-years-of-statistical-computing/cover.png",
     coverAlt:
       "Four independent samples of 1,400 draws from one distribution, plotted as histograms, with the density they all came from laid over the top",
+    thumb: "/writing/ten-years-of-statistical-computing/thumb.png",
+    coverInBody: true,
   },
   {
     slug: "the-invisible-hand",

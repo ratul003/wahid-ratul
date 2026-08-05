@@ -82,22 +82,24 @@ export default async function ArticlePage({
           <p className="text-lg sm:text-xl text-white/60 leading-snug">{a.subtitle}</p>
         </header>
 
-        {/* cover */}
-        <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden border border-white/[0.08] mb-4">
-          <Image
-            src={a.cover}
-            alt={a.coverAlt}
-            fill
-            priority
-            sizes="(max-width: 768px) 100vw, 768px"
-            className="object-cover"
-            style={{ objectPosition: "50% 40%" }}
-          />
-          <div
-            className="absolute inset-x-0 top-0 h-px"
-            style={{ background: `linear-gradient(90deg, transparent, ${a.color}77, transparent)` }}
-          />
-        </div>
+        {/* cover (skipped when the body already opens with it) */}
+        {!a.coverInBody && (
+          <div className="relative w-full aspect-[16/9] rounded-xl overflow-hidden border border-white/[0.08] mb-4">
+            <Image
+              src={a.cover}
+              alt={a.coverAlt}
+              fill
+              priority
+              sizes="(max-width: 768px) 100vw, 768px"
+              className="object-cover"
+              style={{ objectPosition: "50% 40%" }}
+            />
+            <div
+              className="absolute inset-x-0 top-0 h-px"
+              style={{ background: `linear-gradient(90deg, transparent, ${a.color}77, transparent)` }}
+            />
+          </div>
+        )}
 
         {/* body */}
         <div

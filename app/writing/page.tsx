@@ -47,12 +47,12 @@ export default function WritingIndex() {
             >
               <div className="absolute inset-0 pointer-events-none">
                 <Image
-                  src={a.cover}
+                  src={a.thumb ?? a.cover}
                   alt={a.coverAlt}
                   fill
                   sizes="(max-width: 768px) 100vw, 50vw"
                   className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                  style={{ objectPosition: "50% 40%" }}
+                  style={{ objectPosition: a.thumb ? "50% 50%" : "50% 40%" }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/45 to-transparent" />
                 <div
