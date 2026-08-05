@@ -1,0 +1,198 @@
+<figure>
+  <img src="/writing/ten-years-of-statistical-computing/cover.png" alt="Four independent samples of 1,400 draws from one distribution, plotted as histograms, with the density they all came from laid over the top. The numbers move. The shape does not.">
+</figure>
+
+<h2>The silent decade</h2>
+
+<p>For ten years I was very good at mathematics that meant nothing.</p>
+
+<p>Twelve years at an international school in Dhaka, under the Edexcel curriculum, which means I didn't learn mathematics so much as sit examinations about it. Algebra, then differentiation, then integration. Vectors, matrices, standard deviation. Trigonometry until the identities were reflexes. Thousands of pages of past papers, worked and re-worked, until my hand knew the shape of an answer before my head did.</p>
+
+<p>All of it was silent. That is the only word I have. The mathematics never pushed back, never surprised me, never told me anything I didn't already know was coming. The closest thing to application was a ladder leaning against a wall, and even the ladder was fake. Nobody was ever going to fall off it.</p>
+
+<p>Then I moved to Minnesota, where for a year the most quantitative thing I did was work in a dining hall.</p>
+
+<p>I should be accurate about that stretch, because I have a habit of skipping it. Across four years I held nine jobs alongside the degree: dining services, orientation leader, liaison for incoming international students, teaching assistant for three economics courses, a project management internship, resident advisor, hall director, and research on top of it. I didn't do nine jobs because I was industrious. I did nine jobs because that was the arithmetic.</p>
+
+<p>Nobody warns you that the quiet part of studying abroad is the low arithmetic running underneath everything, all the time.</p>
+
+<h2>The class</h2>
+
+<figure>
+  <img src="/writing/ten-years-of-statistical-computing/transcript-stat2501.png" alt="Transcript line: F 16, 4STAT2501, 4.0 credits, B+, Prob &amp; Stochastic Processes">
+  <figcaption>It reads: F 16, meaning Fall 2016. Course 2501, Probability and Stochastic Processes. Four credits. B plus.</figcaption>
+</figure>
+
+<p>The first thing I ever made a computer do with mathematics was draw a histogram of numbers that didn't exist.</p>
+
+<p>The instruction was to simulate rather than solve, which I didn't register as a distinction at the time. Generate a few thousand draws, then look at what you got. I remember thinking it was a strange assignment, because there was nothing to work out. I typed the line and pressed enter expecting an answer, since for ten years pressing enter on mathematics had produced one.</p>
+
+<p>What came back was a picture. Lopsided, ragged along the top, heavier in the middle than at either end. It looked less like a result than like weather.</p>
+
+<p>So I ran it again, mostly because I assumed I'd done it wrong. The picture changed. Not much, but visibly: a bar shorter here, a longer tail there. I ran it a third time and a fourth. The numbers underneath came out different every time, and the shape stayed exactly where it was.</p>
+
+<p>That's the whole thing, and it took me most of the semester to see why it mattered. The shape was the real object, and every individual number was just one draw from it. For ten years a question had one right value and my job was to produce it. Now the answer was a region you had to hold rather than a value you could write down. The class got harder from there, hence the B plus.</p>
+
+<p>I never really went back. Once you've seen the shape, a single number starts to look like a claim rather than a fact. I didn't know it then, but that reflex would turn out to be the most durable thing I own. Ten years later the machines can produce any number you ask for, faster and cheaper than I ever could. What they cannot do is doubt one.</p>
+
+<p>The textbook was Ross, <em>Introduction to Probability Models</em>, and the catalog description ended like this:</p>
+
+<blockquote>
+  <p>Markov chains, Poisson processes, birth and death processes, and queuing theory.</p>
+</blockquote>
+
+<p>Hold that sentence. I will come back for it in about five years.</p>
+
+<h2>Learning to lose</h2>
+
+<p>That class turned into three years of research, and research is where the instinct actually got built.</p>
+
+<p>The project that did it was about my own country: whether conditional cash transfers had improved maternal health outcomes in Bangladesh, using propensity score matching on twenty years of national survey data. That means pairing each woman who received the transfer with one who didn't but otherwise looked the same on paper, so the comparison is closer to fair. Women who'd already given birth, in places I'd been, under a policy that had already happened. Nothing about it could be re-run.</p>
+
+<p>That's when I understood what the method is for. Matching isn't a clever trick for making groups comparable. It's an argument that the mothers who received the transfer and the mothers who didn't were alike in every way that mattered, and the argument can be wrong, and if it's wrong you publish a number saying a programme worked when it didn't.</p>
+
+<p>The other two projects taught me the same thing more cheaply. My algorithm for detecting directional dependence found a signal under one distribution and nothing under another. A cognitive model dropped race and age as predictors because they weren't significant, however much I wanted them to be. Three years, one recurring lesson: being willing to say the answer isn't there turns out to be most of the job.</p>
+
+<figure>
+  <img src="/writing/ten-years-of-statistical-computing/viz-research.png" alt="A map from the first simulation in Fall 2016 into four research strands, with the method and the lasting lesson of each.">
+</figure>
+
+<figure>
+  <img src="/writing/ten-years-of-statistical-computing/research-poster-group.jpg" alt="Poster session, October 2017. Other faces blurred for privacy.">
+  <figcaption>American Statistical Association Fall '17 Research Conference.</figcaption>
+</figure>
+
+<figure>
+  <img src="/writing/ten-years-of-statistical-computing/asa-poster-cheque.jpg" alt="The $50 cheque for co-winning a statistics poster prize, October 2017. Payer details, signatures and bank numbers removed.">
+  <figcaption>Fifty dollars for co-winning an undergraduate poster prize. Memo line: "poster co-winner."</figcaption>
+</figure>
+
+<h2>The first survey that could hurt someone</h2>
+
+<p>Then a year of research for community organisations, including a domestic violence and trafficking support service, where I designed clinical surveys and used survival analysis to see how behavioural symptoms correlated over time among survivors.</p>
+
+<p>I will not say more about that work than that. But it moved something permanently. Until then, a wrong specification cost me a grade. Here, a badly worded item meant a person answered a question I hadn't meant to ask, about the worst thing that had happened to them, for nothing.</p>
+
+<p>Rigour stopped being an academic value that week. It is the minimum decency you owe someone who hands you their data.</p>
+
+<h2>The abstractions had a payroll</h2>
+
+<p>I graduated in 2019 into a labour market that was, by the numbers, <a href="https://www.commerce.nc.gov/blog/2022/09/29/recession-scarring-college-graduates-entering-labor-market-during-downturn" target="_blank" rel="noopener">about as good as it gets</a>: roughly 1.2 jobseekers per opening. I sold iPhones at a Genius Bar, then spent a year in accounting operations making two columns match. There's a specific quiet in being twenty-two, holding a degree in inference, and being paid to check that things add up.</p>
+
+<p>By 2021 I was back in Dhaka.</p>
+
+<p>I want to be careful how I say that, because the honest version holds two things at once. Coming home was a relief. It was also not a decision.</p>
+
+<p>My right to be in the country was one year of practical training, and then an extension I'd applied for on the strength of a statistics degree. Both of those are attached to an employer. When the company's operations shut down, the paperwork stopped meaning anything, and there's nothing in that process to appeal to. I packed up an apartment in California and flew home. Nobody involved was unkind about it. It just closed.</p>
+
+<p>And I couldn't really talk about any of it at home, because I was the only employed person in my family. That's a particular kind of solitude. The people closest to you are depending on the thing you're afraid of losing, so the conversation you actually need is the one conversation you can't start. They were proud of me. They had no way to relate to what it cost.</p>
+
+<p>Then the work turned out to be the best I'd done: last-mile logistics for a delivery marketplace, two million orders a month, sixteen thousand riders, sixty-four cities.</p>
+
+<p>Now read that catalog sentence again. Orders arriving at a dispatch system are a Poisson process: things turning up at random but at a knowable average rate. Riders logging on and off are a birth and death process, a population gaining and losing members while you watch. Dispatch is a queue. And order stacking, the biggest analytical fight of my early career, is a batching policy on that queue.</p>
+
+<p>Four abstractions I'd learned in a classroom to pass an examination, each with a payroll attached.</p>
+
+<p>I didn't apply that course to that job. I was handed the job the course had been about, and it took me years to notice.</p>
+
+<h2>Nobody taught me any of this</h2>
+
+<p>Here is the part of the decade no syllabus covered.</p>
+
+<p>A statistics degree teaches you to answer a question once a clean dataset exists. Which is, I think, maybe a third of the job. It doesn't teach you where the dataset comes from, how to move it, or how to build the thing people read the answer on. In 2021 I could fit a survey-weighted model and couldn't have told you what a star schema was.</p>
+
+<p>So I taught myself, in the order the jobs demanded it. SQL, then Excel, then Power BI, then a data engineering track, then dbt and Segment and the warehouse. Certificates nobody asked me for, taken in the evenings between shifts of the work that actually needed them. That sounds more organised than it was.</p>
+
+<p>I did it three times over, not gracefully. BigQuery and Tableau at the delivery marketplace, where dashboards refreshed the next day so every decision was made on yesterday. Snowflake and dbt at the enterprise software company. Now an AI-native layer wired across production systems, answering people in the flow of their work instead of making them wait on me.</p>
+
+<p>Each era's tools abolished the previous era's hardest labour, and I wouldn't go back to any of them. But not one removed the part where somebody has to decide whether the number is true.</p>
+
+<figure>
+  <img src="/writing/ten-years-of-statistical-computing/viz-decade.png" alt="Six eras from 2016 to 2026. The blocks are what the tools of each era still couldn&#x27;t do, shrinking over time, above a band showing that deciding whether a number is true never got cheaper.">
+</figure>
+
+<p>The 2026 row is the one I find most telling. The bottleneck is no longer computing anything. It's a definition file a human has to be right about, and when that file is wrong everything downstream is confidently, fluently wrong.</p>
+
+<figure>
+  <img src="/writing/ten-years-of-statistical-computing/viz-portfolio.png" alt="Eight case studies from the decade: analytics platforms, data engineering, experimentation, marketplace pricing and incentive design, and an AI-native operating layer.">
+</figure>
+
+<p>Each one is written up in full if you want the working rather than the summary: the <a href="https://product-intelligence-platform.vercel.app" target="_blank" rel="noopener">product intelligence platform</a>, the <a href="https://data-engineering-foundation.vercel.app" target="_blank" rel="noopener">data engineering foundation</a> underneath it, the <a href="https://experimentation-science.vercel.app" target="_blank" rel="noopener">experimentation framework</a>, the <a href="https://systems-architecture.vercel.app" target="_blank" rel="noopener">architecture decisions</a>, the marketplace work on <a href="https://when-demand-exceeds-supply.vercel.app" target="_blank" rel="noopener">demand and supply</a>, <a href="https://rank-reward-retain.vercel.app" target="_blank" rel="noopener">partner incentives</a> and <a href="https://cost-benefit-optimization.vercel.app" target="_blank" rel="noopener">order assignment</a>, and the <a href="https://claude-ing.vercel.app" target="_blank" rel="noopener">AI operating layer</a>.</p>
+
+<h2>Fewer than you want</h2>
+
+<p><strong>Then 2022.</strong> Russia invaded Ukraine, fuel prices rose everywhere, and in Bangladesh that became <a href="https://thediplomat.com/2022/08/bangladesh-tightens-its-belt-as-forex-crisis-looms/" target="_blank" rel="noopener">a currency crisis</a>: the taka sliding from roughly 85 to the dollar in May to about 112 by August, inflation peaking at 9.52 percent.</p>
+
+<p>If you've never watched your currency lose a quarter of its value in a summer, the surprising part is how administrative it feels. There's no dramatic day. Prices just stop making sense, slowly, and everyone adjusts their arithmetic and carries on.</p>
+
+<p>I should stop, because I can feel myself making that sound orderly, and it wasn't. The money in my country was coming apart. People I knew were doing sums at the end of every week that had worked fine the week before. And I was in an office with the air conditioning on, building a model about whether to put one more insulated bag on the back of one more motorbike.</p>
+
+<p>Some days that felt like the most useful thing I could possibly be doing with a statistics degree, genuinely. Some days it felt obscene. I did not resolve it then and I have not resolved it since, and I notice I got this far into telling you about a decade of my life without once saying it out loud.</p>
+
+<p>Inside a delivery company that shock arrives as a cost mandate, and by the time it reached my desk it was one question: <strong>how many orders should a rider carry at once?</strong> Stack more and cost per delivery drops immediately, on the exact line leadership is measured against. Everything about the incentive pointed one way.</p>
+
+<p>On a dashboard that parameter is a percentage. On the road it's a man on a motorbike in Dhaka traffic with three insulated bags strapped behind him, in the rain, deciding which of three people gets a hot meal and which two get an apology. He doesn't know a spreadsheet in another country moved a number last week. He knows his acceptance rate is watched, and that the second address is nine minutes further than the app implied.</p>
+
+<p>But the number felt wrong before I could show it was wrong, which is the whole subject of this essay, and this is the first time it earned its keep.</p>
+
+<p>So I ran the regression. Twenty-seven variables. The result was almost funny in how badly it contradicted the brief: the rider cost we were trying to cut barely responded at all, while delivery time and satisfaction responded strongly, in the directions nobody wanted.</p>
+
+<figure>
+  <img src="/writing/ten-years-of-statistical-computing/viz-stacking.png" alt="What order stacking actually moved: correlation of +0.82 with delivery time, -0.78 with customer satisfaction, and only -0.19 with the rider cost we were trying to cut.">
+</figure>
+
+<p>So the honest answer to a cost-cutting programme was: fewer than you want.</p>
+
+<p>I rehearsed that sentence before I said it. I'm not proud of how long I spent deciding whether to soften it, or of the second version I had ready in case the room turned, which put the same finding in language vague enough that nobody would have had to act on it. I never used that version. But I wrote it first, and I still think about that.</p>
+
+<p>It became national dispatch policy.</p>
+
+<p>A war 4,000 miles away became a fuel price, then a regional cost mandate, then a parameter in a dispatch algorithm, then somebody's dinner arriving cold. Statistics is the last translation layer before geopolitics reaches a person's front door.</p>
+
+<h2>The time it didn't fire</h2>
+
+<p>I'd rather end on that story, which is why I won't.</p>
+
+<p>Earlier this year I found core marketing campaigns reporting healthy performance against conversion goals set to null. Nothing was broken. No dashboard was red. No alert fired. They'd been running that way for weeks inside a system I owned, and I only caught it while reading the configuration for an unrelated reason.</p>
+
+<p>Nobody wrote a false number. The false number wrote itself.</p>
+
+<p>Honestly, the bug isn't the part that bothers me. Bugs are ordinary. What bothers me is that I'm the person who builds the trust layer. I'd written the governance for the events feeding our metrics and argued for the review gate, and I'd built exactly none of that for the goals those metrics were measured against, because it didn't occur to me that a goal is also a definition.</p>
+
+<p>For weeks the reports were fluent and confident and empty, and people planned against them. The flinch fires on numbers you're looking at. I'd stopped looking there, because I'd decided that part was solved.</p>
+
+<p>That is the honest limit of the thing this essay is about. It is not a superpower. It's a habit, and habits have blind spots exactly where you have stopped paying attention.</p>
+
+<p>If you do this work you've been in that room too. The only thing I have that helps is to make the number checkable before anyone has a stake in it: agree the threshold while everyone's still relaxed, tie the output to a figure somebody else owns. Do that early and the honest answer defends itself later, when you're tired and outnumbered and it's Thursday.</p>
+
+<h2>The thing I automated was me</h2>
+
+<p>I now spend most of my time on the other side of this, building the systems that decide what an organisation is allowed to believe is true. Last year I wired an AI layer across fifteen production systems so people could stop waiting on me for answers. It removed about 85 percent of the requests that used to be my job.</p>
+
+<p>Here is the part I would rather not write down. I was good at the thing I automated, and being needed for it was most of how I understood my own worth. I removed it deliberately, argued for it in meetings, and then put it on my résumé. There are weeks now when I can't tell whether I made myself more valuable or simply harder to replace. Those aren't the same thing, and only one of them is about the work.</p>
+
+<h2>What the drilling was for</h2>
+
+<p>So what did ten years of past papers buy me, in a year when a model does the integral in 900 milliseconds and formats it nicely?</p>
+
+<p>Not speed. It never bought speed. Not the formulas either, which I've mostly forgotten.</p>
+
+<p>It bought a flinch.</p>
+
+<p>A number comes across the screen and something goes wrong in my chest before I can say why. The rate is too round. The lift is enormous and the sample is small. Two systems agree a little too perfectly, which usually means one is reading the other. That flinch is the compressed residue of thousands of problems I got wrong and had to find out where. Closer to a reflex than to knowledge, honestly, and the only professional asset I have that hasn't depreciated in ten years.</p>
+
+<p>Everything downstream of it is automated now, and good. I'd rather write a prompt than a for-loop. But plausible analyses now arrive faster than anyone can check them, which makes the flinch more valuable, not less.</p>
+
+<h2>Where I am today</h2>
+
+<p>I gave this my entire twenties. The dining hall shifts before I knew what I wanted. The research years, unpaid, where I learned to want a true answer more than a good one. The graduation into a market that closed behind me. Coming home to find my own country's currency coming apart while I sat in an office being asked to make deliveries cheaper.</p>
+
+<p>For most of those years the work paid nothing. The first time anyone paid me directly for statistics it was fifty dollars, handwritten, memo line "poster co-winner". I did it because it fed something a grade couldn't reach.</p>
+
+<p>I should be precise about the money, since this essay is full of large numbers. I've built models that took millions of dollars of churn out of a business and re-priced a portfolio serving a hundred thousand customers, and I lived paycheque to paycheque until a few years ago. Both of those are true at the same time. Nobody tells you that you can be the person in the room who knows what the number means and still be doing arithmetic in the supermarket on the way home.</p>
+
+<p>Ten years later the same instinct pays for a comfortable life. Not a fortune. A life: a home, choices, the ability to say no. It took the entire decade to get there.</p>
+
+<p>Some days building the machinery feels like the most leveraged thing a person can do. Some days it feels like I talked myself out of the part I loved, the part where a distribution appeared on a screen and I felt the floor move. I haven't resolved that.</p>
+
+<p>The mathematics finally made a sound. It turned out to be doubt.</p>
