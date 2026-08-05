@@ -562,7 +562,7 @@ const articles = hostedArticles.map((a) => ({
   excerpt: a.excerpt,
   href: `/writing/${a.slug}`,
   color: a.color,
-  image: a.cover,
+  image: a.thumb ?? a.cover,
   imageAlt: a.coverAlt,
 }));
 
@@ -1027,12 +1027,12 @@ export default function Home() {
               All on Medium <ArrowUpRight />
             </a>
           </div>
-          <div className="grid md:grid-cols-2 gap-3">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
             {articles.map((a) => (
               <Link
                 key={a.title}
                 href={a.href}
-                className="group relative flex flex-col rounded-xl border border-white/[0.08] overflow-hidden min-h-[420px] hover:border-white/[0.2] hover:-translate-y-0.5 transition-all duration-300 ease-out"
+                className="group relative flex flex-col rounded-lg border border-white/[0.07] overflow-hidden min-h-[250px] hover:border-white/[0.15] hover:scale-[1.03] hover:-translate-y-1 transition-all duration-300 ease-out"
               >
                 {/* Sketched photo background, sitting inside the card box */}
                 <div className="absolute inset-0 pointer-events-none">
@@ -1043,21 +1043,20 @@ export default function Home() {
                     className="maradona-sketch object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                     style={{ objectPosition: "50% 40%" }}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0f] via-[#0a0a0f]/45 to-transparent" />
+                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, #0a0a0f 16%, rgba(10,10,15,0.82) 52%, rgba(10,10,15,0.42) 100%)" }} />
                   <div className="absolute inset-x-0 top-0 h-px" style={{ background: `linear-gradient(90deg, transparent, ${a.color}77, transparent)` }} />
                 </div>
 
                 {/* Content sits at the bottom, over the image */}
-                <div className="relative z-10 flex flex-col flex-1 justify-end p-6">
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="text-[10px] uppercase tracking-[0.15em] font-semibold" style={{ color: a.color }}>{a.topic}</span>
-                    <span className="text-white/30">·</span>
-                    <span className="text-[10px] text-white/55">{a.date}</span>
+                <div className="relative z-10 flex flex-col flex-1 justify-end p-3.5">
+                  <div className="flex items-center gap-2 mb-2">
+                    <span className="text-[9px] uppercase tracking-[0.12em] font-semibold leading-tight" style={{ color: a.color }}>{a.topic}</span>
+                    <span className="text-white/30 text-[9px]">·</span>
+                    <span className="text-[9px] text-white/55">{a.date}</span>
                   </div>
-                  <h3 className="text-base font-semibold text-white mb-1 leading-snug">{a.title}</h3>
-                  <p className="text-xs text-white/65 mb-4 leading-snug">{a.subtitle}</p>
-                  <p className="text-xs text-white/70 leading-relaxed">{a.excerpt}</p>
-                  <div className="mt-5 flex items-center gap-1.5 text-[11px] text-white/60 group-hover:text-white transition-colors">
+                  <h3 className="text-[13px] font-semibold text-white mb-1.5 leading-snug">{a.title}</h3>
+                  <p className="text-[11px] text-white/60 leading-relaxed line-clamp-3">{a.subtitle}</p>
+                  <div className="mt-3 flex items-center gap-1.5 text-[10px] text-white/55 group-hover:text-white/90 transition-colors">
                     <span>Read the article</span>
                     <ArrowUpRight />
                   </div>
