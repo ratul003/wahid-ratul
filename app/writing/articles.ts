@@ -24,14 +24,14 @@ export type Article = {
 export const articles: Article[] = [
   {
     slug: "ten-years-of-statistical-computing",
-    title: "10 years of Statistical Computing",
+    title: "A Decade of Statistical Computing",
     subtitle:
-      "Reflecting on a decade of highs and lows, the technological advancements behind it, and how it rewarded me professionally and spiritually.",
+      "Reflecting on a decade of highs and lows, the technological advancements behind it, and how it rewarded me professionally, spiritually, and financially.",
     topic: "Statistics · Career · AI",
     date: "August 2026",
     readTime: "15 min read",
     excerpt:
-      "Fall 2016, a four-credit probability class, and a B plus. Ten years later the machines can produce any number you ask for and still cannot doubt one. Nine jobs to pay for a degree, a visa that closed, a currency coming apart, and the one instinct that never depreciated.",
+      "Fall 2016, a four-credit probability class, and a B plus. Ten years later, the machines can produce any number you ask for and still cannot doubt one. Nine jobs to pay for a degree, a visa that closed, a currency coming apart, and the one instinct that never depreciated.",
     color: "#f43f5e",
     cover: "/writing/ten-years-of-statistical-computing/cover.png",
     coverAlt:
