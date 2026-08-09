@@ -487,31 +487,16 @@ const campusRoles: CampusRole[] = [
     period: "2016 - 2017",
     detail: "Principles of Microeconomics, Microeconomic Theory and Public Economics.",
   },
-  {
-    title: "Project Management Intern",
-    period: "2016 - 2018",
-    detail: "Co-curricular and service-learning programmes with social organisations across rural Minnesota.",
-  },
-  {
-    title: "Residence Advisor",
-    period: "2017 - 2018",
-    detail: "Floor management, student counselling and community programming.",
-  },
-  {
-    title: "International Student Liaison",
-    period: "2016 - 2017",
-    detail: "Mentored and supported incoming international students.",
-  },
-  {
-    title: "New Student Orientation Group Leader",
-    period: "2016",
-    detail: "Led small-group discussion for new students through fall orientation.",
-  },
-  {
-    title: "Student Worker, Dining Services",
-    period: "2015 - 2016",
-    detail: "Campus dining operations with Sodexo.",
-  },
+];
+
+// Sectors the experience above actually spans, shown as dot chips in About.
+const industries = [
+  { label: "Enterprise SaaS", color: "#6366f1" },
+  { label: "On-Demand Marketplaces", color: "#f97316" },
+  { label: "Home Services", color: "#2dd4bf" },
+  { label: "Insurance", color: "#8b5cf6" },
+  { label: "Accounting", color: "#10b981" },
+  { label: "Tech Retail", color: "#f43f5e" },
 ];
 
 const honors = [
@@ -779,16 +764,35 @@ export default function Home() {
             <span className="text-[11px] font-mono text-white/40">01</span>
             <p className="text-[11px] uppercase tracking-[0.2em] text-white/55">About</p>
           </div>
-          <div className="grid md:grid-cols-2 gap-x-16 gap-y-16 items-start">
+          <div className="grid md:grid-cols-2 md:grid-rows-[auto_1fr] gap-x-16 gap-y-14 items-start">
 
-            {/* Left, row 1: bio + skills */}
+            {/* Left, row 1: bio + industries + skills */}
             <div className="md:col-start-1 md:row-start-1">
               <p className="text-white/75 leading-relaxed mb-4 text-sm">
-                Usually I&apos;m the person who builds the pipeline, defines the metric, runs the experiment, and then has to defend the call. Most companies split those four jobs across four people, and the number changes meaning at every handoff. Closing that gap is the work: seven years of it across marketplaces and enterprise SaaS, and $17M+ in measured revenue impact.
+                Marketplaces taught me the operating half of this job: the pricing, incentive and dispatch calls that get made while demand is still moving. Enterprise SaaS was where I built the measurement half, from event instrumentation through to the experimentation standard product teams shipped against.
               </p>
-              <p className="text-white/75 leading-relaxed mb-10 text-sm">
-                Marketplaces taught me the operating half, the pricing, incentives and dispatch decisions that get made while demand is still moving. Enterprise SaaS was where I built the measurement half, from event instrumentation to the experimentation standard product teams shipped against. Both now run on agentic AI: an operating layer wired into 15+ production systems, and the evaluation harness that decides whether a customer-facing AI agent is good enough to ship.
+              <p className="text-white/75 leading-relaxed mb-9 text-sm">
+                Both halves now run on agentic AI. I keep an operating layer wired into 15+ production systems, so a question can go from raw event to shipped decision without leaving my hands.
               </p>
+
+              <div className="mb-9">
+                <p className="text-[9px] uppercase tracking-[0.18em] mb-2.5 font-semibold text-white/45">Industries</p>
+                <div className="flex flex-wrap gap-2">
+                  {industries.map(({ label, color }) => (
+                    <span
+                      key={label}
+                      className="inline-flex items-center gap-2 text-[11px] px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-white/65"
+                    >
+                      <span
+                        className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                        style={{ background: color, boxShadow: `0 0 7px ${color}cc` }}
+                      />
+                      {label}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
               <div className="space-y-4">
                 {skillGroups.map((g) => (
                   <div key={g.label}>
@@ -893,7 +897,7 @@ export default function Home() {
                   <img src="https://www.google.com/s2/favicons?domain=umn.edu&sz=64" alt="University of Minnesota" width={20} height={20} className="logo-glow rounded-sm object-contain flex-shrink-0" />
                   <p className="exp-name text-sm font-bold">University of Minnesota</p>
                 </div>
-                <p className="text-xs text-white/45 mt-1.5">B.S. dual major · Morris, Minnesota · 2015 - 2019</p>
+                <p className="text-xs text-white/45 mt-1.5">B.S. dual major · Minnesota, USA · 2015 - 2019</p>
                 <div className="relative mt-3.5 pl-4">
                   <div
                     className="absolute left-[3px] top-2 bottom-2 w-px"
@@ -931,7 +935,7 @@ export default function Home() {
               </div>
 
               <p className="text-[10px] uppercase tracking-[0.18em] text-white/40 mt-9 mb-4">
-                Nine roles held alongside the degree
+                Roles held alongside the degree
               </p>
               <div className="relative pl-5 border-l border-white/10">
                 <div className="space-y-4">
