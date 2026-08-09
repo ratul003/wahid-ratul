@@ -18,8 +18,8 @@
   .pwrap::after{ content:""; position:absolute; left:-7px; bottom:2px; width:22px; height:22px; border-radius:50%; background:var(--green); opacity:0.75; }
   .photo{ position:relative; z-index:1; width:104px; height:104px; object-fit:cover; object-position:center 28%; border-radius:47% 53% 56% 44% / 52% 44% 56% 48%; border:2.5px solid #fff; box-shadow:0 0 0 2px var(--mint2); }
 
-  .sh{ display:flex; align-items:center; gap:5px; margin:7px 0 3.5px; }
-  .sh:first-of-type{ margin-top:2px; }
+  .sh{ display:flex; align-items:center; gap:5px; margin:9.7px 0 3.5px; }
+  .sh:first-of-type{ margin-top:2.5px; }
   .sh .ic{ width:13px; height:13px; border-radius:4px; background:var(--mint); display:flex; align-items:center; justify-content:center; flex-shrink:0; }
   .sh .ic svg{ width:8px; height:8px; fill:none; stroke:var(--green-d); stroke-width:2.2; }
   .sh span{ font-size:7.8pt; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink); }
@@ -64,10 +64,13 @@
   .tagband{ display:inline-block; background:linear-gradient(90deg,var(--mint),#e7f6ee); border-radius:3px; padding:2.5px 8px; margin-top:4px; font-size:6.6pt; font-weight:700; letter-spacing:0.1em; text-transform:uppercase; color:var(--green-d); }
   .tagband .sep{ color:var(--green); }
 
-  .pstrip{ display:flex; align-items:center; gap:5px; margin-top:5px; font-size:6.9pt; color:var(--body); }
-  .pstrip svg{ width:10px; height:10px; fill:none; stroke:var(--green-d); stroke-width:2; flex-shrink:0; }
-  .pstrip b{ color:var(--ink); }
-  .pstrip a b{ color:var(--green-d); }
+  .pstrip{ display:flex; align-items:center; gap:7px; margin-top:5.5px; font-size:6.9pt; color:var(--body); }
+  .pstrip .pk{ font-size:5.9pt; font-weight:700; letter-spacing:0.13em; text-transform:uppercase; color:var(--green-d); white-space:nowrap; }
+  .pstrip .pr{ flex:1; height:1px; background:linear-gradient(90deg,var(--mint2),rgba(228,231,234,0)); }
+  .pstrip .pd{ white-space:nowrap; }
+  .pstrip .pd b{ color:var(--ink); font-weight:600; }
+  .pstrip .pu{ display:inline-flex; align-items:center; gap:3.5px; white-space:nowrap; font-size:6.8pt; font-weight:700; color:var(--green-d); border:1px solid var(--mint2); background:#f3faf6; border-radius:4px; padding:1px 5.5px; }
+  .pstrip .pu svg{ width:8px; height:8px; fill:none; stroke:var(--green-d); stroke-width:2.2; flex-shrink:0; }
 
   .mh{ display:flex; align-items:center; gap:6px; margin:9px 0 4px; }
   .mh .ic{ width:15px; height:15px; border-radius:4px; background:var(--mint); display:flex; align-items:center; justify-content:center; }
@@ -123,7 +126,7 @@
     <div class="ka"><div class="t"><img src="https://www.google.com/s2/favicons?domain=optimizely.com&amp;sz=64" alt="">$5M churn erased<span class="tag" style="background:#eef2ff;color:var(--indigo)">Company-wide</span></div><p>500K+ users modelled, briefed to the CEO.</p></div>
     <div class="ka"><div class="t"><img src="https://www.google.com/s2/favicons?domain=optimizely.com&amp;sz=64" alt="">$12M upsell unlocked<span class="tag" style="background:#ecfeff;color:var(--cyan)">Customer-facing</span></div><p>100K-customer DXP re-priced; LTV +28%.</p></div>
     <div class="ka"><div class="t"><img src="https://www.google.com/s2/favicons?domain=justmovein.com&amp;sz=64" alt="">2.8× work, zero new hires<span class="tag" style="background:#fffbeb;color:var(--amber)">Automation</span></div><p>94%-precision AI triage; £100-175K/yr saved.</p></div>
-    <div class="ka"><div class="t"><img src="https://www.google.com/s2/favicons?domain=foodpanda.com&amp;sz=64" alt="">€100K+/mo revenue created<span class="tag" style="background:#fff1f2;color:var(--rose)">Marketplace</span></div><p>64 cities, +21% basket, 2M+ orders/month.</p></div>
+    <div class="ka"><div class="t"><img src="https://www.google.com/s2/favicons?domain=foodpanda.com&amp;sz=64" alt="">€100K+/mo generated<span class="tag" style="background:#fff1f2;color:var(--rose)">Marketplace</span></div><p>64 cities, +21% basket, 2M+ orders/month.</p></div>
     <div class="ka"><div class="t"><img src="https://www.google.com/s2/favicons?domain=optimizely.com&amp;sz=64" alt="">85% of analyst requests gone<span class="tag" style="background:#f5f3ff;color:var(--violet)">AI-native</span></div><p>NLP agents made 70+ stakeholders self-serve.</p></div>
 
     <div class="sh"><span class="ic"><svg viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></span><span>Skills</span></div>
@@ -161,7 +164,7 @@
   <main class="main">
     <div class="name">Wahid T. Ratul</div>
     <div class="tagband">Product Manager <span class="sep">•</span> Data Scientist <span class="sep">•</span> AI Enabler <span class="sep">•</span> Marketplace Operator</div>
-    <div class="pstrip"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg><span>Every <b>↗</b> opens the work behind the number. <a href="https://wahid-ratul.vercel.app/?utm_source=resume&utm_medium=pdf"><b style="white-space:nowrap">wahid-ratul.vercel.app</b></a></span></div>
+    <div class="pstrip"><span class="pk">Selected work</span><span class="pd"><b>Ten</b> interactive case studies, each linked from the result it produced.</span><span class="pr"></span><a class="pu" href="https://wahid-ratul.vercel.app/?utm_source=resume&utm_medium=pdf"><svg viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><path d="M15 3h6v6"/><path d="M10 14L21 3"/></svg>wahid-ratul.vercel.app</a></div>
 
     <div class="mh"><span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></span><span>Experience</span></div>
 
