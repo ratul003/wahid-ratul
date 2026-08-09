@@ -327,7 +327,6 @@ const roles: Role[] = [
         period: "2026 - present",
         impact: [
           "Own product across **5 delivery teams** for a B2B2C marketplace moving **16K households a month** on energy, broadband and insurance referral commission.",
-          "Set the quality bar for the customer-facing AI agent: a judge model scores every conversation against a rubric, an **8-state outcome classifier** resolves how each one ended, and human-versus-model agreement is published as the trust metric on an adjudicated gold set.",
           "Drive the digital move journey against a **£1M ARR target in 6 months**: live deal data personalising **40K+ mover emails** at a **52.9% open rate**, with the journey redesign instrumented and A/B tested in PostHog.",
           "Built the company's first funnel analytics for phone sales, its largest revenue channel: **1.4M call records** stitched to **880K moves**, attribution covering **~90% of phone revenue**, now the agreed operational reporting cadence.",
           "Instrumented Service Ops in HubSpot behind **9 AI workflows**: **49K tickets** routed at **94% precision**, **80% closing untouched**, **2.8× the moves** at flat headcount.",
