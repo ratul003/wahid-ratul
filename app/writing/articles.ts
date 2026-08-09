@@ -66,7 +66,7 @@ export const articles: Article[] = [
       "Almost midnight, nine hours before a leadership review, I nearly walked a wrong number into the room. The story of the dependency tax, a one-person Claude Code operating layer, and the one check that separates breadth from trust.",
     color: "#F5A524",
     cover: "/writing/the-night-i-deleted-the-best-slide-in-the-deck/cover.png",
-    coverAlt: "Claude-ing — an abstract illustration of the operating setup this story is about",
+    coverAlt: "Claude-ing, an abstract illustration of the operating setup this story is about",
     links: [{ label: "Try the live demo", href: "https://claude-ing.vercel.app" }],
   },
   {
