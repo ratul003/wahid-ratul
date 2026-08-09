@@ -26,7 +26,7 @@ export const articles: Article[] = [
     slug: "ten-years-of-statistical-computing",
     title: "A Decade of Statistical Computing",
     subtitle:
-      "Ten years on from a B plus in probability. The machines can now produce any number you ask for, and still cannot doubt a single one of them.",
+      "Reflecting on a decade of highs and lows, the technological advancements behind it, and how it rewarded me professionally, spiritually, and financially.",
     topic: "Statistics · Career · AI",
     date: "August 2026",
     readTime: "15 min read",
@@ -43,7 +43,7 @@ export const articles: Article[] = [
     slug: "the-invisible-hand",
     title: "The Invisible Hand: When AI meets Market Forces",
     subtitle:
-      "Tokens got 280 times cheaper and the AI bills went up anyway. Economics has seen this before, and it has a name for what happens to the work.",
+      "The market quietly stops trading work between people and starts handing it to machines, one task at a time.",
     topic: "AI · Economics · Behavioral Economics",
     date: "July 2026",
     readTime: "11 min read",
@@ -72,8 +72,7 @@ export const articles: Article[] = [
   {
     slug: "the-game-that-outlived-empires",
     title: "The Game That Outlived Empires",
-    subtitle:
-      "Empires fell and the game did not. A century of football, politics and money, ending in a million simulations of who lifts the trophy in 2026.",
+    subtitle: "FIFA corruption, late-stage capitalism, why Germany, and who wins in 2026.",
     topic: "Football · Politics · Economics",
     date: "June 2026",
     readTime: "19 min read",
