@@ -489,14 +489,12 @@ const campusRoles: CampusRole[] = [
   },
 ];
 
-// Sectors the experience above actually spans, shown as dot chips in About.
+// Sectors worked in, each carrying the scale it was worked at.
 const industries = [
-  { label: "Enterprise SaaS", color: "#6366f1" },
-  { label: "On-Demand Marketplaces", color: "#f97316" },
-  { label: "Home Services", color: "#2dd4bf" },
-  { label: "Insurance", color: "#8b5cf6" },
-  { label: "Accounting", color: "#10b981" },
-  { label: "Tech Retail", color: "#f43f5e" },
+  { label: "Enterprise SaaS", scale: "1.2M+ events / day", color: "#6366f1" },
+  { label: "On-Demand Delivery", scale: "2M+ orders / month", color: "#f97316" },
+  { label: "Home Services", scale: "16K moves / month", color: "#2dd4bf" },
+  { label: "Expert Marketplaces", scale: "3M+ consultations", color: "#8b5cf6" },
 ];
 
 const honors = [
@@ -769,25 +767,26 @@ export default function Home() {
             {/* Left, row 1: bio + industries + skills */}
             <div className="md:col-start-1 md:row-start-1">
               <p className="text-white/75 leading-relaxed mb-4 text-sm">
-                Marketplaces taught me the operating half of this job: the pricing, incentive and dispatch calls that get made while demand is still moving. Enterprise SaaS was where I built the measurement half, from event instrumentation through to the experimentation standard product teams shipped against.
+                The domain keeps changing and the job stays the same. Ten enterprise SaaS products throwing off 1.2M+ events a day. A delivery network running 2M+ orders a month across 64 cities. A move platform handling 16K households a month. Each one needed someone to decide what counted, build the thing that counted it, and then stand behind the answer in the room where it got used.
               </p>
               <p className="text-white/75 leading-relaxed mb-9 text-sm">
-                Both halves now run on agentic AI. I keep an operating layer wired into 15+ production systems, so a question can go from raw event to shipped decision without leaving my hands.
+                These days I do that with an operating layer I built on Claude, wired into 15+ production systems across the warehouse, dbt, HubSpot, PostHog and Linear. It writes the query, ships the change, and checks the number against its source of record before I am allowed to quote it.
               </p>
 
               <div className="mb-9">
-                <p className="text-[9px] uppercase tracking-[0.18em] mb-2.5 font-semibold text-white/45">Industries</p>
+                <p className="text-[9px] uppercase tracking-[0.18em] mb-2.5 font-semibold text-white/45">Worked in</p>
                 <div className="flex flex-wrap gap-2">
-                  {industries.map(({ label, color }) => (
+                  {industries.map(({ label, scale, color }) => (
                     <span
                       key={label}
-                      className="inline-flex items-center gap-2 text-[11px] px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.03] text-white/65"
+                      className="inline-flex items-baseline gap-2 text-[11px] px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.03]"
                     >
                       <span
-                        className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                        className="w-1.5 h-1.5 rounded-full flex-shrink-0 self-center"
                         style={{ background: color, boxShadow: `0 0 7px ${color}cc` }}
                       />
-                      {label}
+                      <span className="text-white/70">{label}</span>
+                      <span className="text-[10px] font-medium" style={{ color }}>{scale}</span>
                     </span>
                   ))}
                 </div>
