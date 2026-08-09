@@ -219,7 +219,7 @@ function IconTrophy({ color }: { color: string }) {
 const projects = [
   {
     title: "Claude-ing WorkOS",
-    description: "An AI operating layer where one PM builds the whole stack — the pipeline, an MCP server, the dashboard, the experiment — with no handoff. Tiered-context Claude Code with a live IDE demo you can run session by session.",
+    description: "An AI operating layer where one PM builds the whole stack, the pipeline, an MCP server, the dashboard, the experiment, with no handoff. Tiered-context Claude Code with a live IDE demo you can run session by session.",
     color: "#F5A524",
     label: "AI Operating Layer · Personal",
     href: "https://claude-ing.vercel.app",
@@ -326,10 +326,11 @@ const roles: Role[] = [
         title: "Product Manager",
         period: "2026 - present",
         impact: [
-          "Own product end to end for a B2B2C marketplace moving **16K households a month** on energy, broadband and insurance referral commission.",
-          "Building the digital move journey against a **£1M ARR target in 6 months**: deals fetched live by API, personalising **40K+ mover emails** at a **52.9% open rate**.",
-          "Built the company's first funnel analytics for phone sales, its largest revenue channel: **1.4M call records** stitched to **880K moves**, with attribution covering **~90% of phone revenue**.",
-          "Moved Service Ops off a 28-tab spreadsheet into HubSpot ticketing behind **9 AI workflows**: **49K tickets** routed at **94% precision**, **80% closing untouched**, **2.8× the moves** at flat headcount.",
+          "Own product across **5 delivery teams** for a B2B2C marketplace moving **16K households a month** on energy, broadband and insurance referral commission.",
+          "Set the quality bar for the customer-facing AI agent: a judge model scores every conversation against a rubric, an **8-state outcome classifier** resolves how each one ended, and human-versus-model agreement is published as the trust metric on an adjudicated gold set.",
+          "Drive the digital move journey against a **£1M ARR target in 6 months**: live deal data personalising **40K+ mover emails** at a **52.9% open rate**, with the journey redesign instrumented and A/B tested in PostHog.",
+          "Built the company's first funnel analytics for phone sales, its largest revenue channel: **1.4M call records** stitched to **880K moves**, attribution covering **~90% of phone revenue**, now the agreed operational reporting cadence.",
+          "Instrumented Service Ops in HubSpot behind **9 AI workflows**: **49K tickets** routed at **94% precision**, **80% closing untouched**, **2.8× the moves** at flat headcount.",
           "Founded WorkOS, the company's agentic operating layer: Claude wired to **15+ production systems**, with SSO-gated dashboards replacing enterprise BI.",
         ],
         links: [{ label: "Claude-ing WorkOS", href: "https://claude-ing.vercel.app", color: CS.workos }],
@@ -712,7 +713,7 @@ export default function Home() {
               <div className="animate-fade-up-delay-2 flex items-start gap-6 mb-10">
                 <div className="w-8 h-px bg-white/30 mt-[10px] flex-shrink-0" />
                 <p className="text-sm sm:text-base text-white/70 max-w-md leading-relaxed">
-                  I turn empirical evidence into business growth: the pricing models, the incentive frameworks that move customers and partners, and the decision systems that tell a business its next move and the reason behind it.
+                  I build the pipeline, define the metric, run the experiment, and then own the call. Seven years of it across marketplaces and enterprise SaaS, and $17M+ in measured revenue impact.
                 </p>
               </div>
               <div className="animate-fade-up-delay-2 flex flex-wrap items-center gap-3">
@@ -784,10 +785,10 @@ export default function Home() {
             {/* Left, row 1: bio + skills */}
             <div className="md:col-start-1 md:row-start-1">
               <p className="text-white/75 leading-relaxed mb-4 text-sm">
-                I turn empirical evidence into business growth. As a Data Scientist turned Product Manager, I&apos;ve orchestrated multimillion-dollar revenue gains: the pricing and packaging models, the incentive frameworks that move customers and partners, and the decision systems that tell a business its next move and the reason behind it.
+                Usually I&apos;m the person who builds the pipeline, defines the metric, runs the experiment, and then has to defend the call. Most companies split those four jobs across four people, and the number changes meaning at every handoff. Closing that gap is the work: seven years of it across marketplaces and enterprise SaaS, and $17M+ in measured revenue impact.
               </p>
               <p className="text-white/75 leading-relaxed mb-10 text-sm">
-                My expertise spans SaaS pricing and packaging, product analytics, and the restless tempo of on-demand marketplace operations, across global tech and e-commerce. Lately I have gone deep on agentic AI: building AI-native workflows that automate UAT, Data Reporting, System Integrations, and the operational work which requires human intervention.
+                Marketplaces taught me the operating half, the pricing, incentives and dispatch decisions that get made while demand is still moving. Enterprise SaaS was where I built the measurement half, from event instrumentation to the experimentation standard product teams shipped against. Both now run on agentic AI: an operating layer wired into 15+ production systems, and the evaluation harness that decides whether a customer-facing AI agent is good enough to ship.
               </p>
               <div className="space-y-4">
                 {skillGroups.map((g) => (
