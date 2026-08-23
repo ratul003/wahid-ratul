@@ -26,12 +26,12 @@ export const articles: Article[] = [
     slug: "you-cannot-surge-price-a-therapist",
     title: "You Cannot Surge-Price a Therapist",
     subtitle:
-      "Uber fixed supply shortfalls with money. When the supply is people with licences, session caps and a daily limit on how much emotional labour they can do, the same lever stops working.",
+      "I ran surge pricing across sixty-four cities at foodpanda and watched it work. Then I took the same lever to a marketplace of licensed experts, and it did almost nothing.",
     topic: "Marketplaces · Operations · Pricing",
     date: "August 2026",
-    readTime: "9 min read",
+    readTime: "10 min read",
     excerpt:
-      "11:08pm, 47 people waiting, three experts online and twelve asleep with no idea. The gig-economy playbook says raise the price until supply shows up. That assumes a driver three streets away, not a licensed coach with a scope of practice. What I built instead, with the instruments to drive yourself.",
+      "11:08pm, 47 people waiting, three experts online and twelve asleep with no idea. At foodpanda I would have raised the incentive and watched riders appear. You cannot do that to a therapist. What I got wrong first, what turned out to be elastic instead, and the instruments to drive it yourself.",
     color: "#22d3ee",
     cover: "/writing/you-cannot-surge-price-a-therapist/cover.png",
     coverAlt:
