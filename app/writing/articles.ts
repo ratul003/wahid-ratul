@@ -24,7 +24,7 @@ export type Article = {
 export const articles: Article[] = [
   {
     slug: "you-cannot-surge-price-a-therapist",
-    title: "Why Surge Pricing Does Not Work in Every Online Marketplace",
+    title: "Why surge pricing does not work in every online marketplace",
     subtitle:
       "I ran surge pricing across sixty-four cities at foodpanda and watched it work. Then I took the same lever to a marketplace of licensed experts, and it did almost nothing.",
     topic: "Marketplaces · Operations · Pricing",

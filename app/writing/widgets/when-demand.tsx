@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Live instruments embedded inside "Why Surge Pricing Does Not Work in Every Online Marketplace".
+ * Live instruments embedded inside "Why surge pricing does not work in every online marketplace".
  *
  * These are ports of the working components from the project site
  * (when-demand-exceeds-supply.vercel.app), narrowed for the article column.
