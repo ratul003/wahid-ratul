@@ -34,6 +34,7 @@ export const articles: Article[] = [
       "11:08pm, 47 people waiting, three experts online and twelve asleep with no idea. At foodpanda I would have raised the incentive and watched riders appear. You cannot do that to a therapist. What I got wrong first, what turned out to be elastic instead, and the instruments to drive it yourself.",
     color: "#22d3ee",
     cover: "/writing/you-cannot-surge-price-a-therapist/cover.png",
+    thumb: "/writing/you-cannot-surge-price-a-therapist/thumb.png",
     coverAlt:
       "Two supply-response curves against incentive per session: interchangeable supply climbing past 90 percent, credentialed supply flattening under a capacity ceiling at 60 percent, with the measured 8, 38 and 55 percent tiers ringed",
     links: [
