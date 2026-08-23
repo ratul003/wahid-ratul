@@ -37,6 +37,7 @@ export const articles: Article[] = [
     coverAlt:
       "Two supply-response curves against incentive per session: interchangeable supply climbing past 90 percent, credentialed supply flattening under a capacity ceiling at 60 percent, with the measured 8, 38 and 55 percent tiers ringed",
     links: [
+      { label: "Watch the 2-minute film", href: "https://when-demand-exceeds-supply.vercel.app/#film" },
       { label: "Explore the live system", href: "https://when-demand-exceeds-supply.vercel.app" },
     ],
   },
