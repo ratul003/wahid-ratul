@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Live instruments embedded inside "You Cannot Surge-Price a Therapist".
+ * Live instruments embedded inside "Why Surge Pricing Does Not Work in Every Online Marketplace".
  *
  * These are ports of the working components from the project site
  * (when-demand-exceeds-supply.vercel.app), narrowed for the article column.
