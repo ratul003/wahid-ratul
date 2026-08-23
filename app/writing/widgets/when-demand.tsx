@@ -171,7 +171,7 @@ const BARO: Record<State, { label: string; status: string; delay: string; dropou
   },
   yellow: {
     label: "Yellow", status: "Supply pressure, incentive engine activates",
-    delay: "30–60 min", dropout: "5–10%",
+    delay: "30 to 60 min", dropout: "5 to 10%",
     supply: ["Push to active, scheduled and offline experts", "“X customers waiting right now” framing", "Revenue share boost + 1.5× rating multiplier"],
     demand: ["Light surge fee on new bookings", "“High demand, booking now secures your slot”"],
   },
