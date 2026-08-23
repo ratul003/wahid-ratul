@@ -5,6 +5,26 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { articles, getArticle } from "../articles";
+import {
+  QueueSim,
+  Barometer,
+  SupplyResponse,
+  RecoveryTimeline,
+} from "../widgets/when-demand";
+
+/**
+ * Marker name in an article body -> the live component it stands for.
+ *
+ * Built here rather than exported from the widgets module: a "use client" file
+ * can only hand a server component individual client references, so exporting
+ * the map itself yields a proxy and every lookup comes back undefined.
+ */
+const WIDGETS: Record<string, React.ComponentType> = {
+  queue: QueueSim,
+  barometer: Barometer,
+  response: SupplyResponse,
+  recovery: RecoveryTimeline,
+};
 
 export function generateStaticParams() {
   return articles.map((a) => ({ slug: a.slug }));
@@ -35,6 +55,33 @@ export async function generateMetadata({
 function readBody(slug: string): string {
   const file = path.join(process.cwd(), "app", "writing", "content", `${slug}.html`);
   return fs.readFileSync(file, "utf-8");
+}
+
+/**
+ * Renders the article body, swapping `<!--WIDGET:name-->` markers for the live
+ * component of that name. Prose chunks keep the `.article-prose` styling; the
+ * widgets sit outside it so the typography rules do not reach into them.
+ */
+function ArticleBody({ html }: { html: string }) {
+  const parts = html.split(/<!--\s*WIDGET:([a-z-]+)\s*-->/);
+  return (
+    <>
+      {parts.map((chunk, i) => {
+        if (i % 2 === 1) {
+          const Widget = WIDGETS[chunk];
+          return Widget ? <Widget key={i} /> : null;
+        }
+        // Only the opening chunk gets the larger lede paragraph.
+        return chunk.trim() ? (
+          <div
+            key={i}
+            className={i === 0 ? "article-prose" : "article-prose prose-cont"}
+            dangerouslySetInnerHTML={{ __html: chunk }}
+          />
+        ) : null;
+      })}
+    </>
+  );
 }
 
 export default async function ArticlePage({
@@ -102,10 +149,7 @@ export default async function ArticlePage({
         )}
 
         {/* body */}
-        <div
-          className="article-prose"
-          dangerouslySetInnerHTML={{ __html: body }}
-        />
+        <ArticleBody html={body} />
 
         {/* companion links */}
         {a.links && a.links.length > 0 && (

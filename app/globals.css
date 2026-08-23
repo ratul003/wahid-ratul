@@ -199,6 +199,8 @@ body {
 }
 .article-prose p { margin: 0 0 1.5em; }
 .article-prose > p:first-of-type { font-size: 1.28rem; color: rgba(241, 245, 249, 0.95); }
+/* Bodies split around an embedded widget: only the opening chunk gets the lede. */
+.article-prose.prose-cont > p:first-of-type { font-size: 1.19rem; color: rgba(241, 245, 249, 0.86); }
 .article-prose h2,
 .article-prose h3,
 .article-prose h4 {

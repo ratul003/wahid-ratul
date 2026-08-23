@@ -1,0 +1,113 @@
+<p>At 11:08 on a weeknight, the marketplace had 47 open session requests and three experts online. All three were already on a call.</p>
+
+<p>Twelve more experts were offline. Not busy. Offline, at home, app closed, with no idea that the biggest wave of demand that week was breaking on the other side of the platform.</p>
+
+<p>Nobody in the building knew either. The dropout would surface in tomorrow's report as a number that looked slightly worse than yesterday's. By then the people in that queue had gone somewhere else, and the platform had absorbed the whole cost of the mismatch in silence.</p>
+
+<p>That last part took me a while to accept. The platform was not short of experts. It had over 300 of them, vetted at a 30 percent acceptance rate. It was short of a way to tell them that right now, at this minute, they were needed.</p>
+
+<!--WIDGET:queue-->
+
+<p>Drag it. Supply is fixed at 18 sessions an hour, which is three experts at six sessions each. Under 3× demand not much happens. Past it the line bends, because the queue does not grow in proportion to demand. It grows in proportion to the gap, and the gap compounds every minute it stays open.</p>
+
+<p>That shape is the reason "we will look at it in the morning" is not a plan.</p>
+
+<h2>The playbook that does not transfer</h2>
+
+<p>My first instinct was the obvious one. This problem is solved. Uber solved it, DoorDash solved it, Instacart solved it. Go read what they published and copy the mechanism.</p>
+
+<p>So I did, and the published work is genuinely good. Uber recalculates demand and supply per hexagonal zone every minute or two. DoorDash predicts the Dasher-hours a region will need, compares that to the supply it expects to show up on its own, and issues Peak Pay for exactly the shortfall, before the gap opens rather than after. Instacart's SAGE treats pricing, incentives and shopper outreach as one joint optimisation instead of three triggers that happen to fire near each other. That last idea is the most valuable sentence anyone has published about marketplace operations.</p>
+
+<p>None of it is extractable. It is hundreds of millions of dollars of infrastructure welded into someone else's stack. But that was not the real problem.</p>
+
+<p>The real problem is that the mechanism underneath it assumes something that was not true for me.</p>
+
+<p>Surge pricing works on drivers because a driver is a fungible unit of supply who can be summoned in ten minutes. Raise the price, and someone who was already in their car, already qualified, already three streets away, decides to switch the app on. The supply curve responds because the barrier between "not working" and "working" is a decision, and money moves decisions.</p>
+
+<p>Now try it with a licensed mental health coach at 11pm.</p>
+
+<p>She cannot take a session in ten minutes, because she is not sitting in a car three streets away. She has a credential that took years, a scope of practice she cannot step outside, a session that runs 30 to 90 minutes rather than 12, a hard ceiling of maybe four to eight sessions in a day before the work stops being good, and no ability to cross into a category she is not trained for. A DoorDash driver can switch from restaurant to grocery the same afternoon. You cannot reroute an astrologer into a mental health crisis.</p>
+
+<p>So the money lever still works, but on a much flatter curve, and it saturates fast. Price is doing something real. It is just not doing the thing the gig playbook assumes it does.</p>
+
+<h2>Three companies that hit the same wall</h2>
+
+<p>This is not theoretical, and the failure mode is consistent enough to be a warning.</p>
+
+<p><strong>BetterHelp</strong> grew into the largest therapy platform of the pandemic on the promise of quick access. In November 2023 the FTC settled with them for $7.8 million, and one of the findings was that they had misrepresented therapist response times to millions of customers. They had more clients than their therapists could serve. Matching stretched from hours to days while the marketing still said fast. That is what flying blind looks like from the outside: you do not learn about the supply gap from your operations, you learn about it from your complaints, and eventually from a regulator.</p>
+
+<p><strong>Chegg</strong> built one of the largest human tutor networks in education, tens of thousands of tutors. Their 2022 and 2023 earnings calls name the constraint out loud as supply-side: humans could not cover 24/7, subject gaps persisted straight through exam season, and the per-session economics did not hold. By 2024 the human network had been replaced with AI. I do not read that as a strategic pivot. I read it as a supply ceiling nobody had built the operational intelligence to work around, so the only lever left was to change what the supply was made of.</p>
+
+<p><strong>Clarity.fm</strong> is the closest structural twin to the marketplace I was working on. Live expert calls, pay per minute, non-interchangeable supply by domain, 180-plus countries. It has no surge, no demand signal, no routing. When a top expert in a category goes offline, demand for that category has nowhere to go, exactly as on day one. The category works. The operations layer was never built.</p>
+
+<p>Three companies, three outcomes: regulated, replaced, or standing still.</p>
+
+<h2>What is actually movable</h2>
+
+<p>Here is the turn, and it took embarrassingly long to see.</p>
+
+<p>I had been treating this as a pricing problem, which framed it as a question about the supply curve. It is not. Those twelve offline experts did not decline the work. They were never asked. What failed at 11:08 was not incentive design. It was that a fact existed on one side of the platform and never crossed to the other.</p>
+
+<p>Information is elastic even when supply is not. You cannot conjure a therapist with money. You can absolutely tell every qualified person on your roster, within seconds, that 12 people are waiting right now and what the next hour is worth. Some of them are awake. Some of them will open the app. That is a supply response the gig playbook never has to think about, because its supply is already sitting in the car.</p>
+
+<p>Everything I built after that follows from it.</p>
+
+<h2>Two triggers, one dial per category</h2>
+
+<p>The barometer is deliberately dumb. Two independent triggers, delay time and dropout rate, either of which can flip the state on its own. Green, Yellow, Red.</p>
+
+<p>What matters is not the mechanism, it is that both thresholds are configurable per category. A 30 minute wait for astrology is a mild annoyance. A 30 minute wait for someone reaching out about their mental health is a crisis. A single global threshold has to be wrong for one of them, and I would rather be explicit about which.</p>
+
+<!--WIDGET:barometer-->
+
+<p>Every action attached to a state fires automatically, and every action reverses automatically when supply recovers. Nobody approves anything at 11pm.</p>
+
+<h2>It has to pay for itself, or it gets switched off</h2>
+
+<p>The surge fee is not margin. It is ring-fenced the moment it is collected, and it funds the expert bonus that the same spike triggered on the other side.</p>
+
+<p>I set that constraint on day one, and I want to be precise about why, because it sounds like a nice-to-have and it is not. A system that costs the platform money to run is a system somebody disables during the exact week it is most needed, when the numbers are already ugly and someone is hunting for costs to cut. Funding the response out of the revenue the response creates means it stays affordable at any size of spike. Self-financing was never an elegance argument. It was a survival condition.</p>
+
+<h2>Where I was wrong</h2>
+
+<p>I designed three incentive tiers and assumed the interesting one was Red. Big spike, maximum response, every channel firing. That felt right on paper, which should have been the warning.</p>
+
+<p>The actual question was whether Yellow could carry a spike on its own, or whether the system should skip to Red every time. So I modelled the acceptance curves against the response behaviour of the expert pool instead of guessing.</p>
+
+<!--WIDGET:response-->
+
+<p>With no incentive at all, about 8 percent of experts respond, which is just the people who happened to open the app. At the Yellow tier, roughly $8 a session plus a rating multiplier and a revenue share boost, it goes to 38 percent. Red, at $16 with SMS on top, reaches 55 percent.</p>
+
+<p>Yellow alone handled about 70 percent of spikes. Red turned out to be a backstop, not a default. Had I shipped my instinct, the platform would have paid maximum bonus on most nights for a response it could have bought at half the price, and the experts would have learned inside two weeks that the urgent alert was not urgent.</p>
+
+<h2>The line I refused to make configurable</h2>
+
+<p>The router decides what a human has to handle: supply health, query complexity scored by NLP, customer tier, category.</p>
+
+<p>One rule overrides all four. Mental health always routes to a human, whatever the load is, whatever the complexity score says. I wrote that into the spec as a hard constraint rather than a default, because a default is a thing an operator turns off at 2am on the worst night of the quarter, which is precisely the night it exists for.</p>
+
+<p>Not every decision in an operations system should be a parameter.</p>
+
+<h2>Proof, not vibes</h2>
+
+<p>The thing I actually trusted was not the design doc. It was the replay.</p>
+
+<p>I rebuilt a real platform evening, 23:00 to 23:30 on a high-demand night, and ran the engine against it as if it had been live. The barometer went Red at minute 8. Surge fired at minute 9. The first expert accepted at minute 11. Supply closed the gap within four minutes of detection.</p>
+
+<!--WIDGET:recovery-->
+
+<p>Without the engine, the queue peaks around 65 and stays there, because nothing in the system is trying to close it. With it, nine experts accepted the push, delay dropped from 34 minutes to 18, and the incentives switched themselves off.</p>
+
+<p>That night the platform collected $420 in surge and paid out $380 in bonuses. The response cost it $40.</p>
+
+<p>That sequence became the acceptance test for the whole system. Not "does the logic look right", but "replay a night that already happened and show me the gap closing".</p>
+
+<h2>What I would tell you if you run a marketplace</h2>
+
+<p>If your supply is people rather than vehicles, the honest version of the problem is that you cannot buy your way out of a shortfall on demand. Your supply curve is flatter than the case studies assume, and it saturates.</p>
+
+<p>What you can do is make sure a shortfall is never a secret. Detect it in seconds instead of finding it in a report. Fund the response from the demand that caused it, so nobody has to justify the cost. Reserve the human for the cases where being human is the product. And set the thresholds per category, because tolerance for waiting is not a property of your platform, it is a property of why someone came to it.</p>
+
+<p>I designed all of this before the marketplace had an engineering team to build it, which is its own argument. The reason nobody has this is not that it is hard to build. It is that it sits between pricing, notifications, routing and ops, and in most companies that means it belongs to nobody.</p>
+
+<p>The queue at 11:08 does not care whose team it is.</p>

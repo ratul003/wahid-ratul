@@ -23,6 +23,24 @@ export type Article = {
 
 export const articles: Article[] = [
   {
+    slug: "you-cannot-surge-price-a-therapist",
+    title: "You Cannot Surge-Price a Therapist",
+    subtitle:
+      "Uber fixed supply shortfalls with money. When the supply is people with licences, session caps and a daily limit on how much emotional labour they can do, the same lever stops working.",
+    topic: "Marketplaces · Operations · Pricing",
+    date: "August 2026",
+    readTime: "9 min read",
+    excerpt:
+      "11:08pm, 47 people waiting, three experts online and twelve asleep with no idea. The gig-economy playbook says raise the price until supply shows up. That assumes a driver three streets away, not a licensed coach with a scope of practice. What I built instead, with the instruments to drive yourself.",
+    color: "#22d3ee",
+    cover: "/writing/you-cannot-surge-price-a-therapist/cover.png",
+    coverAlt:
+      "Two supply-response curves against incentive per session: interchangeable supply climbing past 90 percent, credentialed supply flattening under a capacity ceiling at 60 percent, with the measured 8, 38 and 55 percent tiers ringed",
+    links: [
+      { label: "Explore the live system", href: "https://when-demand-exceeds-supply.vercel.app" },
+    ],
+  },
+  {
     slug: "ten-years-of-statistical-computing",
     title: "A Decade of Statistical Computing",
     subtitle:
