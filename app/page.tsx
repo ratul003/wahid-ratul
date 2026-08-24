@@ -766,11 +766,26 @@ export default function Home() {
 
             {/* Left, row 1: bio + industries + skills */}
             <div className="md:col-start-1 md:row-start-1">
+              <p className="text-white/85 leading-relaxed mb-4 text-base font-medium">
+                I turn empirical evidence into business growth.
+              </p>
               <p className="text-white/75 leading-relaxed mb-4 text-sm">
-                The domain keeps changing and the job stays the same. Ten enterprise SaaS products throwing off 1.2M+ events a day. A delivery network running 2M+ orders a month across 64 cities. A move platform handling 16K households a month. Each one needed someone to decide what counted, build the thing that counted it, and then stand behind the answer in the room where it got used.
+                As a Data Scientist turned Product Manager, I&apos;ve orchestrated multimillion-dollar revenue gains: pricing and packaging models, incentive frameworks that move customers and partners, and decision systems that tell a business its next move and the reason behind it.
+              </p>
+              <p className="text-white/75 leading-relaxed mb-4 text-sm">
+                My expertise spans SaaS pricing and packaging, product analytics, and the fast-paced demands of on-demand marketplace operations across global tech and e-commerce. Lately, I have gone deep on agentic AI: building AI-native workflows that automate UAT, data reporting, system integrations, and the operational work that requires human intervention.
               </p>
               <p className="text-white/75 leading-relaxed mb-9 text-sm">
-                These days I do that with an operating layer I built on Claude, wired into 15+ production systems across the warehouse, dbt, HubSpot, PostHog and Linear. It writes the query, ships the change, and checks the number against its source of record before I am allowed to quote it.
+                I write about AI, economics, data science, and product work on{" "}
+                <a
+                  href="https://medium.com/@wahidtratul"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-indigo-300 hover:text-indigo-200 underline underline-offset-2 transition-colors"
+                >
+                  Medium
+                </a>
+                .
               </p>
 
               <div className="mb-9">
