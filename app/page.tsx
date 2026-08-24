@@ -773,17 +773,17 @@ export default function Home() {
                 As a Data Scientist turned Product Manager, I&apos;ve orchestrated multimillion-dollar revenue gains: pricing and packaging models, incentive frameworks that move customers and partners, and decision systems that tell a business its next move and the reason behind it.
               </p>
               <p className="text-white/75 leading-relaxed mb-4 text-sm">
-                My expertise spans SaaS pricing and packaging, product analytics, and the fast-paced demands of on-demand marketplace operations across global tech and e-commerce. Lately, I have gone deep on agentic AI: building AI-native workflows that automate UAT, data reporting, system integrations, and the operational work that requires human intervention.
+                My expertise spans SaaS pricing and packaging, product analytics, and the fast-paced demands of on-demand marketplace operations across global tech and e-commerce. Lately, I have gone deep on agentic AI: building AI-native workflows that automate UAT, Data Reporting, System Integrations, and the operational work that requires human intervention.
               </p>
               <p className="text-white/75 leading-relaxed mb-9 text-sm">
-                I write about AI, economics, data science, and product work on{" "}
+                I write about AI, Economics, Data Science, and Product work on Medium -{" "}
                 <a
                   href="https://medium.com/@wahidtratul"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-indigo-300 hover:text-indigo-200 underline underline-offset-2 transition-colors"
                 >
-                  Medium
+                  https://medium.com/@wahidtratul
                 </a>
                 .
               </p>
