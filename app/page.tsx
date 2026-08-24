@@ -345,11 +345,11 @@ const roles: Role[] = [
         title: "Analytics Engineer, Product",
         period: "2024 - 2026",
         impact: [
-          "Delivered the company's system of record for product metrics: **1.2M+ daily events**, **10+ SaaS products**, **70+ self-serving stakeholders**, under an **8-step event-gating process**.",
-          "Authored the architecture decisions behind it: Mixpanel to warehouse-native across **8 product teams in 6 months**, and a Snowflake-to-BigQuery evaluation tracing **80-90% of cost** to egress.",
-          "Engineered the **3-layer warehouse**: 4 parallel ELT services, a Kimball star schema, reverse ETL pushing metrics into Salesforce and Gainsight.",
-          "Cut annual churn **$5M** with churn and adoption models over **500K+ users**, briefed quarterly to the CEO and Insight Partners; NLP agents eliminated **85% of ad-hoc analyst requests**.",
-          "Set the frequentist and Bayesian experimentation standard behind ship/kill calls: a 5K-impression gate at **80% power** and a **+16% qualification lift (58% to 74%)** that became the cross-sell proof point.",
+          "Delivered the **Product Intelligence Platform**, the system of record **10+ SaaS product teams** ship against, defining each product's **L1 engagement metric**: **1.2M+ daily events**, **70+ self-serving stakeholders**.",
+          "Recommended and drove the **Mixpanel to warehouse-native migration** across **8 product teams in 6 months**, authoring the architecture decision records behind it.",
+          "Engineered the **3-layer warehouse**: 4 parallel ELT services, reverse ETL into Salesforce and Gainsight; traced **80-90% of cost** to egress in a **Snowflake-to-BigQuery** review.",
+          "Built the churn and adoption product over **500K+ users**, erasing **$5M** of annual churn, briefed quarterly to the CEO; shipped self-serve NLP agents that retired **85% of ad-hoc analyst requests**.",
+          "Set the frequentist and Bayesian experimentation standard product teams make ship/kill calls with: a 5K-impression gate at **80% power** co-designed with the Experimentation PM, and a **+16% qualification lift (58% to 74%)** that became the cross-sell proof point.",
         ],
         links: [
           { label: "Product Intelligence", href: "https://product-intelligence-platform.vercel.app", color: CS.pip },
@@ -362,7 +362,7 @@ const roles: Role[] = [
         title: "Senior Analyst, Go-To-Market Analytics",
         period: "2023 - 2024",
         impact: [
-          "Set C-suite KPI targets by forecast, delivering **12% YoY ARR growth** at **7% above the DXP benchmark**, and cut leadership decision time **30%** over a **$50M+ pipeline**.",
+          "Built the forecasting product behind C-suite KPI targets, delivering **12% YoY ARR growth**, beating the **DXP benchmark by 7%**, and cutting leadership decision time **30%** over a **$50M+ pipeline**.",
         ],
       },
       {
@@ -383,9 +383,8 @@ const roles: Role[] = [
         title: "Analytics Consultant",
         period: "2024 - 2025",
         impact: [
-          "Raised expert quality **23%** across **3M+ consultations** with a TOPSIS model ranking **500+ partners** (300+ verified) on 5 weighted criteria.",
-          "Held **95% supply retention** through scale-up with a dynamic pay engine: **30-90% revenue-share bands** plus performance multipliers.",
-          "Built the real-time demand-supply engine running daily operations: health scoring, surge pricing and incentive orchestration in one control loop.",
+          "Shipped the partner-ranking product behind **3M+ consultations**, a TOPSIS model scoring **500+ partners** (300+ verified) on 5 criteria that drove reward and retention calls, raising expert quality **23%**.",
+          "Designed the dynamic pay engine holding **95% supply retention** through scale-up: **30-90% revenue-share bands** feeding the real-time demand-supply engine for health scoring, surge pricing and incentives.",
         ],
         links: [
           { label: "Rank, Reward, Retain", href: "https://rank-reward-retain.vercel.app", color: CS.rank },
@@ -403,9 +402,9 @@ const roles: Role[] = [
         title: "Assistant Manager, Logistics & Analytics",
         period: "2021 - 2023",
         impact: [
-          "Owned last-mile operations for **2M+ monthly orders** across 5 verticals, serving **50+ ops stakeholders**; ML fleet forecasting compounded **3% monthly KPI gains** at **75%+ on-time** delivery.",
-          "Proved by regression that algorithmic order stacking loses money past a **20-24% band**, refunds overtaking rider savings; adopted as national dispatch policy.",
-          "Generated **€100K+/mo incremental revenue** and **+21% basket size** with surge pricing across **64 cities**; raised **16K-rider fleet** performance **20%** with automated tooling and compliance penalties.",
+          "Owned last-mile operations on one of Bangladesh's largest consumer platforms: **2M+ monthly orders** across 5 verticals and **50+ ops stakeholders**; ML fleet forecasting compounded **3% monthly KPI gains** at **75%+ on-time** delivery.",
+          "Proved by regression that order stacking loses money past a **20-24% band**; shipped as the national dispatch policy. Shipped the return-order product, a daily compliance dashboard flipping cancelled-order billing across **2,200+ vendors**: **€377K saved in a year**, food-quality complaints down **60.6%**.",
+          "Launched surge pricing across **64 cities**, generating **€100K+/mo incremental revenue** and **+21% basket size**; shipped the automated tooling and compliance penalties that raised **16K-rider fleet** performance **20%**.",
         ],
         links: [{ label: "Cost-Benefit Optimization", href: "https://cost-benefit-optimization.vercel.app", color: CS.cost }],
       },
@@ -420,7 +419,7 @@ const roles: Role[] = [
         title: "Product Analyst",
         period: "2020 - 2021",
         impact: [
-          "Cut operating costs **$150K/yr** and raised project completion **20%** with a MongoDB asset store and search engine over **10K+ HVAC assets**.",
+          "Shipped a MongoDB store and search product over **10K+ HVAC assets**, cutting costs **$150K/yr** and raising project completion **20%**.",
           "Improved project efficacy **27%** leading quality control across **120 offshore operators** for 3D-tour delivery.",
         ],
       },
