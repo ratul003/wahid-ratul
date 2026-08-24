@@ -327,7 +327,7 @@ const roles: Role[] = [
         period: "2026 - present",
         impact: [
           "Own the product roadmap end to end for a B2B2C marketplace moving **16K households a month**: find where revenue leaks through funnel analytics, set the roadmap against it, ship and measure the fix.",
-          "Drive the digital move journey against a **£1M ARR target in 6 months**: live deal data personalising **40K+ mover emails** at a **52.9% open rate**, with the journey redesign instrumented and A/B tested in PostHog.",
+          "Shipped the digital move journey against a **£1M ARR target**, A/B tested in PostHog: deals fetched live by API, personalising journeys for **580K movers**, 40K+ emails at a **52.9% open rate**.",
           "Shipped the funnel product for phone sales, its largest revenue channel: **1.4M call records** stitched to **880K moves**; the board attributes **~90% of phone revenue**, its daily digest coaching every closer, now the agreed operational reporting cadence.",
           "Turned Service Ops' 28-tab spreadsheet into an in-house ticketing product on HubSpot at **£0 spend**: **11 AI workflows** run the queue over a **12-article agent SOP** of know-how, edge cases and resolutions, classifying **76K tickets a year** at **94% precision**, **83% closing with no agent reply**, and **17.9K supplier emails** auto-triaged, **2.8× the moves** at flat headcount.",
           "Founded WorkOS, an internal AI product adopted across **6 job functions**: Claude wired to **15+ production systems** for user-acceptance testing, bug triage, data pipelines and **every function**'s reporting, with SSO-gated dashboards replacing enterprise BI.",
