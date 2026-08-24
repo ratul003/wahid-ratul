@@ -6,7 +6,7 @@ import { articles } from "./articles";
 export const metadata: Metadata = {
   title: "Writing · Wahid Tawsif Ratul",
   description:
-    "Essays on AI, economics, product and data, by Wahid Tawsif Ratul.",
+    "Articles on AI, economics, product and data, by Wahid Tawsif Ratul.",
 };
 
 export default function WritingIndex() {
@@ -33,7 +33,7 @@ export default function WritingIndex() {
           <span className="text-[11px] font-mono text-white/40">·</span>
           <p className="text-[11px] uppercase tracking-[0.2em] text-white/55">Writing</p>
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Essays</h1>
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Articles</h1>
         <p className="text-sm text-white/55 max-w-xl mb-14 leading-relaxed">
           Long-form pieces on AI, economics, product and data. Where the numbers meet the story.
         </p>
