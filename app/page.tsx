@@ -327,10 +327,10 @@ const roles: Role[] = [
         period: "2026 - present",
         impact: [
           "Own the product end to end for a B2B2C marketplace moving **16K households a month**, across all three revenue channels: the **£1M ARR** digital journey, phone sales and service operations, each scoped from funnel analytics and measured after launch.",
-          "Shipped the digital move journey against a **£1M ARR target**, A/B tested in PostHog: deals fetched live by API, personalising journeys for **580K movers**, 40K+ emails at a **52.9% open rate**.",
-          "Turned Service Ops' 28-tab spreadsheet into an in-house ticketing product on HubSpot: **11 AI workflows** run the queue, classifying 76K tickets/yr at 94% precision with **83% closing with no agent reply**; 9 agents absorb **2.8× the moves** at flat headcount, averting £100-175K/yr in hires.",
-          "Founded WorkOS, an internal AI product adopted across **6 job functions**: Claude wired to **15+ production systems** for user-acceptance testing, bug triage, data pipelines and **every function**'s reporting, with SSO-gated dashboards replacing enterprise BI.",
-          "Shipped the funnel product for phone sales, its largest revenue channel: **1.4M call records** stitched to **880K moves**; the board attributes **~90% of phone revenue**, its daily digest coaching every closer.",
+          "Shipped the digital move journey against a **£1M ARR target**: broadband, energy and insurance deals fetched live by API, personalising **580K mover journeys** and 40K+ emails at a 52.9% open rate, A/B tested in PostHog.",
+          "Turned Service Ops' 28-tab spreadsheet into an in-house ticketing product on HubSpot: 11 AI workflows classify 76K tickets/yr at 94% precision, **83% closing with no agent reply**; 9 agents absorb **2.8× the moves, averting £100-175K/yr in hires**.",
+          "Founded WorkOS, an internal AI product across **6 job functions**: Claude wired to **15+ production systems** for user-acceptance testing, bug triage, data pipelines and **every function**'s reporting; SSO-gated dashboards **replaced enterprise BI**.",
+          "Shipped the funnel product for phone sales, its largest channel: **1.4M call records** stitched to **880K moves**; the board attributes **~90% of phone revenue** through it, its daily digest coaching closers.",
         ],
         links: [{ label: "Claude-ing WorkOS", href: "https://claude-ing.vercel.app", color: CS.workos }],
       },
@@ -383,8 +383,8 @@ const roles: Role[] = [
         title: "Analytics Consultant",
         period: "2024 - 2025",
         impact: [
-          "Shipped the partner-ranking product behind **3M+ consultations**, a TOPSIS model scoring **500+ partners** (300+ verified) on 5 criteria that drove reward and retention calls, raising expert quality **23%**.",
-          "Designed the dynamic pay engine holding **95% supply retention** through scale-up: **30-90% revenue-share bands** feeding the real-time demand-supply engine for health scoring, surge pricing and incentives.",
+          "Shipped the partner-ranking product behind **3M+ consultations**, TOPSIS-scoring **500+ partners** (300+ verified) on 5 criteria for reward and retention, **raising expert quality 23%**.",
+          "Designed the dynamic pay engine holding **95% supply retention**: **30-90% revenue-share bands** feeding the demand-supply engine for health scoring, surge pricing and escalation routing.",
         ],
         links: [
           { label: "Rank, Reward, Retain", href: "https://rank-reward-retain.vercel.app", color: CS.rank },
@@ -419,8 +419,7 @@ const roles: Role[] = [
         title: "Product Analyst",
         period: "2020 - 2021",
         impact: [
-          "Shipped a MongoDB store and search product over **10K+ HVAC assets**, cutting costs **$150K/yr** and raising project completion **20%**.",
-          "Improved project efficacy **27%** leading quality control across **120 offshore operators** for 3D-tour delivery.",
+          "Shipped a MongoDB store and search product over **10K+ HVAC assets**, cutting costs **$150K/yr** and raising project completion **20%**; lifted efficacy **27%** across **120 offshore operators** on 3D tours.",
         ],
       },
     ],
