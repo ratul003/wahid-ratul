@@ -402,7 +402,7 @@ const roles: Role[] = [
         title: "Assistant Manager, Logistics & Analytics",
         period: "2021 - 2023",
         impact: [
-          "Owned last-mile operations on one of Bangladesh's largest consumer platforms: **2M+ monthly orders** across 5 verticals and **50+ ops stakeholders**, ML fleet forecasting compounding **3% monthly KPI gains** at **75%+ on-time** delivery. Cost-benefit models over 27 operational variables set the order-stacking band at **20-24%** and shipped as the **national dispatch policy**.",
+          "Owned last-mile operations on one of Bangladesh's largest consumer platforms: **2M+ monthly orders** across 5 verticals and **50+ ops stakeholders**, ML fleet forecasting compounding **3% monthly KPI gains** at **75%+ on-time** delivery, and deployed the **national order dispatch policy** driving customer reorder-rate.",
           "Shipped the return-order product, a daily compliance dashboard flipping cancelled-order billing across **2,200+ vendors**: **€377K saved in a year**, food-quality complaints down **60.6%**.",
           "Launched surge pricing across **64 cities**, generating **€100K+/mo incremental revenue** and **+21% basket size**; automated tooling and compliance penalties raised **16K-rider fleet** performance **20%**.",
         ],
