@@ -326,7 +326,7 @@ const roles: Role[] = [
         title: "Product Manager",
         period: "2026 - present",
         impact: [
-          "Own the product end to end for a B2B2C marketplace moving **16K households a month**: find where revenue leaks, set the roadmap against it, ship and measure the fix.",
+          "Own the product end to end for a B2B2C marketplace moving **16K households a month**, across all three revenue channels: the **£1M ARR** digital journey, phone sales and service operations, each scoped from funnel analytics and measured after launch.",
           "Shipped the digital move journey against a **£1M ARR target**, A/B tested in PostHog: deals fetched live by API, personalising journeys for **580K movers**, 40K+ emails at a **52.9% open rate**.",
           "Turned Service Ops' 28-tab spreadsheet into an in-house ticketing product on HubSpot: **11 AI workflows** run the queue, classifying 76K tickets/yr at 94% precision with **83% closing with no agent reply**; 9 agents absorb **2.8× the moves** at flat headcount, averting £100-175K/yr in hires.",
           "Founded WorkOS, an internal AI product adopted across **6 job functions**: Claude wired to **15+ production systems** for user-acceptance testing, bug triage, data pipelines and **every function**'s reporting, with SSO-gated dashboards replacing enterprise BI.",
@@ -347,9 +347,9 @@ const roles: Role[] = [
         impact: [
           "Built the churn and adoption product over **500K+ users**, erasing **$5M** of annual churn, briefed quarterly to the CEO and Insight Partners; self-serve NLP agents retired **85% of ad-hoc requests**.",
           "Delivered the **Product Intelligence Platform**, the system of record **10+ SaaS product teams** ship against: one governed L1 engagement and L2 feature-adoption metric per product over **1.2M+ daily events**, an 8-step gating process that ended metric drift, and **70+ stakeholders** self-serving instead of queueing for an analyst.",
-          "Built the experimentation practice those teams now run on: a frequentist and Bayesian framework with a 5K-impression gate at **80% power**, so every team calls ship or kill on the same evidence. Its proof point moved cross-sell qualification from 58% to 74%, a **+16% lift**.",
-          "Owned **Systems Architecture**: made the call to leave Mixpanel for a warehouse-native stack and delivered it across **8 product teams in 6 months**, trading a per-event SaaS bill for governed models every team queries from one definition.",
-          "Built the warehouse under all of it: 4 parallel ELT services landing raw events, 3-layer dbt models above them, reverse ETL pushing scores into Salesforce and Gainsight; a **Snowflake-to-BigQuery** review traced **80-90% of spend** to egress and reset the platform decision.",
+          "Built the experimentation platform **10+ product teams** ship on: a frequentist and Bayesian framework with a 5K-impression gate at **80% power**, turning every launch into one ship-or-kill call. Lifted cross-sell qualification **58% to 74%**.",
+          "Architected the move off Mixpanel onto a warehouse-native stack and ran the migration across **8 product teams in 6 months**, retiring a per-event SaaS bill and giving every team one governed definition to query.",
+          "Built the warehouse it all runs on: 4 parallel ELT services, 3-layer dbt models above them and reverse ETL pushing scores into Salesforce and Gainsight; a **Snowflake-to-BigQuery** review traced **80-90% of spend** to egress and settled the platform decision.",
         ],
         links: [
           { label: "Product Intelligence", href: "https://product-intelligence-platform.vercel.app", color: CS.pip },
@@ -402,10 +402,9 @@ const roles: Role[] = [
         title: "Assistant Manager, Logistics & Analytics",
         period: "2021 - 2023",
         impact: [
-          "Owned last-mile operations on one of Bangladesh's largest consumer platforms: **2M+ monthly orders** across 5 verticals and **50+ ops stakeholders**; ML fleet forecasting compounded **3% monthly KPI gains** at **75%+ on-time** delivery.",
+          "Owned last-mile operations on one of Bangladesh's largest consumer platforms: **2M+ monthly orders** across 5 verticals and **50+ ops stakeholders**, ML fleet forecasting compounding **3% monthly KPI gains** at **75%+ on-time** delivery. Cost-benefit models over 27 operational variables set the order-stacking band at **20-24%** and shipped as the **national dispatch policy**.",
           "Shipped the return-order product, a daily compliance dashboard flipping cancelled-order billing across **2,200+ vendors**: **€377K saved in a year**, food-quality complaints down **60.6%**.",
           "Launched surge pricing across **64 cities**, generating **€100K+/mo incremental revenue** and **+21% basket size**; automated tooling and compliance penalties raised **16K-rider fleet** performance **20%**.",
-          "Ran the daily hunt for margin across last-mile logistics: cost-benefit models over 27 operational variables set the order-stacking band at **20-24%** and the free-delivery thresholds, and became the **national dispatch policy**.",
         ],
         links: [{ label: "Cost-Benefit Optimization", href: "https://cost-benefit-optimization.vercel.app", color: CS.cost }],
       },
