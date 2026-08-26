@@ -56,10 +56,12 @@ body {
 }
 
 /* Slow drifting blobs */
+/* Translate only. Scaling a 700px layer under a 150px blur forces the browser
+   to re-rasterise it every frame; translating it is a pure compositor move. */
 @keyframes drift {
-  0%, 100% { transform: translate(0, 0) scale(1); }
-  33%      { transform: translate(40px, -30px) scale(1.08); }
-  66%      { transform: translate(-30px, 25px) scale(0.95); }
+  0%, 100% { transform: translate3d(0, 0, 0); }
+  33%      { transform: translate3d(44px, -34px, 0); }
+  66%      { transform: translate3d(-34px, 28px, 0); }
 }
 
 .drift-slow { animation: drift 22s ease-in-out infinite; }
@@ -92,8 +94,13 @@ body {
     transparent 65%
   );
   transform: translateX(-160%);
-  animation: sheen 4.5s ease-in-out infinite;
+  /* One staggered pass on load, then only on hover. Running this `infinite`
+     across 34 pills kept the compositor busy for the life of the page. */
+  animation: sheen 4.5s ease-in-out 1 both;
   animation-delay: var(--d, 0s);
+}
+.skill-pill:hover::before {
+  animation: sheen 0.9s ease-out 1;
 }
 @keyframes sheen {
   0% { transform: translateX(-160%); }
@@ -107,18 +114,67 @@ body {
     0 0 24px var(--glow);
 }
 
-/* Skill logo / glyph inside a pill - glows in its own brand hue */
-@keyframes mark-glow {
-  0%, 100% { filter: drop-shadow(0 0 2px var(--mglow)); }
-  50%      { filter: drop-shadow(0 0 7px var(--mglow)) brightness(1.15); }
-}
+/* Skill logo / glyph inside a pill - glows in its own brand hue.
+   Static by default: there are 100+ of these once the marquee duplicates its
+   track, and animating `filter` on all of them forever is the single most
+   expensive thing on the page. The marquee supplies the motion instead. */
 .skill-mark {
-  animation: mark-glow 3.6s ease-in-out infinite;
-  animation-delay: var(--d, 0s);
+  filter: drop-shadow(0 0 4px var(--mglow));
+  transition: filter 0.25s ease;
 }
 .skill-pill:hover .skill-mark {
   filter: drop-shadow(0 0 9px var(--mglow)) brightness(1.2);
 }
+
+/* Experiment console sliders */
+.ec-range {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.1);
+  outline: none;
+  cursor: grab;
+}
+.ec-range:active { cursor: grabbing; }
+.ec-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #e0e7ff;
+  border: 2px solid #6366f1;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.7);
+  transition: transform 0.15s ease;
+}
+.ec-range::-webkit-slider-thumb:hover { transform: scale(1.16); }
+.ec-range::-moz-range-thumb {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  background: #e0e7ff;
+  border: 2px solid #6366f1;
+  box-shadow: 0 0 10px rgba(99, 102, 241, 0.7);
+}
+.ec-range:focus-visible::-webkit-slider-thumb {
+  outline: 2px solid #a5b4fc;
+  outline-offset: 2px;
+}
+
+/* Hero scale tiles - the figure lights its own top edge on hover */
+.stat-tile { transition: background 0.25s ease; }
+.stat-tile::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(165, 180, 252, 0.55), transparent);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+.stat-tile:hover { background: rgba(255, 255, 255, 0.028); }
+.stat-tile:hover::after { opacity: 1; }
 
 /* Chips linking a role to its published case study */
 .case-chip {
@@ -130,13 +186,14 @@ body {
   box-shadow: 0 0 16px -3px var(--c);
 }
 
-/* Pulsing glow for experience / education progression dots */
-@keyframes pulse-glow {
-  0%, 100% { filter: brightness(1); transform: scale(1); }
-  50% { filter: brightness(1.5); transform: scale(1.2); }
-}
+/* Experience / education progression dots. Their glow comes from the inline
+   box-shadow; pulsing `filter` on every dot forever bought nothing visible. */
 .glow-dot {
-  animation: pulse-glow 2.6s ease-in-out infinite;
+  transition: filter 0.25s ease, transform 0.25s ease;
+}
+.group\/exp:hover .glow-dot {
+  filter: brightness(1.4);
+  transform: scale(1.15);
 }
 
 /* Experience - glowing, dynamic company logo */
@@ -252,4 +309,34 @@ body {
   text-align: center;
   line-height: 1.5;
   margin-top: 0.7em;
+}
+
+/* Full-width list rows for writing and research, replacing the card grid */
+.row-link {
+  padding-left: 2px;
+  transition: padding-left 0.22s ease, background 0.22s ease;
+}
+.row-link:hover {
+  padding-left: 10px;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.035), transparent 70%);
+}
+
+
+/* Scorecard figures - these are the boast, so they get the light */
+.stat-figure {
+  background: linear-gradient(160deg, #ffffff 20%, #c7d2fe 75%, #a5b4fc 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 14px rgba(129, 140, 248, 0.35));
+}
+
+/* Project cards - a real screenshot deserves to be the thing that lifts */
+.proj-card {
+  transition: transform 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease;
+}
+.proj-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 14px 40px -18px rgba(0, 0, 0, 0.9);
 }

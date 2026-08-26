@@ -2,84 +2,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { articles as hostedArticles } from "./writing/articles";
 import { MARKS } from "./skill-marks";
+import ExperimentConsole from "./experiment-console";
+import { WorkOsPanel, DispatchPanel, SupplyPanel } from "./job-panels";
+import ResearchPanel from "./research-panels";
 
 // ── Project icons ──────────────────────────────────────────────────────────────
-
-function IconRadar({ color }: { color: string }) {
-  return (
-    <svg width="32" height="32" viewBox="0 0 28 28" fill="none">
-      <circle cx="14" cy="14" r="3" stroke={color} strokeWidth="1.5" />
-      <circle cx="14" cy="14" r="7" stroke={color} strokeWidth="1" opacity="0.5" />
-      <circle cx="14" cy="14" r="11" stroke={color} strokeWidth="0.75" opacity="0.25" />
-      <path d="M14 3v3M14 22v3M3 14h3M22 14h3" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function IconLayers({ color }: { color: string }) {
-  return (
-    <svg width="32" height="32" viewBox="0 0 28 28" fill="none">
-      <ellipse cx="14" cy="7" rx="9" ry="3" stroke={color} strokeWidth="1.5" />
-      <path d="M5 7v5c0 1.66 4.03 3 9 3s9-1.34 9-3V7" stroke={color} strokeWidth="1.5" />
-      <path d="M5 12v5c0 1.66 4.03 3 9 3s9-1.34 9-3v-5" stroke={color} strokeWidth="1.5" />
-    </svg>
-  );
-}
-
-function IconFlask({ color }: { color: string }) {
-  return (
-    <svg width="32" height="32" viewBox="0 0 28 28" fill="none">
-      <path d="M10.5 3.5h7M10.5 3.5v8.5L5 22a2 2 0 0 0 1.8 2.9h14.4A2 2 0 0 0 23 22l-5.5-10V3.5"
-        stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M7.5 20h13" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
-      <circle cx="16" cy="21.5" r="1" fill={color} />
-      <circle cx="12.5" cy="23" r="0.75" fill={color} />
-    </svg>
-  );
-}
-
-function IconCompass({ color }: { color: string }) {
-  return (
-    <svg width="32" height="32" viewBox="0 0 28 28" fill="none">
-      <circle cx="14" cy="14" r="10" stroke={color} strokeWidth="1.5" />
-      <path d="M14 4v4M14 20v4M4 14h4M20 14h4" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
-      <path d="M17.5 10.5l-5 3-2 5.5 5-3 2-5.5z" stroke={color} strokeWidth="1.25" strokeLinejoin="round" />
-      <circle cx="14" cy="14" r="1.25" fill={color} />
-    </svg>
-  );
-}
-
-function IconBalance({ color }: { color: string }) {
-  return (
-    <svg width="32" height="32" viewBox="0 0 28 28" fill="none">
-      <path d="M14 5v18M6 23h16" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
-      <path d="M14 8H7L4 16h6l4-8z" stroke={color} strokeWidth="1.25" strokeLinejoin="round" fill="none" />
-      <path d="M14 8h7l3 8h-6l-4-8z" stroke={color} strokeWidth="1.25" strokeLinejoin="round" fill="none" />
-    </svg>
-  );
-}
-
-function IconGem({ color }: { color: string }) {
-  return (
-    <svg width="32" height="32" viewBox="0 0 28 28" fill="none">
-      <path d="M4 12l10 13 10-13" stroke={color} strokeWidth="1.5" strokeLinejoin="round" />
-      <path d="M4 12h20M9 12l5-8 5 8" stroke={color} strokeWidth="1.5" strokeLinejoin="round" strokeLinecap="round" />
-      <path d="M14 25V12M9 12l5 6 5-6" stroke={color} strokeWidth="0.75" opacity="0.4" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
-function IconChart({ color }: { color: string }) {
-  return (
-    <svg width="32" height="32" viewBox="0 0 28 28" fill="none">
-      <path d="M4 4v18a2 2 0 0 0 2 2h18" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
-      <rect x="8" y="13" width="3.2" height="7" rx="1" stroke={color} strokeWidth="1.4" />
-      <rect x="14" y="9" width="3.2" height="11" rx="1" stroke={color} strokeWidth="1.4" />
-      <rect x="20" y="6" width="3.2" height="14" rx="1" stroke={color} strokeWidth="1.4" />
-      <path d="M8 10l5-4 4 2 6-5" stroke={color} strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" opacity="0.55" />
-    </svg>
-  );
-}
 
 function ArrowUpRight() {
   return (
@@ -124,7 +51,33 @@ function Impact({ text }: { text: string }) {
 
 type CaseLink = { label: string; href: string; color: string };
 
-/** Chips linking a role to the published case studies it produced. */
+/** One impact bullet. */
+function Bullet({ line }: { line: string }) {
+  return (
+    <li className="flex gap-2 text-[11.5px] leading-relaxed text-white/55">
+      <span
+        className="mt-[6px] w-[3px] h-[3px] rounded-full flex-shrink-0"
+        style={{ background: "#a5b4fc", boxShadow: "0 0 6px #818cf8" }}
+      />
+      <span>
+        <Impact text={line} />
+      </span>
+    </li>
+  );
+}
+
+/** Every bullet, expanded. No dropdown: a collapsed bullet is a bullet nobody reads. */
+function ImpactList({ lines }: { lines: string[] }) {
+  return (
+    <ul className="mt-2 space-y-1.5">
+      {lines.map((line) => (
+        <Bullet key={line} line={line} />
+      ))}
+    </ul>
+  );
+}
+
+/** Chips linking a role to the implementations it produced. */
 function CaseLinks({ links }: { links: CaseLink[] }) {
   return (
     <div className="flex flex-wrap gap-1.5 mt-2.5">
@@ -194,111 +147,155 @@ const socials = [
   { label: "Email", href: "mailto:wahidtratul@gmail.com", Icon: IconEmail },
 ];
 
-function IconTerminal({ color }: { color: string }) {
-  return (
-    <svg width="32" height="32" viewBox="0 0 28 28" fill="none">
-      <rect x="3" y="5" width="22" height="18" rx="2.5" stroke={color} strokeWidth="1.5" />
-      <path d="M8 11l3.5 3-3.5 3" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-      <path d="M14.5 17.5h5" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
-    </svg>
-  );
-}
-
-function IconTrophy({ color }: { color: string }) {
-  return (
-    <svg width="32" height="32" viewBox="0 0 28 28" fill="none">
-      <path d="M8 4h12v5a6 6 0 0 1-12 0V4z" stroke={color} strokeWidth="1.5" strokeLinejoin="round" />
-      <path d="M8 6H5a2 2 0 0 0 0 4h3.4M20 6h3a2 2 0 0 1 0 4h-3.4" stroke={color} strokeWidth="1.5" strokeLinecap="round" />
-      <path d="M14 15v3.5M10.5 23h7M11 23a3 3 0 0 1 6 0" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
-  );
-}
-
 // ── Data ──────────────────────────────────────────────────────────────────────
 
+/**
+ * Every deployed project, thumbnailed with a real screenshot of the running
+ * site rather than a stock photo. `org` ties each one back to the job that
+ * produced it, so the catalogue and the job sections agree.
+ */
 const projects = [
   {
-    title: "Claude-ing WorkOS",
-    description: "An AI operating layer where one PM builds the whole stack, the pipeline, an MCP server, the dashboard, the experiment, with no handoff. Tiered-context Claude Code with a live IDE demo you can run session by session.",
+    title: "Wired Claude Into 15+ Production Systems",
+    name: "Claude-ing WorkOS",
+    org: "Just Move In",
+    label: "AI Operating Layer",
+    description:
+      "An AI operating layer where one PM runs the whole stack. Wires Claude into 15+ production systems for UAT, bug triage, data pipelines and every function's reporting, then walks you through it session by session in a live IDE demo.",
+    inside: "19 runnable sessions · tiered-context harness · narrated film",
     color: "#F5A524",
-    label: "AI Operating Layer · Personal",
     href: "https://claude-ing.vercel.app",
-    image: "/projects/claude-ing-workos.jpg",
-    Icon: IconTerminal,
+    image: "/shots/claude-ing-workos.jpg",
   },
   {
-    title: "World Cup 2026 Simulator",
-    description: "A one-million-run Monte Carlo simulation of the 2026 World Cup, re-run live in the browser on every load, paired with an essay on FIFA, power, and Germany's statistical case for the title.",
-    color: "#2dd4bf",
-    label: "Monte Carlo Simulation · Personal",
-    href: "https://fifa-wc2026-simulator.vercel.app/#cr",
-    image: "/maradona.png",
-    Icon: IconTrophy,
-  },
-  {
-    title: "Product Intelligence Platform",
-    description: "End-to-end analytics architecture spanning event instrumentation, warehouse-native metrics, and agentic AI measurement across a B2B experimentation platform's product suite.",
+    title: "Standardised Product Metrics Across 10+ SaaS Teams",
+    name: "Product Intelligence Platform",
+    org: "Optimizely",
+    label: "Product Analytics",
+    description:
+      "The system of record 10+ SaaS product teams shipped against: one governed L1 engagement and L2 adoption metric per product over 1.2M+ daily events, plus the 8-step gating process that ended metric drift for good.",
+    inside: "Metric tree · gating workflow · adoption cohorts",
     color: "#6366f1",
-    label: "Analytics · Enterprise SaaS",
     href: "https://product-intelligence-platform.vercel.app",
-    image: "/projects/product-intelligence-platform.jpg",
-    Icon: IconRadar,
+    image: "/shots/product-intelligence-platform.jpg",
   },
   {
-    title: "Data Engineering Foundation",
-    description: "Three-layer Snowflake architecture with parallel ELT services, Kimball star schema modeling, and Reverse ETL patterns for operational data activation.",
-    color: "#10b981",
-    label: "Data Engineering · Enterprise SaaS",
-    href: "https://data-engineering-foundation.vercel.app",
-    image: "/projects/data-engineering-foundation.jpg",
-    Icon: IconLayers,
-  },
-  {
-    title: "Experimentation Science",
-    description: "Statistical framework behind a B2B experimentation platform's L1 metrics, 5K impression thresholding, dual frequentist/Bayesian inference, and Dev Agent quality findings.",
+    title: "Built the Frequentist and Bayesian A/B Testing Framework",
+    name: "Running Meaningful Experiments",
+    org: "Optimizely",
+    label: "Experimentation",
+    description:
+      "The statistical framework behind the platform: a 5,000-impression gate at 80% power, dual frequentist and Bayesian inference, and the Dev Agent quality finding that came out of actually reading the results.",
+    inside: "Power curves · sequential testing · ship-or-kill rule",
     color: "#f59e0b",
-    label: "Experimentation · Enterprise SaaS",
     href: "https://experimentation-science.vercel.app",
-    image: "/projects/experimentation-science.jpg",
-    Icon: IconFlask,
+    image: "/shots/experimentation-science.jpg",
   },
   {
-    title: "Systems Architecture",
-    description: "Two architectural decision records: Mixpanel → warehouse-native migration and a BigQuery evaluation, with egress cost analysis and migration strategy.",
+    title: "Built the Snowflake Data Warehouse and ELT Pipelines",
+    name: "Data Engineering Foundation",
+    org: "Optimizely",
+    label: "Data Engineering",
+    description:
+      "The warehouse everything else runs on. Three-layer Snowflake architecture with four parallel ELT services above it, Kimball star schemas, and Reverse ETL pushing scores back into Salesforce and Gainsight.",
+    inside: "Layer diagram · star schemas · reverse-ETL flow",
+    color: "#10b981",
+    href: "https://data-engineering-foundation.vercel.app",
+    image: "/shots/data-engineering-foundation.jpg",
+  },
+  {
+    title: "Migrated 8 Product Teams from Mixpanel to the Warehouse",
+    name: "Systems Architecture",
+    org: "Optimizely",
+    label: "Architecture",
+    description:
+      "Two architectural decision records, written to be argued with: the Mixpanel to warehouse-native migration across 8 product teams, and a Snowflake versus BigQuery evaluation that traced 80-90% of spend to egress.",
+    inside: "2 ADRs · egress cost model · migration plan",
     color: "#f43f5e",
-    label: "Architecture · Enterprise SaaS",
     href: "https://systems-architecture.vercel.app",
-    image: "/projects/systems-architecture.jpg",
-    Icon: IconCompass,
+    image: "/shots/systems-architecture.jpg",
   },
   {
-    title: "When Demand Exceeds Supply",
-    description: "Real-time demand-supply intelligence engine for two-sided marketplaces, with health scoring, surge pricing, and AI escalation routing.",
+    title: "Built the Real-Time Supply Health and Surge Pricing Engine",
+    name: "When Demand Exceeds Supply",
+    org: "Coto",
+    label: "Marketplace Ops",
+    description:
+      "A real-time demand-supply engine for a two-sided marketplace. Health scores the queue, fires surge pricing and incentives when supply thins, and routes the escalations a human still has to answer.",
+    inside: "Live barometer · queue simulator · surge bands",
     color: "#06b6d4",
-    label: "Pricing Analytics · On-Demand Marketplace",
     href: "https://when-demand-exceeds-supply.vercel.app",
-    image: "/projects/when-demand-exceeds-supply.jpg",
-    Icon: IconBalance,
+    image: "/shots/when-demand-exceeds-supply.jpg",
   },
   {
-    title: "Rank, Reward, Retain",
-    description: "Expert scoring system using TOPSIS across five criteria, with dynamic revenue optimization and creator analytics, driving a 23% improvement in expert quality.",
+    title: "Ranked 500+ Marketplace Experts with TOPSIS Scoring",
+    name: "Rank, Reward, Retain",
+    org: "Coto",
+    label: "Incentive Design",
+    description:
+      "TOPSIS scoring across five criteria to rank 500+ marketplace experts, wired to dynamic 30-90% revenue-share bands so that ranking actually pays. Expert quality rose 23%.",
+    inside: "TOPSIS scorer · pay bands · creator analytics",
     color: "#8b5cf6",
-    label: "Incentive Design · On-Demand Marketplace",
     href: "https://rank-reward-retain.vercel.app",
-    image: "/projects/rank-reward-retain.jpg",
-    Icon: IconGem,
+    image: "/shots/rank-reward-retain.jpg",
   },
   {
-    title: "Cost-Benefit Optimization of Order Assignment",
-    description: "Finding the order-assignment intensity where algorithmic dispatch reaches equilibrium between delivery cost and customer experience, with a live metric console and per-city bands, modeled in BigQuery, R, and Tableau.",
+    title: "Found the Dispatch Intensity Where Cost and Experience Balance",
+    name: "Cost-Benefit Optimization",
+    org: "foodpanda",
+    label: "Applied Analytics",
+    description:
+      "Finds the order-assignment intensity where algorithmic dispatch balances delivery cost against customer experience, per city. Modelled in BigQuery, R and Tableau, with a live metric console to move the assumptions.",
+    inside: "Metric console · per-city bands · equilibrium curve",
     color: "#f97316",
-    label: "Applied Analytics · On-Demand Marketplace",
     href: "https://cost-benefit-optimization.vercel.app",
-    image: "/projects/cost-benefit-optimization.jpg",
-    Icon: IconChart,
+    image: "/shots/cost-benefit-optimization.jpg",
+  },
+  {
+    title: "Built an Algorithm to Detect Directional Dependence",
+    name: "Modeling Directional Dependence",
+    org: "University of Minnesota",
+    label: "Statistics Thesis",
+    description:
+      "A linear-model random algorithm for detecting bivariate directional dependence, the asymmetry a correlation coefficient is blind to by construction. My statistics senior thesis, written up as a working instrument.",
+    inside: "Simulation study · WebGL surfaces · derivations in KaTeX",
+    color: "#a855f7",
+    href: "https://research-directional-dependence.vercel.app",
+    image: "/shots/research-directional-dependence.jpg",
+  },
+  {
+    title: "Modelled Directional Dependence Using Copulas",
+    name: "Directional Dependence via Copulas",
+    org: "University of Minnesota",
+    label: "HHMI Research",
+    description:
+      "Concomitants of order statistics on copulas, with Monte Carlo data designed specifically to keep causal bias out of the directional estimate. Funded by an HHMI grant.",
+    inside: "Copula families · Monte Carlo design · order statistics",
+    color: "#14b8a6",
+    href: "https://research-copulas-directional-depend.vercel.app",
+    image: "/shots/research-copulas.jpg",
+  },
+  {
+    title: "Modelled Cognitive Change Across Two NHANES Cycles",
+    name: "Cognitive Change & Neuropsychology",
+    org: "University of Minnesota",
+    label: "UROP Research",
+    description:
+      "Survey-weighted logistic regression on CERAD, AFT and DSST testing across two NHANES cycles, modelling how cognitive change differs by gender and race on a nationally representative sample.",
+    inside: "Survey weighting · 1,580 paired adults · two cycles",
+    color: "#0ea5e9",
+    href: "https://research-nhanes-cognitive.vercel.app",
+    image: "/shots/research-nhanes-cognitive.jpg",
   },
 ];
+
+/** Favicon marks, shared by the scorecard and the experience timeline. */
+const LOGO = {
+  jmi: "https://www.google.com/s2/favicons?domain=justmovein.com&sz=64",
+  optimizely: "https://www.google.com/s2/favicons?domain=optimizely.com&sz=64",
+  coto: "https://www.google.com/s2/favicons?domain=coto.world&sz=64",
+  foodpanda: "https://www.google.com/s2/favicons?domain=foodpanda.com&sz=64",
+};
 
 // Case-study colours reused by the experience links so a role points at the
 // published work it produced.
@@ -314,19 +311,54 @@ const CS = {
 };
 
 type Position = { title: string; period: string; impact?: string[]; links?: CaseLink[] };
-type Role = { org: string; logo?: string; location?: string; positions: Position[] };
+/**
+ * A `feature` turns a role into a full section of its own: a headline, a
+ * sentence framing the work, one live panel, and the essay it produced. Roles
+ * without one fall into the compact "Earlier" list instead.
+ */
+type Feature = {
+  industry: string;
+  status: string;
+  headline: string;
+  narrative: string;
+  panel: "console" | "triage" | "barometer" | "dispatch";
+  panelNote?: string;
+  article?: { slug: string; title: string };
+};
+type Role = {
+  org: string;
+  logo?: string;
+  location?: string;
+  positions: Position[];
+  feature?: Feature;
+};
 
 const roles: Role[] = [
   {
     org: "Just Move In",
-    logo: "https://www.google.com/s2/favicons?domain=justmovein.com&sz=64",
+    logo: LOGO.jmi,
     location: "United Kingdom",
+    feature: {
+      industry: "Home Services",
+      status: "UK home-moving marketplace, B2B2C across three revenue channels",
+      headline:
+        "Built an AI Layer That Automates Feature Prototype & UAT, Reporting and Personalized A/B Testing with Claude WorkOS",
+      narrative:
+        "One person covering product, data, growth and platform, because WorkOS wires Claude into the systems each of those jobs actually runs on. Pick a session below and watch it run: the same harness, the same repo, the same output that lands in Slack and Linear.",
+      panel: "triage",
+      panelNote:
+        "Six of the 21 sessions, running here. The full harness, the repo layout and the narrated film are on the project site.",
+      article: {
+        slug: "the-night-i-deleted-the-best-slide-in-the-deck",
+        title: "The Night I Deleted the Best Slide in the Deck",
+      },
+    },
     positions: [
       {
         title: "Product Manager",
         period: "2026 - present",
         impact: [
-          "Own the product end to end for a B2B2C marketplace moving **16K households a month**, across all three revenue channels: the **£1M ARR** digital journey, phone sales and service operations, each scoped from funnel analytics and measured after launch.",
+          "Own the product end to end across **seven workstreams**: experimentation, analytics, reporting, automation and AI initiatives, UAT, feature building, and the new digital journey.",
           "Shipped the digital move journey against a **£1M ARR target**: broadband, energy and insurance deals fetched live by API, personalising **580K mover journeys** and 40K+ emails at a 52.9% open rate, A/B tested in PostHog.",
           "Turned Service Ops' 28-tab spreadsheet into an in-house ticketing product on HubSpot: 11 AI workflows classify 76K tickets/yr at 94% precision, **83% closing with no agent reply**; 9 agents absorb **2.8× the moves, averting £100-175K/yr in hires**.",
           "Founded WorkOS, an internal AI product across **6 job functions**: Claude wired to **15+ production systems** for user-acceptance testing, bug triage, data pipelines and **every function**'s reporting; SSO-gated dashboards **replaced enterprise BI**.",
@@ -338,8 +370,19 @@ const roles: Role[] = [
   },
   {
     org: "Optimizely",
-    logo: "https://www.google.com/s2/favicons?domain=optimizely.com&sz=64",
+    logo: LOGO.optimizely,
     location: "Hybrid · Dhaka",
+    feature: {
+      industry: "Enterprise SaaS",
+      status: "Global digital experience platform, 100K+ B2B customers",
+      headline:
+        "Built the Product Intelligence Platform 10+ SaaS Product Teams Ship On",
+      narrative:
+        "Ten product teams shipped against one governed metric per product and one gate: 5,000 impressions per arm, 80% power against a declared MDE. This is that gate, running in your browser.",
+      panel: "console",
+      panelNote:
+        "Move either slider and the standard error, the interval, the power and the decision all recompute. Nothing in this panel is a mockup.",
+    },
     positions: [
       {
         title: "Analytics Engineer, Product",
@@ -376,13 +419,29 @@ const roles: Role[] = [
   },
   {
     org: "Coto",
-    logo: "https://www.google.com/s2/favicons?domain=coto.world&sz=64",
+    logo: LOGO.coto,
     location: "Remote · Part-time",
+    feature: {
+      industry: "Expert Marketplaces",
+      status: "On-demand expert marketplace, Singapore",
+      headline:
+        "Built the Expert Ranking, Incentive Design and Demand-Supply Engine for an On-Demand Marketplace",
+      narrative:
+        "A two-sided marketplace fails on the supply side first, and it fails quietly. I built the health scoring that reads the failure early, and the pay bands that answer it.",
+      panel: "barometer",
+      panelNote:
+        "An M/M/c queue on Erlang C. The grid is every operating point computed at once, so you can see the whole boundary rather than one reading.",
+      article: {
+        slug: "you-cannot-surge-price-a-therapist",
+        title: "Why surge pricing does not work in every online marketplace",
+      },
+    },
     positions: [
       {
         title: "Analytics Consultant",
         period: "2024 - 2025",
         impact: [
+          "Owned **four functions** for an on-demand expert marketplace: live marketplace operations, incentive design, analytics and reporting, and the data architecture beneath them.",
           "Shipped the partner-ranking product behind **3M+ consultations**, TOPSIS-scoring **500+ partners** (300+ verified) on 5 criteria for reward and retention, **raising expert quality 23%**.",
           "Designed the dynamic pay engine holding **95% supply retention**: **30-90% revenue-share bands** feeding the demand-supply engine for health scoring, surge pricing and escalation routing.",
         ],
@@ -395,14 +454,24 @@ const roles: Role[] = [
   },
   {
     org: "foodpanda",
-    logo: "https://www.google.com/s2/favicons?domain=foodpanda.com&sz=64",
+    logo: LOGO.foodpanda,
     location: "Dhaka, Bangladesh",
+    feature: {
+      industry: "On-Demand Marketplace",
+      status: "Bangladesh's largest Q-commerce platform",
+      headline:
+        "Implemented the National Order Dispatch Policy, Surge Pricing and Return-Order Compliance Across 64 Cities",
+      narrative:
+        "Put more orders on one rider trip and cost per order falls while lateness climbs. The optimum is not a matter of taste, it is wherever you price a late order. So that is the second slider.",
+      panel: "dispatch",
+      panelNote: "The curve is scanned across the feasible range on every change, not asserted.",
+    },
     positions: [
       {
         title: "Assistant Manager, Logistics & Analytics",
         period: "2021 - 2023",
         impact: [
-          "Owned last-mile operations on one of Bangladesh's largest consumer platforms: **2M+ monthly orders** across 5 verticals and **50+ ops stakeholders**, ML fleet forecasting compounding **3% monthly KPI gains** at **75%+ on-time** delivery, and deployed the **national order dispatch policy** driving customer reorder-rate.",
+          "Owned last-mile operations at Bangladesh's largest Q-commerce platform: **2M+ monthly orders** across 5 verticals and **50+ ops stakeholders**, ML fleet forecasting compounding **3% monthly KPI gains** at **75%+ on-time** delivery, and deployed the **national order dispatch policy** driving customer reorder-rate.",
           "Shipped the return-order product, a daily compliance dashboard flipping cancelled-order billing across **2,200+ vendors**: **€377K saved in a year**, food-quality complaints down **60.6%**.",
           "Launched surge pricing across **64 cities**, generating **€100K+/mo incremental revenue** and **+21% basket size**; automated tooling and compliance penalties raised **16K-rider fleet** performance **20%**.",
         ],
@@ -463,11 +532,6 @@ const campusRoles: CampusRole[] = [
     period: "2016 - 2019",
     detail:
       "Four projects across probability, econometrics and biostatistics, funded by an HHMI grant and UROP twice: directional dependence through order statistics and copulas, conditional cash transfers and maternal health in Bangladesh, and survey-weighted models of NHANES cognitive testing.",
-    links: [
-      { label: "Directional Dependence", href: "https://research-directional-dependence.vercel.app", color: "#a855f7" },
-      { label: "Copulas", href: "https://research-copulas-directional-depend.vercel.app", color: "#14b8a6" },
-      { label: "NHANES Cognition", href: "https://research-nhanes-cognitive.vercel.app", color: "#0ea5e9" },
-    ],
   },
   {
     title: "Research Analyst",
@@ -487,12 +551,62 @@ const campusRoles: CampusRole[] = [
   },
 ];
 
-// Sectors worked in, each carrying the scale it was worked at.
+// Every sector worked in, strongest first. No scale figures here: the numbers
+// live in the hero strip and in the role bullets, and repeating them turned a
+// list of industries into a wall of digits.
 const industries = [
-  { label: "Enterprise SaaS", scale: "1.2M+ events / day", color: "#6366f1" },
-  { label: "On-Demand Delivery", scale: "2M+ orders / month", color: "#f97316" },
-  { label: "Home Services", scale: "16K moves / month", color: "#2dd4bf" },
-  { label: "Expert Marketplaces", scale: "3M+ consultations", color: "#8b5cf6" },
+  { label: "Enterprise SaaS", color: "#6366f1" },
+  { label: "On-Demand Marketplace", color: "#f97316" },
+  { label: "Home Services", color: "#2dd4bf" },
+  { label: "Expert Marketplaces", color: "#8b5cf6" },
+  { label: "Financial Services", color: "#34d399" },
+  { label: "Consumer Retail", color: "#f43f5e" },
+];
+
+/**
+ * The scorecard, organised by company rather than by figure. A bare number with
+ * a favicon next to it answers none of the questions a reader actually has:
+ * what does it count, what did I do, who was it for, what industry, and how big
+ * a name is that company in it. Each tile answers all five.
+ */
+// Reverse-chronological, matching the order the job sections run in below.
+const heroCompanies = [
+  {
+    org: "Just Move In",
+    logo: LOGO.jmi,
+    industry: "Home Services",
+    status: "UK home-moving marketplace, B2B2C across three revenue channels",
+    value: "16K",
+    unit: "moves / month",
+    did: "Own **seven workstreams** end to end: experimentation, analytics, reporting, automation, AI, UAT and the new digital journey",
+  },
+  {
+    org: "Optimizely",
+    logo: LOGO.optimizely,
+    industry: "Enterprise SaaS",
+    status: "Global digital experience platform, 100K+ B2B customers",
+    value: "500K+",
+    unit: "users",
+    did: "Built the **Product Intelligence Platform** and the experimentation framework **10+ product teams** ship on",
+  },
+  {
+    org: "Coto",
+    logo: LOGO.coto,
+    industry: "Expert Marketplaces",
+    status: "On-demand expert marketplace, Singapore",
+    value: "3M+",
+    unit: "consultations",
+    did: "Owned **four functions**: live operations, incentive design, analytics and data architecture",
+  },
+  {
+    org: "foodpanda",
+    logo: LOGO.foodpanda,
+    industry: "On-Demand Marketplace",
+    status: "Bangladesh's largest Q-commerce platform",
+    value: "2M+",
+    unit: "orders / month",
+    did: "Owned last-mile operations end to end, **5 verticals** and **50+ stakeholders**",
+  },
 ];
 
 const honors = [
@@ -540,39 +654,279 @@ const articles = hostedArticles.map((a) => ({
   subtitle: a.subtitle,
   topic: a.topic,
   date: a.date,
+  readTime: a.readTime,
   excerpt: a.excerpt,
   href: `/writing/${a.slug}`,
   color: a.color,
   image: a.thumb ?? a.cover,
   imageAlt: a.coverAlt,
+  links: a.links,
 }));
 
-const research = [
-  {
-    title: "Modeling Directional Dependence",
-    role: "Statistics Senior Thesis",
-    description: "A linear-model random algorithm for detecting bivariate directional dependence, the asymmetry ordinary correlation can't see.",
-    color: "#a855f7",
-    href: "https://research-directional-dependence.vercel.app",
-    image: "/projects/research-directional-dependence.jpg",
-  },
-  {
-    title: "Directional Dependence via Copulas",
-    role: "HHMI Research",
-    description: "Concomitants of order statistics on copulas, with Monte Carlo data designed to keep causal bias out of the directional estimate.",
-    color: "#14b8a6",
-    href: "https://research-copulas-directional-depend.vercel.app",
-    image: "/projects/research-copulas-directional-dependence.jpg",
-  },
-  {
-    title: "Cognitive Change & Neuropsychology",
-    role: "UROP Research · NHANES",
-    description: "Survey-weighted logistic regression on two NHANES cycles of CERAD, AFT & DSST testing to model cognitive change across gender and race.",
-    color: "#0ea5e9",
-    href: "https://research-nhanes-cognitive.vercel.app",
-    image: "/projects/research-nhanes-cognitive.jpg",
-  },
-];
+
+type Project = (typeof projects)[number];
+type ArticleCard = (typeof articles)[number];
+
+/** One shipped implementation: the running site, captured, and what it does. */
+function ImplementationCard({ pr }: { pr: Project }) {
+  return (
+    <a
+      href={pr.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="proj-card group flex flex-col rounded-xl border border-white/[0.08] bg-[#0b0b11] overflow-hidden"
+    >
+      <span className="relative block aspect-[16/9] overflow-hidden border-b border-white/[0.06]">
+        <Image
+          src={pr.image}
+          alt={`${pr.name}, as deployed`}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 500px"
+          className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.05]"
+        />
+        <span
+          className="absolute inset-x-0 top-0 h-px"
+          style={{ background: `linear-gradient(90deg, transparent, ${pr.color}88, transparent)` }}
+        />
+      </span>
+      <span className="flex flex-col flex-1 p-4">
+        <span className="flex items-center gap-2 mb-2">
+          <span
+            className="text-[9px] uppercase tracking-[0.12em] font-semibold px-2 py-[3px] rounded-full border"
+            style={{ color: pr.color, borderColor: pr.color + "40", background: pr.color + "12" }}
+          >
+            {pr.label}
+          </span>
+          <span className="ml-auto text-white/30 group-hover:text-white/80 transition-colors">
+            <ArrowUpRight />
+          </span>
+        </span>
+        <span className="block text-[15px] font-semibold text-white leading-snug mb-1">
+          {pr.title}
+        </span>
+        <span className="block text-[10.5px] text-white/40 mb-2.5">{pr.name}</span>
+        <span className="block text-[12px] text-white/60 leading-relaxed mb-3">
+          {pr.description}
+        </span>
+        <span className="block text-[10.5px] text-white/35 mt-auto pt-2.5 border-t border-white/[0.05]">
+          {pr.inside}
+        </span>
+      </span>
+    </a>
+  );
+}
+
+/**
+ * An article preview. `featured` lays the cover beside the text instead of
+ * above it, which gives the lead piece the room its cover art deserves and
+ * stops a five-item grid from orphaning a card on its own row.
+ */
+function ArticlePreview({ a, featured = false }: { a: ArticleCard; featured?: boolean }) {
+  return (
+    <div
+      className={`proj-card group flex rounded-xl border border-white/[0.08] bg-[#0b0b11] overflow-hidden ${
+        featured ? "flex-col md:flex-row" : "flex-col"
+      }`}
+    >
+      <Link
+        href={a.href}
+        className={`flex ${featured ? "flex-col md:flex-row md:items-stretch w-full" : "flex-col flex-1"}`}
+      >
+        <span
+          className={`relative block overflow-hidden ${
+            featured
+              ? "md:w-[52%] aspect-[16/9] md:aspect-auto md:min-h-[300px] border-b md:border-b-0 md:border-r"
+              : "aspect-[16/9] border-b"
+          } border-white/[0.06]`}
+        >
+          <Image
+            src={a.image}
+            alt={a.imageAlt}
+            fill
+            sizes={featured ? "(max-width: 768px) 100vw, 540px" : "(max-width: 640px) 100vw, 500px"}
+            className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.05]"
+          />
+          <span
+            className="absolute inset-x-0 top-0 h-px"
+            style={{ background: `linear-gradient(90deg, transparent, ${a.color}88, transparent)` }}
+          />
+        </span>
+        <span className={`flex flex-col flex-1 ${featured ? "p-6 justify-center" : "p-4"}`}>
+          <span className="flex items-center gap-2 mb-2 flex-wrap">
+            <span
+              className="text-[9px] uppercase tracking-[0.12em] font-semibold px-2 py-[3px] rounded-full border"
+              style={{ color: a.color, borderColor: a.color + "40", background: a.color + "12" }}
+            >
+              {a.topic}
+            </span>
+            <span className="text-[10px] text-white/35">{a.date}</span>
+            <span className="text-white/20 text-[10px]">·</span>
+            <span className="text-[10px] text-white/35">{a.readTime}</span>
+            <span className="ml-auto text-white/30 group-hover:text-white/80 transition-colors">
+              <ArrowUpRight />
+            </span>
+          </span>
+          <span
+            className={`block font-semibold text-white leading-snug mb-2 ${
+              featured ? "text-[1.35rem] tracking-tight" : "text-[15px]"
+            }`}
+          >
+            {a.title}
+          </span>
+          <span
+            className={`block text-white/60 leading-relaxed ${featured ? "text-[13px]" : "text-[12px]"}`}
+          >
+            {featured ? a.excerpt : a.subtitle}
+          </span>
+          {featured && a.links && a.links.length > 0 && (
+            <span className="flex flex-wrap gap-x-4 gap-y-1 mt-4">
+              {a.links.map((l) => (
+                <span key={l.href} className="text-[11px] text-white/45">
+                  {l.label}
+                </span>
+              ))}
+            </span>
+          )}
+        </span>
+      </Link>
+      {!featured && a.links && a.links.length > 0 && (
+        <span className="flex flex-wrap gap-x-4 gap-y-1 px-4 pb-4 pt-1 mt-auto">
+          {a.links.map((l) => (
+            <a
+              key={l.href}
+              href={l.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-[10.5px] text-white/45 hover:text-white transition-colors"
+            >
+              {l.label}
+              <ArrowUpRight />
+            </a>
+          ))}
+        </span>
+      )}
+    </div>
+  );
+}
+
+const PANELS: Record<Feature["panel"], React.ComponentType> = {
+  console: ExperimentConsole,
+  triage: WorkOsPanel,
+  dispatch: DispatchPanel,
+  barometer: SupplyPanel,
+};
+
+const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+
+/**
+ * One job, as a section: who they are, what I was accountable for, and a live
+ * panel of the actual work. This replaced a grid of image cards that asserted
+ * the same things without showing any of them.
+ */
+function JobSection({ role, n }: { role: Role; n: string }) {
+  const f = role.feature!;
+  const Panel = PANELS[f.panel];
+  const built = projects.filter((pr) => pr.org === role.org);
+
+  return (
+    <section id={slugify(role.org)} className="scroll-mt-20 py-24 px-6 border-t border-white/[0.06]">
+      <div className="max-w-5xl mx-auto">
+        {/* Who, what industry, and how big a name they are in it */}
+        <div className="flex flex-wrap items-center gap-2.5 mb-2">
+          <span className="text-[11px] font-mono text-white/40 mr-1.5">{n}</span>
+          {role.logo && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={role.logo} alt="" width={19} height={19} className="rounded-sm object-contain flex-shrink-0" />
+          )}
+          <span className="text-[15px] font-bold text-white">{role.org}</span>
+          <span className="text-[9.5px] uppercase tracking-[0.11em] text-indigo-200/60 border border-indigo-300/20 bg-indigo-400/[0.07] rounded-full px-2 py-[2px]">
+            {f.industry}
+          </span>
+          {role.location && <span className="text-[10.5px] text-white/35">{role.location}</span>}
+        </div>
+        <p className="text-[11.5px] text-white/40 mb-7">{f.status}</p>
+
+        <h2 className="text-[1.3rem] sm:text-[1.6rem] font-bold tracking-tight text-white leading-[1.25] mb-4 max-w-4xl">
+          {f.headline}
+        </h2>
+        <p className="text-sm text-white/60 max-w-2xl mb-8 leading-relaxed">{f.narrative}</p>
+
+        <Panel />
+        {f.panelNote && <p className="mt-3 text-[11px] text-white/35">{f.panelNote}</p>}
+
+        <div className="grid md:grid-cols-[1.25fr_1fr] gap-x-14 gap-y-9 mt-12">
+          {/* What I owned */}
+          <div>
+            <p className="text-[10px] uppercase tracking-[0.16em] text-white/35 mb-5">
+              What I owned
+            </p>
+            <div className={`space-y-5 ${role.positions.length > 1 ? "relative pl-5" : ""}`}>
+              {role.positions.length > 1 && (
+                <div
+                  className="absolute left-1 top-2 bottom-2 w-px border-l border-dashed"
+                  style={{ borderColor: "#a5b4fc", opacity: 0.7 }}
+                />
+              )}
+              {role.positions.map((pos) => (
+                <div key={pos.title} className="relative">
+                  {role.positions.length > 1 && (
+                    <span
+                      className="glow-dot absolute -left-[18px] top-[5px] w-2.5 h-2.5 rounded-full ring-2 ring-[#0a0a0f]"
+                      style={{
+                        background: "linear-gradient(135deg, #c7d2fe, #818cf8)",
+                        boxShadow: "0 0 10px #818cf8cc, 0 0 4px #c7d2fe",
+                      }}
+                    />
+                  )}
+                  <p className="exp-title text-sm font-medium leading-snug">{pos.title}</p>
+                  <p className="text-xs text-white/45 mt-0.5">{pos.period}</p>
+                  {pos.impact && <ImpactList lines={pos.impact} />}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* What I wrote about it */}
+          <div>
+            {f.article && (
+              <>
+                <p className="text-[10px] uppercase tracking-[0.16em] text-white/35 mb-4">
+                  What I wrote about it
+                </p>
+                <Link
+                  href={`/writing/${f.article.slug}`}
+                  className="case-chip group flex items-start justify-between gap-3 rounded-lg border border-white/10 bg-white/[0.02] px-3.5 py-3"
+                  style={{ "--c": "#a5b4fc" } as React.CSSProperties}
+                >
+                  <span className="text-[12px] font-medium text-white/85 leading-snug">
+                    {f.article.title}
+                  </span>
+                  <span className="text-white/40 group-hover:text-white/80 transition-colors mt-[3px] flex-shrink-0">
+                    <ArrowUpRight />
+                  </span>
+                </Link>
+              </>
+            )}
+          </div>
+        </div>
+
+        {/* What I shipped there. Real implementations, not write-ups of them. */}
+        {built.length > 0 && (
+          <div className="mt-14">
+            <p className="text-[10px] uppercase tracking-[0.16em] text-white/35 mb-5">
+              {built.length === 1 ? "What I shipped" : `What I shipped · ${built.length}`}
+            </p>
+            <div className="grid sm:grid-cols-2 gap-4">
+              {built.map((pr) => (
+                <ImplementationCard key={pr.href} pr={pr} />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+    </section>
+  );
+}
 
 // ── Page ──────────────────────────────────────────────────────────────────────
 
@@ -647,6 +1001,27 @@ export default function Home() {
       {/* ── Nav ── */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.06] bg-[#0a0a0f]/90 backdrop-blur-md">
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-end gap-5">
+          {/* Section links: the page is long enough now that arriving at the top
+              with no map is a real cost. Hidden on small screens, where the
+              anchors are all a short scroll apart anyway. */}
+          <div className="hidden md:flex items-center gap-5 mr-auto">
+            {[
+              { label: "Optimizely", href: "#optimizely" },
+              { label: "Just Move In", href: "#just-move-in" },
+              { label: "Coto", href: "#coto" },
+              { label: "foodpanda", href: "#foodpanda" },
+              { label: "Research", href: "#research" },
+              { label: "Articles", href: "#writing" },
+            ].map(({ label, href }) => (
+              <a
+                key={label}
+                href={href}
+                className="text-[13px] font-medium text-white/45 hover:text-white transition-colors"
+              >
+                {label}
+              </a>
+            ))}
+          </div>
           <a
             href="/resume"
             className="text-[13px] font-medium text-white/55 hover:text-white transition-colors"
@@ -671,14 +1046,21 @@ export default function Home() {
       </nav>
 
       {/* ── Hero ── */}
-      <section className="pt-36 pb-20 px-6">
+      <section className="pt-32 pb-14 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="flex flex-col md:flex-row items-start gap-10 md:gap-14">
 
             {/* Photo */}
             <div className="animate-fade-up flex-shrink-0 pt-3">
               <div className="relative w-44 h-44 sm:w-52 sm:h-52 rounded-full overflow-hidden ring-1 ring-white/10">
-                <Image src="/profile.png" alt="Wahid Tawsif Ratul" fill className="object-cover" priority />
+                <Image
+                  src="/profile.png"
+                  alt="Wahid Tawsif Ratul"
+                  fill
+                  sizes="(max-width: 640px) 176px, 208px"
+                  className="object-cover"
+                  priority
+                />
               </div>
             </div>
 
@@ -690,161 +1072,226 @@ export default function Home() {
               <h1 className="animate-fade-up-delay font-bold tracking-tight leading-[1.05] mb-8 text-[clamp(1.9rem,5.2vw,3.75rem)] text-white whitespace-nowrap">
                 Wahid Tawsif Ratul
               </h1>
-              <div className="animate-fade-up-delay-2 flex items-start gap-6 mb-10">
+              {/* The bio belongs here, not 3,000px down the page */}
+              <div className="animate-fade-up-delay-2 flex items-start gap-6 mb-6">
                 <div className="w-8 h-px bg-white/30 mt-[10px] flex-shrink-0" />
-                <p className="text-sm sm:text-base text-white/70 max-w-md leading-relaxed">
-                  I build the pipeline, define the metric, run the experiment, and then own the call. Seven years of it across marketplaces and enterprise SaaS, and $17M+ in measured revenue impact.
-                </p>
+                <div className="max-w-xl">
+                  <p className="text-sm sm:text-base text-white/80 leading-relaxed mb-3.5">
+                    Data Scientist turned Product Manager. $17M+ in measured revenue gains in
+                    roles across Systems Product Management, B2B2C SaaS Pricing and Analytics,
+                    and On-Demand Marketplace Operations.
+                  </p>
+                  <p className="text-sm sm:text-base text-white/70 leading-relaxed">
+                    Now deep into Agentic AI: building AI-native workflows automating new feature
+                    prototype and releases, customer campaign and comms, UAT, Reporting and
+                    Systems Integration.
+                  </p>
+                </div>
               </div>
-              <div className="animate-fade-up-delay-2 flex flex-wrap items-center gap-3">
-                <a href="#work" className="px-5 py-2.5 rounded-full bg-white text-[#0a0a0f] text-sm font-semibold hover:bg-white/90 transition-colors">
-                  View Projects
-                </a>
-                <a href="#writing" className="px-5 py-2.5 rounded-full border border-white/15 text-sm text-white/80 hover:border-white/35 hover:text-white transition-all">
-                  Read Articles
-                </a>
-                <a href="#research" className="px-5 py-2.5 rounded-full border border-white/15 text-sm text-white/80 hover:border-white/35 hover:text-white transition-all">
-                  Research
-                </a>
-                <a href="/resume" className="px-5 py-2.5 rounded-full border border-white/15 text-sm text-white/80 hover:border-white/35 hover:text-white transition-all">
-                  Résumé
-                </a>
-                <div className="flex items-center gap-1 sm:ml-2">
-                  {socials.map(({ label, href, Icon }) => (
-                    <a
+
+              {/* Industries, up here where breadth reads immediately */}
+              <div className="animate-fade-up-delay-2 mb-8">
+                <p className="text-[9px] uppercase tracking-[0.18em] mb-2 font-semibold text-white/40">
+                  Worked in
+                </p>
+                <div className="flex flex-wrap gap-1.5">
+                  {industries.map(({ label, color }) => (
+                    <span
                       key={label}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={label}
-                      className="p-2.5 rounded-full border border-white/10 text-white/60 hover:text-white hover:border-white/30 transition-all"
+                      className="inline-flex items-center gap-1.5 text-[10.5px] px-2.5 py-1 rounded-full border border-white/10 bg-white/[0.03]"
                     >
-                      <Icon />
-                    </a>
+                      <span
+                        className="w-1.5 h-1.5 rounded-full flex-shrink-0"
+                        style={{ background: color, boxShadow: `0 0 7px ${color}cc` }}
+                      />
+                      <span className="text-white/65">{label}</span>
+                    </span>
                   ))}
                 </div>
               </div>
+
+              <div className="animate-fade-up-delay-2 flex flex-wrap items-center gap-3">
+                <a href="mailto:wahidtratul@gmail.com" className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white text-[#0a0a0f] text-sm font-semibold hover:bg-white/90 transition-colors">
+                  <IconEmail />
+                  Email me
+                </a>
+                {/* Only the two actions worth taking here. Résumé, writing and
+                    every social link already live in the nav, and repeating
+                    them put a third envelope on one screen. */}
+                <a href="#just-move-in" className="px-5 py-2.5 rounded-full border border-white/15 text-sm text-white/80 hover:border-white/35 hover:text-white transition-all">
+                  See the work
+                </a>
+              </div>
             </div>
+          </div>
+
+          {/* ── Scale, above the fold ── */}
+          <div className="animate-fade-up-delay-2 mt-14">
+            {/* gap-px over a lit background renders the dividers, so the grid
+                stays correct at any column count without per-cell border rules */}
+            <div className="grid sm:grid-cols-2 gap-px rounded-xl border border-white/[0.08] bg-white/[0.07] overflow-hidden">
+              {heroCompanies.map((c) => (
+                <div key={c.org} className="stat-tile relative px-5 py-[19px] bg-[#0b0b11]">
+                  {/* The number leads, with the company and its industry beside it */}
+                  <div className="flex items-center justify-between gap-3 flex-wrap mb-3">
+                    <p className="flex items-baseline gap-1.5">
+                      <span className="stat-figure text-[2rem] font-bold tracking-tight leading-none tabular-nums">
+                        {c.value}
+                      </span>
+                      <span className="text-[11.5px] font-medium text-white/50">{c.unit}</span>
+                    </p>
+                    <span className="flex items-center gap-2 flex-shrink-0">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        src={c.logo}
+                        alt=""
+                        width={17}
+                        height={17}
+                        className="rounded-sm object-contain flex-shrink-0"
+                      />
+                      <span className="text-[12.5px] font-bold text-white">{c.org}</span>
+                      <span className="text-[9px] uppercase tracking-[0.1em] text-indigo-200/65 border border-indigo-300/20 bg-indigo-400/[0.07] rounded-full px-2 py-[2px] whitespace-nowrap">
+                        {c.industry}
+                      </span>
+                    </span>
+                  </div>
+
+                  {/* The boast, then who they are */}
+                  <p className="text-[12.5px] text-white/80 leading-relaxed font-medium">
+                    <Impact text={c.did} />
+                  </p>
+                  <p className="text-[10.5px] text-white/35 leading-snug mt-2 pt-2 border-t border-white/[0.05]">
+                    {c.status}
+                  </p>
+                </div>
+              ))}
+            </div>
+            <p className="mt-3.5 text-[11.5px] text-white/40">
+              Every figure is sourced in a role below, and every project links to the built thing behind it.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* ── Marquee (dynamic, colour-matched to skills) ── */}
-      <div className="border-y border-white/[0.06] py-4 overflow-hidden">
-        <div className="marquee-track flex whitespace-nowrap select-none">
-          {[...Array(2)].map((_, i) => (
-            <span key={i} className="flex items-center">
-              {marqueeItems.map((item, idx) => (
-                <span key={`${i}-${idx}`} className="flex items-center gap-5 px-5">
-                  <span className="flex items-center gap-2">
-                    <SkillMark name={item.label} color={item.color} size={13} />
-                    <span
-                      className="text-[11px] uppercase tracking-[0.18em] font-semibold"
-                      style={{ color: item.color, textShadow: `0 0 14px ${item.color}77, 0 0 4px ${item.color}55` }}
-                    >
-                      {item.label}
-                    </span>
-                  </span>
-                  <span className="text-xs" style={{ color: item.color + "66" }}>✦</span>
-                </span>
+      {/* ── The stack, in full. This replaced a marquee that scrolled the
+             same 34 labels past the reader without letting them read any. ── */}
+      <section className="py-14 px-6 border-y border-white/[0.06]">
+        <div className="max-w-5xl mx-auto">
+          <p className="text-[10px] uppercase tracking-[0.18em] text-white/35 mb-6">
+            Tech Stack
+          </p>
+            <div className="space-y-4">
+              {skillGroups.map((g) => (
+                <div key={g.label}>
+                  <p className="text-[9px] uppercase tracking-[0.18em] mb-2 font-semibold" style={{ color: g.color + "cc" }}>
+                    {g.label}
+                  </p>
+                  <div className="flex flex-wrap gap-2">
+                    {g.items.map((s, idx) => {
+                      const c = g.color;
+                      return (
+                        <span
+                        key={s}
+                        className="skill-pill inline-flex items-center gap-1.5 text-[11px] pl-2 pr-3 py-1.5 rounded-full border font-medium"
+                        style={
+                          {
+                            color: c,
+                            borderColor: c + "55",
+                            background: `linear-gradient(135deg, ${c}26, ${c}0a)`,
+                            "--c": c,
+                            "--glow": c + "55",
+                            "--d": `${idx * 0.22}s`,
+                          } as React.CSSProperties
+                        }
+                        >
+                        <SkillMark name={s} color={c} />
+                        {s}
+                        </span>
+                      );
+                    })}
+                  </div>
+                </div>
               ))}
-            </span>
-          ))}
+            </div>
         </div>
-      </div>
+      </section>
+
+      {/* ── One section per job, each with a live panel of the actual work ── */}
+      {roles
+        .filter((r) => r.feature)
+        .map((role, i) => (
+          <JobSection key={role.org} role={role} n={String(i + 1).padStart(2, "0")} />
+        ))}
+
+      {/* ── Research, on its own, with the real sites as thumbnails ── */}
+      <section id="research" className="scroll-mt-20 py-24 px-6 border-t border-white/[0.06]">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex flex-wrap items-center gap-2.5 mb-2">
+            <span className="text-[11px] font-mono text-white/40 mr-1.5">05</span>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="https://www.google.com/s2/favicons?domain=umn.edu&sz=64"
+              alt=""
+              width={19}
+              height={19}
+              className="rounded-sm object-contain flex-shrink-0"
+            />
+            <span className="text-[15px] font-bold text-white">University of Minnesota</span>
+            <span className="text-[9.5px] uppercase tracking-[0.11em] text-indigo-200/60 border border-indigo-300/20 bg-indigo-400/[0.07] rounded-full px-2 py-[2px]">
+              Research
+            </span>
+            <span className="text-[10.5px] text-white/35">Minnesota, USA</span>
+          </div>
+          <p className="text-[11.5px] text-white/40 mb-7">
+            Three funded projects, two UROP awards and an HHMI grant
+          </p>
+
+          <h2 className="text-[1.6rem] sm:text-[2rem] font-bold tracking-tight text-white leading-tight mb-3.5">
+            Statistics research, before the product work.
+          </h2>
+          <p className="text-sm text-white/60 max-w-2xl mb-10 leading-relaxed">
+            Before the pipelines and the launches there was the lab and the proof. Each of these
+            is written up as a working instrument, with the derivations and the simulations you
+            can read rather than take on trust.
+          </p>
+
+          <ResearchPanel />
+          <p className="mt-3 mb-12 text-[11px] text-white/35">
+            All three computed in the browser. The full derivations, the simulation studies and
+            the WebGL surfaces are on the project sites below.
+          </p>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {projects
+              .filter((pr) => pr.org === "University of Minnesota")
+              .map((pr) => (
+                <ImplementationCard key={pr.href} pr={pr} />
+              ))}
+          </div>
+        </div>
+      </section>
 
       {/* ── About ── */}
-      <section className="py-24 px-6">
+      <section id="about" className="scroll-mt-20 py-24 px-6">
         <div className="max-w-5xl mx-auto">
-          <div className="flex items-baseline gap-4 mb-14">
-            <span className="text-[11px] font-mono text-white/40">01</span>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-white/55">About</p>
+          <div className="flex items-baseline gap-4 mb-5">
+            <span className="text-[11px] font-mono text-white/40">06</span>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-white/55">Earlier &amp; foundations</p>
           </div>
+          <h2 className="text-[1.6rem] sm:text-[2rem] font-bold tracking-tight text-white leading-tight mb-10">
+            Where the toolkit came from.
+          </h2>
           <div className="grid md:grid-cols-2 md:grid-rows-[auto_1fr] gap-x-16 gap-y-14 items-start">
 
             {/* Left, row 1: bio + industries + skills */}
             <div className="md:col-start-1 md:row-start-1">
-              <p className="text-white/85 leading-relaxed mb-4 text-base font-medium">
-                I turn empirical evidence into business growth.
-              </p>
-              <p className="text-white/75 leading-relaxed mb-4 text-sm">
-                As a Data Scientist turned Product Manager, I&apos;ve orchestrated multimillion-dollar revenue gains: pricing and packaging models, incentive frameworks that move customers and partners, and decision systems that tell a business its next move and the reason behind it.
-              </p>
-              <p className="text-white/75 leading-relaxed mb-4 text-sm">
-                My expertise spans SaaS pricing and packaging, product analytics, and the fast-paced demands of on-demand marketplace operations across global tech and e-commerce. Lately, I have gone deep on agentic AI: building AI-native workflows that automate UAT, Data Reporting, System Integrations, and the operational work that requires human intervention.
-              </p>
-              <p className="text-white/75 leading-relaxed mb-9 text-sm">
-                I write about AI, Economics, Data Science, and Product work on Medium -{" "}
-                <a
-                  href="https://medium.com/@wahidtratul"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-indigo-300 hover:text-indigo-200 underline underline-offset-2 transition-colors"
-                >
-                  https://medium.com/@wahidtratul
-                </a>
-                .
-              </p>
-
-              <div className="mb-9">
-                <p className="text-[9px] uppercase tracking-[0.18em] mb-2.5 font-semibold text-white/45">Worked in</p>
-                <div className="flex flex-wrap gap-2">
-                  {industries.map(({ label, scale, color }) => (
-                    <span
-                      key={label}
-                      className="inline-flex items-baseline gap-2 text-[11px] px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.03]"
-                    >
-                      <span
-                        className="w-1.5 h-1.5 rounded-full flex-shrink-0 self-center"
-                        style={{ background: color, boxShadow: `0 0 7px ${color}cc` }}
-                      />
-                      <span className="text-white/70">{label}</span>
-                      <span className="text-[10px] font-medium" style={{ color }}>{scale}</span>
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="space-y-4">
-                {skillGroups.map((g) => (
-                  <div key={g.label}>
-                    <p className="text-[9px] uppercase tracking-[0.18em] mb-2 font-semibold" style={{ color: g.color + "cc" }}>
-                      {g.label}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
-                      {g.items.map((s, idx) => {
-                        const c = g.color;
-                        return (
-                          <span
-                            key={s}
-                            className="skill-pill inline-flex items-center gap-1.5 text-[11px] pl-2 pr-3 py-1.5 rounded-full border font-medium"
-                            style={
-                              {
-                                color: c,
-                                borderColor: c + "55",
-                                background: `linear-gradient(135deg, ${c}26, ${c}0a)`,
-                                "--c": c,
-                                "--glow": c + "55",
-                                "--d": `${idx * 0.22}s`,
-                              } as React.CSSProperties
-                            }
-                          >
-                            <SkillMark name={s} color={c} />
-                            {s}
-                          </span>
-                        );
-                      })}
-                    </div>
-                  </div>
-                ))}
-              </div>
             </div>
 
             {/* Right, spanning both rows: experience */}
             <div className="md:col-start-2 md:row-start-1 md:row-span-2">
-              <p className="text-[11px] uppercase tracking-[0.2em] text-white/50 mb-7">Experience</p>
+              <p className="text-[11px] uppercase tracking-[0.2em] text-white/50 mb-7">Earlier roles</p>
               <div className="space-y-8">
-                {roles.map((company) => (
+                {roles.filter((r) => !r.feature).map((company) => (
                   <div key={company.org} className="group/exp border-l border-white/10 pl-5">
                     <div className="flex items-center gap-2.5 mb-1">
                       {company.logo && (
@@ -876,21 +1323,7 @@ export default function Home() {
                           )}
                           <p className="exp-title text-sm font-medium leading-snug">{pos.title}</p>
                           <p className="text-xs text-white/45 mt-0.5">{pos.period}</p>
-                          {pos.impact && (
-                            <ul className="mt-2 space-y-1.5">
-                              {pos.impact.map((line) => (
-                                <li key={line} className="flex gap-2 text-[11.5px] leading-relaxed text-white/55">
-                                  <span
-                                    className="mt-[6px] w-[3px] h-[3px] rounded-full flex-shrink-0"
-                                    style={{ background: "#a5b4fc", boxShadow: "0 0 6px #818cf8" }}
-                                  />
-                                  <span>
-                                    <Impact text={line} />
-                                  </span>
-                                </li>
-                              ))}
-                            </ul>
-                          )}
+                          {pos.impact && <ImpactList lines={pos.impact} />}
                           {pos.links && <CaseLinks links={pos.links} />}
                         </div>
                       ))}
@@ -972,169 +1405,29 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── Projects ── */}
-      <section id="work" className="py-24 px-6 border-t border-white/[0.06]">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex items-baseline gap-4 mb-14">
-            <span className="text-[11px] font-mono text-white/40">02</span>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-white/55">Projects</p>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
-            {projects.map((p) => (
-              <a
-                key={p.title}
-                href={p.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative flex flex-col rounded-lg border border-white/[0.07] overflow-hidden min-h-[250px] hover:border-white/[0.15] hover:scale-[1.03] hover:-translate-y-1 transition-all duration-300 ease-out"
-              >
-                {/* Photo background, sitting inside the card box */}
-                <div className="absolute inset-0 pointer-events-none">
-                  <Image
-                    src={p.image}
-                    alt={p.title}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                    style={{ objectPosition: "50% 40%" }}
-                  />
-                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, #0a0a0f 16%, rgba(10,10,15,0.82) 52%, rgba(10,10,15,0.42) 100%)" }} />
-                  <div className="absolute inset-x-0 top-0 h-px" style={{ background: `linear-gradient(90deg, transparent, ${p.color}77, transparent)` }} />
-                </div>
-
-                {/* Content sits at the bottom, over the image */}
-                <div className="relative z-10 flex flex-col flex-1 justify-end p-3.5">
-                  <div className="flex items-center gap-2 mb-2">
-                    <div
-                      className="flex items-center justify-center w-7 h-7 rounded-md flex-shrink-0 transition-transform duration-300 ease-out group-hover:scale-110"
-                      style={{ background: `${p.color}1a`, border: `1px solid ${p.color}33`, backdropFilter: "blur(4px)" }}
-                    >
-                      <span className="scale-[0.6]">
-                        <p.Icon color={p.color} />
-                      </span>
-                    </div>
-                    <p className="text-[9px] uppercase tracking-[0.12em] font-semibold leading-tight" style={{ color: p.color + "cc" }}>
-                      {p.label}
-                    </p>
-                  </div>
-                  <h3 className="text-[13px] font-semibold text-white mb-1.5 leading-snug">{p.title}</h3>
-                  <p className="text-[11px] text-white/60 leading-relaxed line-clamp-3">{p.description}</p>
-                  <div className="mt-3 flex items-center gap-1.5 text-[10px] text-white/55 group-hover:text-white/90 transition-colors">
-                    <span>View project</span>
-                    <ArrowUpRight />
-                  </div>
-                </div>
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ── Writing ── */}
-      <section id="writing" className="relative py-24 px-6 border-t border-white/[0.06] overflow-hidden">
+      <section id="writing" className="scroll-mt-20 relative py-24 px-6 border-t border-white/[0.06] overflow-hidden">
         <div className="relative max-w-5xl mx-auto">
-          <div className="flex items-baseline justify-between mb-14">
+          <div className="flex items-baseline justify-between mb-5">
             <div className="flex items-baseline gap-4">
-              <span className="text-[11px] font-mono text-white/40">03</span>
-              <p className="text-[11px] uppercase tracking-[0.2em] text-white/55">Writing</p>
+              <span className="text-[11px] font-mono text-white/40">07</span>
+              <p className="text-[11px] uppercase tracking-[0.2em] text-white/55">Articles</p>
             </div>
             <a href="https://medium.com/@wahidtratul" target="_blank" rel="noopener noreferrer"
               className="flex items-center gap-1.5 text-xs text-white/55 hover:text-white transition-colors">
               All on Medium <ArrowUpRight />
             </a>
           </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
-            {articles.map((a) => (
-              <Link
-                key={a.title}
-                href={a.href}
-                className="group relative flex flex-col rounded-lg border border-white/[0.07] overflow-hidden min-h-[250px] hover:border-white/[0.15] hover:scale-[1.03] hover:-translate-y-1 transition-all duration-300 ease-out"
-              >
-                {/* Sketched photo background, sitting inside the card box */}
-                <div className="absolute inset-0 pointer-events-none">
-                  <Image
-                    src={a.image}
-                    alt={a.imageAlt}
-                    fill
-                    className="maradona-sketch object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                    style={{ objectPosition: "50% 40%" }}
-                  />
-                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, #0a0a0f 16%, rgba(10,10,15,0.82) 52%, rgba(10,10,15,0.42) 100%)" }} />
-                  <div className="absolute inset-x-0 top-0 h-px" style={{ background: `linear-gradient(90deg, transparent, ${a.color}77, transparent)` }} />
-                </div>
-
-                {/* Content sits at the bottom, over the image */}
-                <div className="relative z-10 flex flex-col flex-1 justify-end p-3.5">
-                  <div className="flex items-center gap-2 mb-2">
-                    <span className="text-[9px] uppercase tracking-[0.12em] font-semibold leading-tight" style={{ color: a.color }}>{a.topic}</span>
-                    <span className="text-white/30 text-[9px]">·</span>
-                    <span className="text-[9px] text-white/55">{a.date}</span>
-                  </div>
-                  <h3 className="text-[13px] font-semibold text-white mb-1.5 leading-snug">{a.title}</h3>
-                  <p className="text-[11px] text-white/60 leading-relaxed line-clamp-3">{a.subtitle}</p>
-                  <div className="mt-3 flex items-center gap-1.5 text-[10px] text-white/55 group-hover:text-white/90 transition-colors">
-                    <span>Read the article</span>
-                    <ArrowUpRight />
-                  </div>
-                </div>
-              </Link>
-            ))}
+          <h2 className="text-[1.6rem] sm:text-[2rem] font-bold tracking-tight text-white leading-tight mb-10">
+            Articles on AI, economics, and how data gets used.
+          </h2>
+          {/* The lead article gets the wide treatment, the rest a clean 2x2 */}
+          <div className="mb-4">
+            <ArticlePreview a={articles[0]} featured />
           </div>
-        </div>
-      </section>
-
-      {/* ── Research ── */}
-      <section id="research" className="py-24 px-6 border-t border-white/[0.06]">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex items-baseline gap-4 mb-4">
-            <span className="text-[11px] font-mono text-white/40">04</span>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-white/55">Research</p>
-          </div>
-          <p className="text-sm text-white/55 max-w-xl mb-12 leading-relaxed">
-            Before product and pipelines, there was the lab and the proof. My academic
-            research at the University of Minnesota grounded everything that came after.
-          </p>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-2.5">
-            {research.map((r) => (
-              <a
-                key={r.title}
-                href={r.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group relative flex flex-col rounded-lg border border-white/[0.07] overflow-hidden min-h-[250px] hover:border-white/[0.15] hover:-translate-y-1 hover:scale-[1.02] transition-all duration-300 ease-out"
-                style={{ boxShadow: `inset 0 1px 0 ${r.color}1a` }}
-              >
-                {/* Photo background, sitting inside the card box */}
-                <div className="absolute inset-0 pointer-events-none">
-                  <Image
-                    src={r.image}
-                    alt={r.title}
-                    fill
-                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                    style={{ objectPosition: "50% 40%" }}
-                  />
-                  <div className="absolute inset-0" style={{ background: "linear-gradient(to top, #0a0a0f 16%, rgba(10,10,15,0.82) 52%, rgba(10,10,15,0.42) 100%)" }} />
-                  <div className="absolute inset-x-0 top-0 h-px" style={{ background: `linear-gradient(90deg, transparent, ${r.color}77, transparent)` }} />
-                </div>
-
-                {/* Content sits at the bottom, over the image */}
-                <div className="relative z-10 flex flex-col flex-1 justify-end p-4">
-                  <div
-                    className="w-7 h-[3px] rounded-full mb-4 transition-all duration-300 group-hover:w-12"
-                    style={{ background: r.color, boxShadow: `0 0 10px ${r.color}aa` }}
-                  />
-                  <p className="text-[9px] uppercase tracking-[0.14em] font-semibold mb-1.5" style={{ color: r.color + "cc" }}>
-                    {r.role}
-                  </p>
-                  <h3 className="text-[13px] font-semibold text-white mb-2 leading-snug">{r.title}</h3>
-                  <p className="text-[11px] text-white/60 leading-relaxed line-clamp-3">{r.description}</p>
-                  <div className="mt-3 flex items-center gap-1.5 text-[10px] text-white/55 group-hover:text-white/90 transition-colors">
-                    <span>View case study</span>
-                    <ArrowUpRight />
-                  </div>
-                </div>
-              </a>
+          <div className="grid sm:grid-cols-2 gap-4">
+            {articles.slice(1).map((a) => (
+              <ArticlePreview key={a.title} a={a} />
             ))}
           </div>
         </div>
