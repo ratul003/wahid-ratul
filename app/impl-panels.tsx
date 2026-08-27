@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { PanelFrame } from "./job-panels";
+import { CredentialScale, ErsScorecard, ProfileBuilder } from "./ers-views";
 
 /**
  * One interactive visual per shipped implementation. Same rule as everywhere
@@ -316,127 +317,33 @@ function EgressBody() {
   );
 }
 
-// ── Rank, Reward, Retain: TOPSIS, recomputed as you reweight ─────────────────
+// ── Rank, Reward, Retain: the Expert Readiness Score ────────────────────────
 
-const CRITERIA = [
-  { key: "rating", name: "Rating", benefit: true },
-  { key: "response", name: "Response time", benefit: false },
-  { key: "completion", name: "Completion rate", benefit: true },
-  { key: "repeat", name: "Repeat bookings", benefit: true },
-  { key: "credential", name: "Credential level", benefit: true },
+const ERS_TABS = [
+  { k: "scorecard", l: "Expert scorecard", uri: "marketplace://ers/scorecard", meta: "5 criteria" },
+  { k: "builder", l: "Build a profile", uri: "marketplace://ers/builder", meta: "live TOPSIS" },
 ] as const;
 
-// Six representative partners across the five signals.
-const EXPERTS = [
-  { name: "Partner 041", v: [4.9, 42, 0.97, 0.61, 3] },
-  { name: "Partner 118", v: [4.6, 12, 0.93, 0.44, 2] },
-  { name: "Partner 205", v: [4.8, 88, 0.99, 0.72, 3] },
-  { name: "Partner 337", v: [4.3, 9, 0.86, 0.31, 1] },
-  { name: "Partner 402", v: [4.7, 26, 0.95, 0.55, 2] },
-  { name: "Partner 519", v: [5.0, 140, 0.91, 0.38, 3] },
-];
-
-/** Revenue-share band by rank: the score has to pay, or it is just a leaderboard. */
-function band(rank: number, n: number): { pct: number; tier: string } {
-  const q = rank / n;
-  if (q <= 1 / 3) return { pct: 90, tier: "Top band" };
-  if (q <= 2 / 3) return { pct: 60, tier: "Mid band" };
-  return { pct: 30, tier: "Base band" };
-}
-
-/**
- * Real TOPSIS: vector-normalise each criterion, weight it, then rank by closeness
- * to the ideal profile and distance from the worst. Not a weighted average, which
- * a partner can game by maxing one signal.
- */
+/** The scoring engine, with the credential scale it reads sitting above it. */
 export function TopsisPanel() {
-  const [w, setW] = useState([0.3, 0.15, 0.2, 0.2, 0.15]);
-
-  const ranked = useMemo(() => {
-    const n = CRITERIA.length;
-    const wSum = w.reduce((a, b) => a + b, 0) || 1;
-    const wn = w.map((x) => x / wSum);
-
-    // Vector normalisation, per criterion
-    const norms = Array.from({ length: n }, (_, j) =>
-      Math.sqrt(EXPERTS.reduce((a, e) => a + e.v[j] ** 2, 0)) || 1
-    );
-    const V = EXPERTS.map((e) => e.v.map((x, j) => (x / norms[j]) * wn[j]));
-
-    // Ideal and anti-ideal, respecting which criteria are costs
-    const best = Array.from({ length: n }, (_, j) => {
-      const col = V.map((row) => row[j]);
-      return CRITERIA[j].benefit ? Math.max(...col) : Math.min(...col);
-    });
-    const worst = Array.from({ length: n }, (_, j) => {
-      const col = V.map((row) => row[j]);
-      return CRITERIA[j].benefit ? Math.min(...col) : Math.max(...col);
-    });
-
-    const scored = EXPERTS.map((e, i) => {
-      const dPlus = Math.sqrt(V[i].reduce((a, v, j) => a + (v - best[j]) ** 2, 0));
-      const dMinus = Math.sqrt(V[i].reduce((a, v, j) => a + (v - worst[j]) ** 2, 0));
-      return { ...e, c: dMinus / (dPlus + dMinus || 1) };
-    });
-    return scored.sort((a, b) => b.c - a.c);
-  }, [w]);
-
+  const [tab, setTab] = useState(0);
+  const t = ERS_TABS[tab];
   return (
-    <PanelFrame uri="marketplace://ranking/topsis" meta="5 criteria">
-      <div className="grid md:grid-cols-[1fr_1.35fr] divide-y md:divide-y-0 md:divide-x divide-white/[0.06]">
-        <div className="p-4 sm:p-5">
-          <p className="text-[10px] uppercase tracking-[0.16em] text-white/35 mb-4">
-            Criterion weights
-          </p>
-          {CRITERIA.map((c, j) => (
-            <Slider key={c.key}
-              label={`${c.name}${c.benefit ? "" : " (lower is better)"}`}
-              value={w[j]}
-              display={`${Math.round((w[j] / (w.reduce((a, b) => a + b, 0) || 1)) * 100)}%`}
-              min={0} max={0.6} step={0.01}
-              onChange={(v) => setW(w.map((x, k) => (k === j ? v : x)))} />
-          ))}
-          <p className="text-[10px] text-white/30 leading-relaxed">
-            Weights are renormalised to sum to one, so only their ratios matter.
-            Zero a criterion out and watch the order move.
-          </p>
-        </div>
-
-        <div className="p-4 sm:p-5">
-          <p className="text-[10px] uppercase tracking-[0.16em] text-white/35 mb-3">
-            Ranking, and what it pays
-          </p>
-          <div className="space-y-2">
-            {ranked.map((e, i) => {
-              const b = band(i, ranked.length);
-              const tone = b.pct === 90 ? "#8b5cf6" : b.pct === 60 ? "#a78bfa" : "#64748b";
-              return (
-                <div key={e.name}
-                  className="flex items-center gap-3 rounded-lg border px-3 py-2.5 transition-all"
-                  style={{ borderColor: tone + "3d", background: tone + "0f" }}>
-                  <span className="text-[11px] font-mono text-white/35 w-4 flex-shrink-0">{i + 1}</span>
-                  <span className="text-[12px] font-medium text-white/85 flex-shrink-0 w-[92px]">{e.name}</span>
-                  <span className="flex-1 h-[6px] rounded-full bg-white/[0.06] overflow-hidden">
-                    <span className="block h-full rounded-full transition-[width] duration-300"
-                      style={{ width: `${e.c * 100}%`, background: tone }} />
-                  </span>
-                  <span className="text-[11px] text-white/70 tabular-nums w-[42px] text-right flex-shrink-0">
-                    {e.c.toFixed(3)}
-                  </span>
-                  <span className="text-[10px] font-semibold tabular-nums w-[68px] text-right flex-shrink-0"
-                    style={{ color: tone }}>
-                    {b.pct}% share
-                  </span>
-                </div>
-              );
-            })}
-          </div>
-          <p className="text-[10px] text-white/35 mt-3 leading-relaxed">
-            Closeness coefficient C = d⁻ / (d⁺ + d⁻). A weighted average would let a
-            partner max one signal and coast; a geometric distance from both the ideal
-            and the worst profile will not.
-          </p>
-        </div>
+    <PanelFrame uri={t.uri} meta={t.meta}>
+      <div className="flex flex-wrap gap-2 px-4 sm:px-5 py-3 border-b border-white/[0.06]">
+        {ERS_TABS.map((x, i) => (
+          <button key={x.k} onClick={() => setTab(i)} aria-pressed={i === tab}
+            className="text-[11.5px] px-3 py-1.5 rounded-full border transition-all"
+            style={i === tab
+              ? { background: "#8b5cf6", borderColor: "#8b5cf6", color: "#150726", fontWeight: 600 }
+              : { borderColor: "rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.7)" }}>
+            {x.l}
+          </button>
+        ))}
+      </div>
+      <div className="p-4 sm:p-5">
+        <div className="mb-6"><CredentialScale /></div>
+        {tab === 0 ? <ErsScorecard /> : <ProfileBuilder />}
       </div>
     </PanelFrame>
   );

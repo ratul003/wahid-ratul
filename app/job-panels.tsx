@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { DemandTimeline, SurgeImpact, ExpertPush } from "./supply-views";
 
 /**
  * Interactive panels, one per job, in the same grammar as the experiment
@@ -130,7 +131,7 @@ const netCost = (s: number, lateCost: number) =>
  * rider trip drives cost per order down and lateness up. The optimum is not a
  * matter of taste, it is wherever you price a late order, so that is the slider.
  */
-export function DispatchPanel() {
+function StackingBody() {
   const [stack, setStack] = useState(2.6);
   const [lateCost, setLateCost] = useState(2.4);
 
@@ -178,8 +179,7 @@ export function DispatchPanel() {
   const path = r.curve.map((p, i) => `${i ? "L" : "M"}${px(p.s).toFixed(1)} ${py(p.v).toFixed(1)}`).join(" ");
 
   return (
-    <PanelFrame uri="dispatch://assignment/stacking-intensity" meta="scanning 1.0-3.0" badge="live">
-      <div className="grid md:grid-cols-[1fr_1.15fr] divide-y md:divide-y-0 md:divide-x divide-white/[0.06]">
+    <div className="grid md:grid-cols-[1fr_1.15fr] divide-y md:divide-y-0 md:divide-x divide-white/[0.06]">
         <div className="p-4 sm:p-5">
           <p className="text-[10px] uppercase tracking-[0.16em] text-white/35 mb-4">Inputs</p>
           <Slider
@@ -267,8 +267,157 @@ export function DispatchPanel() {
               ))}
             </div>
           </figure>
+      </div>
+    </div>
+  );
+}
+
+// ── Per city, because one national number is the wrong answer ────────────────
+
+/** Nine representative cities: density shifts the cost curve, so it shifts the optimum. */
+const CITIES = [
+  { name: "Dhaka",      density: 1.00, orders: 640 },
+  { name: "Chattogram", density: 0.82, orders: 210 },
+  { name: "Sylhet",     density: 0.68, orders: 96 },
+  { name: "Khulna",     density: 0.61, orders: 74 },
+  { name: "Rajshahi",   density: 0.55, orders: 58 },
+  { name: "Gazipur",    density: 0.88, orders: 152 },
+  { name: "Narayanganj",density: 0.79, orders: 118 },
+  { name: "Cumilla",    density: 0.49, orders: 44 },
+  { name: "Rangpur",    density: 0.41, orders: 31 },
+];
+
+/**
+ * Denser cities absorb stacking: trips are shorter, so lateness climbs more
+ * slowly and the optimum sits higher. Running one national stacking target is
+ * how you end up over-stacking the thin cities and under-stacking Dhaka.
+ */
+function cityOptimum(density: number, lateCost: number) {
+  // Decay scales inversely with density: sparse cities go late faster
+  const decay = DECAY / Math.max(0.3, density);
+  const net = (s: number) => BASE_COST + VAR_COST / s + lateCost * (decay * Math.pow(s - 1, CURVATURE));
+  let best = 1, bestVal = Infinity;
+  for (let s = 1; s <= 3.0001; s += 0.02) {
+    const v = net(s);
+    if (v < bestVal) { bestVal = v; best = s; }
+  }
+  return { best, bestVal, onTime: ON_TIME_CEIL - decay * Math.pow(best - 1, CURVATURE) };
+}
+
+function PerCityBody() {
+  const [lateCost, setLateCost] = useState(2.4);
+  const [national, setNational] = useState(2.1);
+
+  const r = useMemo(() => {
+    const rows = CITIES.map((c) => {
+      const o = cityOptimum(c.density, lateCost);
+      const decay = DECAY / Math.max(0.3, c.density);
+      const netAt = (s: number) => BASE_COST + VAR_COST / s + lateCost * (decay * Math.pow(s - 1, CURVATURE));
+      const loss = netAt(national) - o.bestVal;
+      return { ...c, ...o, loss, monthlyLoss: loss * c.orders * 1000 };
+    });
+    const totalLoss = rows.reduce((a, x) => a + x.monthlyLoss, 0);
+    return { rows: rows.sort((a, b) => b.best - a.best), totalLoss };
+  }, [lateCost, national]);
+
+  const eur = (n: number) => "€" + Math.round(n).toLocaleString();
+
+  return (
+    <div className="grid md:grid-cols-[1fr_1.4fr] divide-y md:divide-y-0 md:divide-x divide-white/[0.06]">
+      <div className="p-4 sm:p-5">
+        <p className="text-[10px] uppercase tracking-[0.16em] text-white/35 mb-4">Inputs</p>
+        <Slider label="What a late order costs you" value={lateCost} display={eur(lateCost)}
+          min={0.5} max={4} step={0.05} onChange={setLateCost} />
+        <Slider label="One national stacking target" value={national} display={national.toFixed(2)}
+          min={1} max={3} step={0.02} onChange={setNational} />
+        <div
+          className="rounded-lg px-3.5 py-3 mt-4 border"
+          style={{ borderColor: "#f9731640", background: "#f973160f" }}
+        >
+          <p className="flex items-baseline gap-2 mb-1">
+            <span className="text-[1.35rem] font-bold leading-none tabular-nums text-orange-300">
+              {eur(r.totalLoss)}
+            </span>
+            <span className="text-[11px] text-white/50">a month, left on the table</span>
+          </p>
+          <p className="text-[11px] leading-relaxed text-white/60">
+            That is the cost of running one number everywhere instead of each city's own optimum.
+            Move the national target and watch which cities it hurts.
+          </p>
+        </div>
+        <Assumptions items={["density index vs Dhaka", "cost curve fitted per city", "orders in thousands / month"]} />
+      </div>
+
+      <div className="p-4 sm:p-5">
+        <p className="text-[10px] uppercase tracking-[0.16em] text-white/35 mb-3.5">
+          Optimum orders per trip, by city
+        </p>
+        <div className="space-y-2">
+          {r.rows.map((c) => {
+            const over = national > c.best + 0.05;
+            const under = national < c.best - 0.05;
+            const tone = over ? "#fb7185" : under ? "#fbbf24" : "#34d399";
+            return (
+              <div key={c.name} className="flex items-center gap-3">
+                <span className="text-[11.5px] text-white/70 w-[86px] flex-shrink-0">{c.name}</span>
+                <span className="relative flex-1 h-[16px] rounded bg-white/[0.04]">
+                  {/* Each city's own optimum */}
+                  <span className="absolute top-0 bottom-0 w-[3px] rounded"
+                    style={{ left: `${((c.best - 1) / 2) * 100}%`, background: tone }} />
+                  {/* The single national target, for comparison */}
+                  <span className="absolute top-0 bottom-0 w-px bg-white/45"
+                    style={{ left: `${((national - 1) / 2) * 100}%` }} />
+                </span>
+                <span className="text-[11px] tabular-nums w-[38px] text-right flex-shrink-0" style={{ color: tone }}>
+                  {c.best.toFixed(2)}
+                </span>
+                <span className="text-[10.5px] text-white/40 tabular-nums w-[70px] text-right flex-shrink-0">
+                  {c.loss > 0.005 ? `−${eur(c.monthlyLoss)}` : "at optimum"}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+        <div className="flex flex-wrap gap-x-5 gap-y-1.5 mt-3.5">
+          {[{ c: "#34d399", l: "national target fits" }, { c: "#fbbf24", l: "under-stacked" },
+            { c: "#fb7185", l: "over-stacked" }].map((k) => (
+            <span key={k.l} className="flex items-center gap-1.5 text-[10px] text-white/50">
+              <span className="w-2.5 h-2.5 rounded-sm" style={{ background: k.c }} />{k.l}
+            </span>
+          ))}
+          <span className="flex items-center gap-1.5 text-[10px] text-white/50">
+            <span className="w-px h-3 bg-white/45" />national target
+          </span>
         </div>
       </div>
+    </div>
+  );
+}
+
+const DISPATCH_TABS = [
+  { k: "equilibrium", l: "Stacking equilibrium", uri: "dispatch://assignment/stacking-intensity", meta: "scanning 1.0-3.0", Body: StackingBody },
+  { k: "cities", l: "Per city", uri: "dispatch://assignment/per-city-bands", meta: "9 of 64 cities", Body: PerCityBody },
+] as const;
+
+/** Where stacking stops paying, nationally and then city by city. */
+export function DispatchPanel() {
+  const [tab, setTab] = useState(0);
+  const t = DISPATCH_TABS[tab];
+  const Body = t.Body;
+  return (
+    <PanelFrame uri={t.uri} meta={t.meta}>
+      <div className="flex flex-wrap gap-2 px-4 sm:px-5 py-3 border-b border-white/[0.06]">
+        {DISPATCH_TABS.map((x, i) => (
+          <button key={x.k} onClick={() => setTab(i)} aria-pressed={i === tab}
+            className="text-[11.5px] px-3 py-1.5 rounded-full border transition-all"
+            style={i === tab
+              ? { background: "#f97316", borderColor: "#f97316", color: "#1d0d03", fontWeight: 600 }
+              : { borderColor: "rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.7)" }}>
+            {x.l}
+          </button>
+        ))}
+      </div>
+      <Body />
     </PanelFrame>
   );
 }
@@ -379,7 +528,7 @@ const RESPONSE: Record<Health["key"], { supply: string[]; demand: string[] }> = 
  * and the two sides of the marketplace get told different things about it. The
  * thresholds are the ones that actually fired: 30 minutes and 5% dropout.
  */
-export function SupplyPanel() {
+function BarometerBody() {
   const [experts, setExperts] = useState(12);
   const [demand, setDemand] = useState(17);
 
@@ -416,8 +565,7 @@ export function SupplyPanel() {
   const pct = Math.min(100, (r.rho / 1.2) * 100); // gauge runs 0 to 120% utilisation
 
   return (
-    <PanelFrame uri="marketplace://health/supply-barometer" meta="Erlang C">
-      <div className="grid md:grid-cols-[1fr_1.2fr] divide-y md:divide-y-0 md:divide-x divide-white/[0.06]">
+    <div className="grid md:grid-cols-[1fr_1.2fr] divide-y md:divide-y-0 md:divide-x divide-white/[0.06]">
         <div className="p-4 sm:p-5">
           <p className="text-[10px] uppercase tracking-[0.16em] text-white/35 mb-4">Inputs</p>
           <Slider
@@ -521,8 +669,37 @@ export function SupplyPanel() {
               </div>
             ))}
           </div>
-        </div>
       </div>
+    </div>
+  );
+}
+
+const SUPPLY_TABS = [
+  { k: "barometer", l: "Supply barometer", uri: "marketplace://health/supply-barometer", meta: "Erlang C", Body: BarometerBody },
+  { k: "timeline", l: "Demand timeline", uri: "marketplace://timeline/evening-spike", meta: "21:00 - 22:00", Body: DemandTimeline },
+  { k: "impact", l: "Surge impact", uri: "marketplace://impact/recovery", meta: "with vs without", Body: SurgeImpact },
+  { k: "push", l: "Expert's phone", uri: "marketplace://incentives/notification", meta: "2 tiers", Body: ExpertPush },
+] as const;
+
+/** The live operations framework, in the four views the case study uses. */
+export function SupplyPanel() {
+  const [tab, setTab] = useState(0);
+  const t = SUPPLY_TABS[tab];
+  const Body = t.Body;
+  return (
+    <PanelFrame uri={t.uri} meta={t.meta}>
+      <div className="flex flex-wrap gap-2 px-4 sm:px-5 py-3 border-b border-white/[0.06]">
+        {SUPPLY_TABS.map((x, i) => (
+          <button key={x.k} onClick={() => setTab(i)} aria-pressed={i === tab}
+            className="text-[11.5px] px-3 py-1.5 rounded-full border transition-all"
+            style={i === tab
+              ? { background: "#06b6d4", borderColor: "#06b6d4", color: "#03181c", fontWeight: 600 }
+              : { borderColor: "rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.7)" }}>
+            {x.l}
+          </button>
+        ))}
+      </div>
+      <Body />
     </PanelFrame>
   );
 }
