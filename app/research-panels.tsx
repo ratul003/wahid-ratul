@@ -94,7 +94,7 @@ const N = 26; // grid resolution
  * moves off zero the surface lifts along one diagonal and collapses along the
  * other, which is the dependence the paper is measuring.
  */
-function CopulaSurface() {
+export function CopulaSurface() {
   const ref = useRef<HTMLCanvasElement>(null);
   const [rho, setRho] = useState(0.6);
   const [yaw, setYaw] = useState(-0.7);
@@ -240,7 +240,7 @@ function CopulaSurface() {
  * noise, so knowing X tells you far more about Y than the reverse, and a single
  * correlation coefficient reports neither.
  */
-function DirectionalDependence() {
+export function DirectionalDependence() {
   const [curve, setCurve] = useState(0.75);
   const [noise, setNoise] = useState(0.45);
 
@@ -391,7 +391,7 @@ const STRATA = [
  * NHANES oversamples on purpose. This shows what that does: the unweighted
  * prevalence drifts with the sampling design, the weighted estimate does not.
  */
-function SurveyWeights() {
+export function SurveyWeights() {
   const [over, setOver] = useState(3.2);
   const [n, setN] = useState(1580);
 

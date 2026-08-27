@@ -340,3 +340,7 @@ body {
   border-color: rgba(255, 255, 255, 0.16);
   box-shadow: 0 14px 40px -18px rgba(0, 0, 0, 0.9);
 }
+
+/* An implementation's header sits over the deployed site's own hero */
+.impl-head { transition: background 0.3s ease; }
+.impl-head:hover { background: rgba(255, 255, 255, 0.015); }

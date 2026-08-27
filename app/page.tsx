@@ -4,7 +4,8 @@ import { articles as hostedArticles } from "./writing/articles";
 import { MARKS } from "./skill-marks";
 import ExperimentConsole from "./experiment-console";
 import { WorkOsPanel, DispatchPanel, SupplyPanel } from "./job-panels";
-import ResearchPanel from "./research-panels";
+import { CopulaSurface, DirectionalDependence, SurveyWeights } from "./research-panels";
+import { GatePanel, LineagePanel, EgressPanel, TopsisPanel } from "./impl-panels";
 
 // ── Project icons ──────────────────────────────────────────────────────────────
 
@@ -166,6 +167,14 @@ const projects = [
     color: "#F5A524",
     href: "https://claude-ing.vercel.app",
     image: "/shots/claude-ing-workos.jpg",
+    interactive: "workos" as const,
+    magnitude: [
+      { v: "15+", l: "production systems wired" },
+      { v: "6", l: "job functions covered" },
+      { v: "21", l: "runnable sessions" },
+    ],
+    detail:
+      "Service Ops ran on a 28-tab spreadsheet and every function queued behind an analyst. WorkOS is the operating layer that removed the queue: Claude wired into HubSpot, PostHog, Linear, Slack and the warehouse, with a tiered-context harness so a session opens already knowing the repo, the metric definitions and who owns what. Eleven AI workflows classify 76K tickets a year at 94% precision and close 83% without an agent replying, which let nine agents absorb 2.8x the moves. The SSO-gated dashboards it generates replaced the enterprise BI tool outright.",
   },
   {
     title: "Standardised Product Metrics Across 10+ SaaS Teams",
@@ -178,6 +187,14 @@ const projects = [
     color: "#6366f1",
     href: "https://product-intelligence-platform.vercel.app",
     image: "/shots/product-intelligence-platform.jpg",
+    interactive: "gate" as const,
+    magnitude: [
+      { v: "10+", l: "product teams shipping on it" },
+      { v: "1.2M+", l: "events a day" },
+      { v: "70+", l: "stakeholders self-serving" },
+    ],
+    detail:
+      "Ten SaaS products, ten definitions of engagement, and no way to compare any of them. I designed the cross-company instrumentation contract, stood up the identity layer that made ARR-linked engagement possible, and defined one governed L1 engagement and L2 feature-adoption metric per product. The part that actually stopped the drift was an eight-gate intake process for new events, because metric drift was never a modelling problem, it was people shipping near-duplicate events with no owner. Seventy-plus stakeholders now self-serve instead of queueing for an analyst.",
   },
   {
     title: "Built the Frequentist and Bayesian A/B Testing Framework",
@@ -190,6 +207,14 @@ const projects = [
     color: "#f59e0b",
     href: "https://experimentation-science.vercel.app",
     image: "/shots/experimentation-science.jpg",
+    interactive: "console" as const,
+    magnitude: [
+      { v: "10+", l: "teams shipping on it" },
+      { v: "5,000", l: "impression gate per arm" },
+      { v: "58% → 74%", l: "cross-sell qualification" },
+    ],
+    detail:
+      "A PM could launch an A/B test in minutes; the hard part was trusting the readout. I built the framework ten product teams ship on: a declared MDE before launch, a 5,000-impression floor per arm, 80% power, and dual frequentist and Bayesian inference so a borderline result gets read the same way twice. Every launch resolves to exactly one ship-or-kill call, written down where anyone can check it. Reading the results properly is also what surfaced the Dev Agent quality finding.",
   },
   {
     title: "Built the Snowflake Data Warehouse and ELT Pipelines",
@@ -202,6 +227,14 @@ const projects = [
     color: "#10b981",
     href: "https://data-engineering-foundation.vercel.app",
     image: "/shots/data-engineering-foundation.jpg",
+    interactive: "lineage" as const,
+    magnitude: [
+      { v: "4", l: "parallel ELT services" },
+      { v: "3", l: "dbt layers above them" },
+      { v: "8", l: "teams migrated in 6 months" },
+    ],
+    detail:
+      "You cannot build product intelligence on a broken foundation, and when I joined, eight products were generating data nobody could join together. I built the warehouse everything now runs on: four parallel ELT services landing into an immutable RAW layer, one staging model per source table, and Kimball star schemas in the only layer a dashboard is allowed to read. Reverse ETL pushes scores and segments back into Salesforce and Gainsight from the mart layer, so the number a CSM sees is the number the warehouse computed. Built and maintained without a dedicated data engineering team.",
   },
   {
     title: "Migrated 8 Product Teams from Mixpanel to the Warehouse",
@@ -214,6 +247,14 @@ const projects = [
     color: "#f43f5e",
     href: "https://systems-architecture.vercel.app",
     image: "/shots/systems-architecture.jpg",
+    interactive: "egress" as const,
+    magnitude: [
+      { v: "2", l: "architectural decision records" },
+      { v: "8", l: "product teams migrated" },
+      { v: "80-90%", l: "of spend traced to egress" },
+    ],
+    detail:
+      "Two decisions that kept being reopened because nobody had written down the cost model. The first moved the company off per-event Mixpanel pricing onto a warehouse-native stack, across eight product teams in six months, retiring the SaaS bill and giving every team one governed definition to query. The second was the Snowflake versus BigQuery question, which turned out not to be about either warehouse: 80 to 90% of the spend was egress, so choosing on compute price was answering the wrong question. Both are written as ADRs, meant to be argued with rather than believed.",
   },
   {
     title: "Built the Real-Time Supply Health and Surge Pricing Engine",
@@ -226,6 +267,14 @@ const projects = [
     color: "#06b6d4",
     href: "https://when-demand-exceeds-supply.vercel.app",
     image: "/shots/when-demand-exceeds-supply.jpg",
+    interactive: "supply" as const,
+    magnitude: [
+      { v: "3M+", l: "consultations behind it" },
+      { v: "95%", l: "supply retention held" },
+      { v: "30-90%", l: "revenue-share bands" },
+    ],
+    detail:
+      "A two-sided marketplace fails on the supply side first, and it fails quietly: demand spikes, experts miss the signal, customers queue and the platform absorbs the cost in silence. I built the live operations framework that detects the imbalance as it happens rather than in a weekly report, health-scoring the queue on delay and dropout and firing the incentive engine when supply thins. When it fires, both sides are told different things: experts see a higher revenue-share band, customers see surge pricing and an honest wait. Five modules, one automated loop, no engineering team when I started.",
   },
   {
     title: "Ranked 500+ Marketplace Experts with TOPSIS Scoring",
@@ -238,6 +287,14 @@ const projects = [
     color: "#8b5cf6",
     href: "https://rank-reward-retain.vercel.app",
     image: "/shots/rank-reward-retain.jpg",
+    interactive: "topsis" as const,
+    magnitude: [
+      { v: "500+", l: "partners ranked" },
+      { v: "5", l: "quality criteria" },
+      { v: "+23%", l: "expert quality" },
+    ],
+    detail:
+      "An expert marketplace with no way to tell a good counsellor from a busy one. I built the scoring engine, the revenue model and the analytics layer: TOPSIS across five quality signals rather than a weighted average, because a weighted average lets a partner max one signal and coast, while a geometric distance from both the ideal and the worst profile will not. Then I wired the score to money, so ranking actually pays: tier progression, session bonuses and earnings transparency across 30 to 90% revenue-share bands. Expert quality rose 23%, and 300 of the 500-plus partners cleared verification.",
   },
   {
     title: "Found the Dispatch Intensity Where Cost and Experience Balance",
@@ -250,6 +307,14 @@ const projects = [
     color: "#f97316",
     href: "https://cost-benefit-optimization.vercel.app",
     image: "/shots/cost-benefit-optimization.jpg",
+    interactive: "dispatch" as const,
+    magnitude: [
+      { v: "2M+", l: "orders a month" },
+      { v: "64", l: "cities live" },
+      { v: "€377K", l: "saved in a year" },
+    ],
+    detail:
+      "Stacking more orders onto one rider trip drives cost per order down and lateness up, and the whole argument in the room was about where to stop. I modelled the equilibrium per city in BigQuery, R and Tableau, and the useful finding was that the optimum is not a matter of taste: it sits wherever you price a late order, which made the disagreement a pricing question instead of an opinion. The same work carried the national order dispatch policy, surge pricing across 64 cities, and a daily compliance dashboard that flipped cancelled-order billing across 2,200-plus vendors.",
   },
   {
     title: "Built an Algorithm to Detect Directional Dependence",
@@ -262,6 +327,14 @@ const projects = [
     color: "#a855f7",
     href: "https://research-directional-dependence.vercel.app",
     image: "/shots/research-directional-dependence.jpg",
+    interactive: "direction" as const,
+    magnitude: [
+      { v: "Senior", l: "statistics thesis" },
+      { v: "Order", l: "statistics and concomitants" },
+      { v: "Monte Carlo", l: "simulation study" },
+    ],
+    detail:
+      "Correlation tells you two variables move together, and then stops. It cannot tell you which one is doing the moving, because a correlation coefficient is symmetric by construction. My senior thesis built a linear-model random algorithm to detect bivariate directional dependence, using order statistics and concomitants to recover the asymmetry that a single coefficient discards. The simulation study is designed so the dependence structure is known in advance, which is the only honest way to check whether a detector detects.",
   },
   {
     title: "Modelled Directional Dependence Using Copulas",
@@ -274,6 +347,14 @@ const projects = [
     color: "#14b8a6",
     href: "https://research-copulas-directional-depend.vercel.app",
     image: "/shots/research-copulas.jpg",
+    interactive: "copula" as const,
+    magnitude: [
+      { v: "HHMI", l: "funded research" },
+      { v: "Copula", l: "families compared" },
+      { v: "Monte Carlo", l: "designed for bias" },
+    ],
+    detail:
+      "A copula strips away the marginals and leaves the dependence structure in its pure form. Working on an HHMI grant, I used concomitants of order statistics on copulas to isolate directional dependence, comparing families to see which preserve the asymmetry and which flatten it. The Monte Carlo design is the substance of the work: the data is generated specifically to keep causal bias out of the directional estimate, so the estimate is measuring dependence rather than the way the sample was built.",
   },
   {
     title: "Modelled Cognitive Change Across Two NHANES Cycles",
@@ -286,6 +367,14 @@ const projects = [
     color: "#0ea5e9",
     href: "https://research-nhanes-cognitive.vercel.app",
     image: "/shots/research-nhanes-cognitive.jpg",
+    interactive: "weights" as const,
+    magnitude: [
+      { v: "2", l: "NHANES cycles" },
+      { v: "1,580", l: "paired adults" },
+      { v: "3", l: "test batteries" },
+    ],
+    detail:
+      "Which cognitive tests actually predict impairment, and does that change across gender, race and time? Funded twice by UROP, I modelled two cycles of NHANES on the CERAD, AFT and DSST batteries with survey-weighted logistic regression. The weighting is not a technicality: NHANES deliberately oversamples older adults, so an unweighted prevalence drifts with the sampling design while the weighted estimate does not. Getting that wrong would produce a confident number about a population that was never sampled that way.",
   },
 ];
 
@@ -321,8 +410,6 @@ type Feature = {
   status: string;
   headline: string;
   narrative: string;
-  panel: "console" | "triage" | "barometer" | "dispatch";
-  panelNote?: string;
   article?: { slug: string; title: string };
 };
 type Role = {
@@ -345,9 +432,6 @@ const roles: Role[] = [
         "Built an AI Layer That Automates Feature Prototype & UAT, Reporting and Personalized A/B Testing with Claude WorkOS",
       narrative:
         "One person covering product, data, growth and platform, because WorkOS wires Claude into the systems each of those jobs actually runs on. Pick a session below and watch it run: the same harness, the same repo, the same output that lands in Slack and Linear.",
-      panel: "triage",
-      panelNote:
-        "Six of the 21 sessions, running here. The full harness, the repo layout and the narrated film are on the project site.",
       article: {
         slug: "the-night-i-deleted-the-best-slide-in-the-deck",
         title: "The Night I Deleted the Best Slide in the Deck",
@@ -379,9 +463,6 @@ const roles: Role[] = [
         "Built the Product Intelligence Platform 10+ SaaS Product Teams Ship On",
       narrative:
         "Ten product teams shipped against one governed metric per product and one gate: 5,000 impressions per arm, 80% power against a declared MDE. This is that gate, running in your browser.",
-      panel: "console",
-      panelNote:
-        "Move either slider and the standard error, the interval, the power and the decision all recompute. Nothing in this panel is a mockup.",
     },
     positions: [
       {
@@ -428,9 +509,6 @@ const roles: Role[] = [
         "Built the Expert Ranking, Incentive Design and Demand-Supply Engine for an On-Demand Marketplace",
       narrative:
         "A two-sided marketplace fails on the supply side first, and it fails quietly. I built the health scoring that reads the failure early, and the pay bands that answer it.",
-      panel: "barometer",
-      panelNote:
-        "An M/M/c queue on Erlang C. The grid is every operating point computed at once, so you can see the whole boundary rather than one reading.",
       article: {
         slug: "you-cannot-surge-price-a-therapist",
         title: "Why surge pricing does not work in every online marketplace",
@@ -463,8 +541,6 @@ const roles: Role[] = [
         "Implemented the National Order Dispatch Policy, Surge Pricing and Return-Order Compliance Across 64 Cities",
       narrative:
         "Put more orders on one rider trip and cost per order falls while lateness climbs. The optimum is not a matter of taste, it is wherever you price a late order. So that is the second slider.",
-      panel: "dispatch",
-      panelNote: "The curve is scanned across the feasible range on every change, not asserted.",
     },
     positions: [
       {
@@ -667,52 +743,106 @@ const articles = hostedArticles.map((a) => ({
 type Project = (typeof projects)[number];
 type ArticleCard = (typeof articles)[number];
 
-/** One shipped implementation: the running site, captured, and what it does. */
-function ImplementationCard({ pr }: { pr: Project }) {
+/**
+ * One shipped implementation, at full width: the running site as a backdrop, the
+ * magnitude of it, an explanation long enough to be worth reading, and its own
+ * interactive visual. The whole header links out to the deployed thing.
+ */
+function ImplementationBlock({ pr }: { pr: Project }) {
+  const Visual = pr.interactive ? VISUALS[pr.interactive] : undefined;
+  const bare = pr.interactive ? BARE.has(pr.interactive) : false;
+
   return (
-    <a
-      href={pr.href}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="proj-card group flex flex-col rounded-xl border border-white/[0.08] bg-[#0b0b11] overflow-hidden"
-    >
-      <span className="relative block aspect-[16/9] overflow-hidden border-b border-white/[0.06]">
-        <Image
-          src={pr.image}
-          alt={`${pr.name}, as deployed`}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 500px"
-          className="object-cover object-top transition-transform duration-500 ease-out group-hover:scale-[1.05]"
-        />
-        <span
-          className="absolute inset-x-0 top-0 h-px"
-          style={{ background: `linear-gradient(90deg, transparent, ${pr.color}88, transparent)` }}
-        />
-      </span>
-      <span className="flex flex-col flex-1 p-4">
-        <span className="flex items-center gap-2 mb-2">
+    <article className="rounded-2xl border border-white/[0.09] bg-[#0b0b11] overflow-hidden">
+      {/* Header, over the site's own hero */}
+      <a href={pr.href} target="_blank" rel="noopener noreferrer" className="impl-head group relative block">
+        <span className="absolute inset-0 pointer-events-none">
+          <Image
+            src={pr.image}
+            alt={`${pr.name}, as deployed`}
+            fill
+            sizes="(max-width: 1024px) 100vw, 1000px"
+            className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+          />
           <span
-            className="text-[9px] uppercase tracking-[0.12em] font-semibold px-2 py-[3px] rounded-full border"
-            style={{ color: pr.color, borderColor: pr.color + "40", background: pr.color + "12" }}
-          >
-            {pr.label}
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(100deg, rgba(11,11,17,0.97) 0%, rgba(11,11,17,0.9) 46%, rgba(11,11,17,0.55) 100%)",
+            }}
+          />
+          <span
+            className="absolute inset-x-0 top-0 h-px"
+            style={{ background: `linear-gradient(90deg, transparent, ${pr.color}aa, transparent)` }}
+          />
+        </span>
+
+        <span className="relative block p-5 sm:p-7">
+          <span className="flex items-center gap-2.5 mb-3 flex-wrap">
+            <span
+              className="text-[9.5px] uppercase tracking-[0.13em] font-bold px-2.5 py-[4px] rounded-full border"
+              style={{ color: pr.color, borderColor: pr.color + "55", background: pr.color + "1a" }}
+            >
+              {pr.label}
+            </span>
+            <span className="text-[11px] text-white/45">{pr.name}</span>
           </span>
-          <span className="ml-auto text-white/30 group-hover:text-white/80 transition-colors">
+
+          <span className="block text-[1.3rem] sm:text-[1.6rem] font-bold tracking-tight text-white leading-[1.25] mb-3.5 max-w-2xl">
+            {pr.title}
+          </span>
+          <span className="block text-[13px] text-white/70 leading-relaxed max-w-2xl mb-5">
+            {pr.detail}
+          </span>
+
+          {/* Magnitude */}
+          <span className="flex flex-wrap gap-x-8 gap-y-3 mb-5">
+            {pr.magnitude.map((m) => (
+              <span key={m.l} className="block">
+                <span
+                  className="block text-[1.25rem] font-bold tracking-tight leading-none tabular-nums mb-1"
+                  style={{ color: pr.color }}
+                >
+                  {m.v}
+                </span>
+                <span className="block text-[10px] uppercase tracking-[0.1em] text-white/40">
+                  {m.l}
+                </span>
+              </span>
+            ))}
+          </span>
+
+          <span className="inline-flex items-center gap-1.5 text-[12px] font-medium text-white/70 group-hover:text-white transition-colors">
+            Open {pr.name}
             <ArrowUpRight />
           </span>
         </span>
-        <span className="block text-[15px] font-semibold text-white leading-snug mb-1">
-          {pr.title}
-        </span>
-        <span className="block text-[10.5px] text-white/40 mb-2.5">{pr.name}</span>
-        <span className="block text-[12px] text-white/60 leading-relaxed mb-3">
-          {pr.description}
-        </span>
-        <span className="block text-[10.5px] text-white/35 mt-auto pt-2.5 border-t border-white/[0.05]">
-          {pr.inside}
-        </span>
-      </span>
-    </a>
+      </a>
+
+      {/* Its own interactive visual */}
+      {Visual && (
+        <div className="border-t border-white/[0.07]">
+          <div className="px-5 sm:px-7 pt-5 pb-1">
+            <p className="text-[10px] uppercase tracking-[0.16em] text-white/35">
+              Run it here
+            </p>
+          </div>
+          <div className={bare ? "px-2 pb-2" : "px-5 sm:px-7 pb-6 pt-3"}>
+            {bare ? (
+              <div className="rounded-xl border border-white/[0.07] overflow-hidden">
+                <Visual />
+              </div>
+            ) : (
+              <Visual />
+            )}
+          </div>
+        </div>
+      )}
+
+      <div className="px-5 sm:px-7 py-3.5 border-t border-white/[0.07] bg-white/[0.015]">
+        <p className="text-[10.5px] text-white/40">{pr.inside}</p>
+      </div>
+    </article>
   );
 }
 
@@ -809,118 +939,135 @@ function ArticlePreview({ a, featured = false }: { a: ArticleCard; featured?: bo
   );
 }
 
-const PANELS: Record<Feature["panel"], React.ComponentType> = {
+/** Each implementation's own interactive visual, keyed off the project. */
+const VISUALS: Record<string, React.ComponentType> = {
+  workos: WorkOsPanel,
+  gate: GatePanel,
   console: ExperimentConsole,
-  triage: WorkOsPanel,
+  lineage: LineagePanel,
+  egress: EgressPanel,
+  supply: SupplyPanel,
+  topsis: TopsisPanel,
   dispatch: DispatchPanel,
-  barometer: SupplyPanel,
+  copula: CopulaSurface,
+  direction: DirectionalDependence,
+  weights: SurveyWeights,
 };
+
+/** The three research bodies ship without the shared window chrome. */
+const BARE = new Set(["copula", "direction", "weights"]);
 
 const slugify = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
 
 /**
- * One job, as a section: who they are, what I was accountable for, and a live
- * panel of the actual work. This replaced a grid of image cards that asserted
- * the same things without showing any of them.
+ * One job, as a section. The role's own panel is gone: every interactive visual
+ * now belongs to the implementation that produced it, so the section reads
+ * experience, then what shipped, then what I wrote about it.
  */
 function JobSection({ role, n }: { role: Role; n: string }) {
   const f = role.feature!;
-  const Panel = PANELS[f.panel];
   const built = projects.filter((pr) => pr.org === role.org);
 
   return (
     <section id={slugify(role.org)} className="scroll-mt-20 py-24 px-6 border-t border-white/[0.06]">
       <div className="max-w-5xl mx-auto">
         {/* Who, what industry, and how big a name they are in it */}
-        <div className="flex flex-wrap items-center gap-2.5 mb-2">
-          <span className="text-[11px] font-mono text-white/40 mr-1.5">{n}</span>
+        <div className="flex flex-wrap items-center gap-3 mb-2.5">
+          <span className="text-[11px] font-mono text-white/40 mr-1">{n}</span>
           {role.logo && (
             // eslint-disable-next-line @next/next/no-img-element
-            <img src={role.logo} alt="" width={19} height={19} className="rounded-sm object-contain flex-shrink-0" />
+            <img src={role.logo} alt="" width={26} height={26} className="rounded-md object-contain flex-shrink-0" />
           )}
-          <span className="text-[15px] font-bold text-white">{role.org}</span>
-          <span className="text-[9.5px] uppercase tracking-[0.11em] text-indigo-200/60 border border-indigo-300/20 bg-indigo-400/[0.07] rounded-full px-2 py-[2px]">
+          <span className="text-[1.2rem] font-bold tracking-tight text-white">{role.org}</span>
+          <span className="text-[10.5px] font-semibold uppercase tracking-[0.11em] text-indigo-100 border border-indigo-300/45 bg-indigo-400/[0.16] rounded-full px-2.5 py-[4px]">
             {f.industry}
           </span>
-          {role.location && <span className="text-[10.5px] text-white/35">{role.location}</span>}
+          {role.location && <span className="text-[11.5px] text-white/50">{role.location}</span>}
         </div>
-        <p className="text-[11.5px] text-white/40 mb-7">{f.status}</p>
+        <p className="text-[13px] text-white/60 mb-8">{f.status}</p>
 
         <h2 className="text-[1.3rem] sm:text-[1.6rem] font-bold tracking-tight text-white leading-[1.25] mb-4 max-w-4xl">
           {f.headline}
         </h2>
-        <p className="text-sm text-white/60 max-w-2xl mb-8 leading-relaxed">{f.narrative}</p>
+        <p className="text-sm text-white/60 max-w-3xl mb-12 leading-relaxed">{f.narrative}</p>
 
-        <Panel />
-        {f.panelNote && <p className="mt-3 text-[11px] text-white/35">{f.panelNote}</p>}
-
-        <div className="grid md:grid-cols-[1.25fr_1fr] gap-x-14 gap-y-9 mt-12">
-          {/* What I owned */}
-          <div>
-            <p className="text-[10px] uppercase tracking-[0.16em] text-white/35 mb-5">
-              What I owned
-            </p>
-            <div className={`space-y-5 ${role.positions.length > 1 ? "relative pl-5" : ""}`}>
-              {role.positions.length > 1 && (
-                <div
-                  className="absolute left-1 top-2 bottom-2 w-px border-l border-dashed"
-                  style={{ borderColor: "#a5b4fc", opacity: 0.7 }}
-                />
-              )}
-              {role.positions.map((pos) => (
-                <div key={pos.title} className="relative">
-                  {role.positions.length > 1 && (
-                    <span
-                      className="glow-dot absolute -left-[18px] top-[5px] w-2.5 h-2.5 rounded-full ring-2 ring-[#0a0a0f]"
-                      style={{
-                        background: "linear-gradient(135deg, #c7d2fe, #818cf8)",
-                        boxShadow: "0 0 10px #818cf8cc, 0 0 4px #c7d2fe",
-                      }}
-                    />
-                  )}
-                  <p className="exp-title text-sm font-medium leading-snug">{pos.title}</p>
-                  <p className="text-xs text-white/45 mt-0.5">{pos.period}</p>
-                  {pos.impact && <ImpactList lines={pos.impact} />}
+        {/* The role itself */}
+        <p className="text-[10px] uppercase tracking-[0.16em] text-white/35 mb-5">
+          The role
+        </p>
+        <div className={`mb-16 ${role.positions.length > 1 ? "relative pl-5" : ""}`}>
+          {role.positions.length > 1 && (
+            <div
+              className="absolute left-1 top-2 bottom-2 w-px border-l border-dashed"
+              style={{ borderColor: "#a5b4fc", opacity: 0.6 }}
+            />
+          )}
+          <div className="space-y-7">
+            {role.positions.map((pos) => (
+              <div key={pos.title} className="relative">
+                {role.positions.length > 1 && (
+                  <span
+                    className="glow-dot absolute -left-[18px] top-[6px] w-2.5 h-2.5 rounded-full ring-2 ring-[#0a0a0f]"
+                    style={{
+                      background: "linear-gradient(135deg, #c7d2fe, #818cf8)",
+                      boxShadow: "0 0 10px #818cf8cc, 0 0 4px #c7d2fe",
+                    }}
+                  />
+                )}
+                <div className="flex flex-wrap items-baseline gap-x-3 mb-2.5">
+                  <p className="exp-title text-[15px] font-semibold leading-snug">{pos.title}</p>
+                  <p className="text-[11.5px] text-white/45">{pos.period}</p>
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* What I wrote about it */}
-          <div>
-            {f.article && (
-              <>
-                <p className="text-[10px] uppercase tracking-[0.16em] text-white/35 mb-4">
-                  What I wrote about it
-                </p>
-                <Link
-                  href={`/writing/${f.article.slug}`}
-                  className="case-chip group flex items-start justify-between gap-3 rounded-lg border border-white/10 bg-white/[0.02] px-3.5 py-3"
-                  style={{ "--c": "#a5b4fc" } as React.CSSProperties}
-                >
-                  <span className="text-[12px] font-medium text-white/85 leading-snug">
-                    {f.article.title}
-                  </span>
-                  <span className="text-white/40 group-hover:text-white/80 transition-colors mt-[3px] flex-shrink-0">
-                    <ArrowUpRight />
-                  </span>
-                </Link>
-              </>
-            )}
+                {pos.impact && (
+                  <ul className="space-y-2.5 max-w-3xl">
+                    {pos.impact.map((line) => (
+                      <li key={line} className="flex gap-2.5 text-[12.5px] leading-relaxed text-white/65">
+                        <span
+                          className="mt-[8px] w-[3px] h-[3px] rounded-full flex-shrink-0"
+                          style={{ background: "#a5b4fc", boxShadow: "0 0 6px #818cf8" }}
+                        />
+                        <span><Impact text={line} /></span>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
           </div>
         </div>
 
-        {/* What I shipped there. Real implementations, not write-ups of them. */}
+        {/* What shipped, each with its own visual */}
         {built.length > 0 && (
-          <div className="mt-14">
+          <>
             <p className="text-[10px] uppercase tracking-[0.16em] text-white/35 mb-5">
-              {built.length === 1 ? "What I shipped" : `What I shipped · ${built.length}`}
+              What I shipped{built.length > 1 && ` · ${built.length}`}
             </p>
-            <div className="grid sm:grid-cols-2 gap-4">
+            <div className="space-y-6">
               {built.map((pr) => (
-                <ImplementationCard key={pr.href} pr={pr} />
+                <ImplementationBlock key={pr.href} pr={pr} />
               ))}
             </div>
+          </>
+        )}
+
+        {/* And what I wrote about it */}
+        {f.article && (
+          <div className="mt-14">
+            <p className="text-[10px] uppercase tracking-[0.16em] text-white/35 mb-4">
+              What I wrote about it
+            </p>
+            <Link
+              href={`/writing/${f.article.slug}`}
+              className="case-chip group flex items-center justify-between gap-4 rounded-lg border border-white/10 bg-white/[0.02] px-4 py-3.5 max-w-2xl"
+              style={{ "--c": "#a5b4fc" } as React.CSSProperties}
+            >
+              <span className="text-[13px] font-medium text-white/85 leading-snug">
+                {f.article.title}
+              </span>
+              <span className="text-white/40 group-hover:text-white/80 transition-colors flex-shrink-0">
+                <ArrowUpRight />
+              </span>
+            </Link>
           </div>
         )}
       </div>
@@ -1232,17 +1379,17 @@ export default function Home() {
             <img
               src="https://www.google.com/s2/favicons?domain=umn.edu&sz=64"
               alt=""
-              width={19}
-              height={19}
-              className="rounded-sm object-contain flex-shrink-0"
+              width={26}
+              height={26}
+              className="rounded-md object-contain flex-shrink-0"
             />
-            <span className="text-[15px] font-bold text-white">University of Minnesota</span>
-            <span className="text-[9.5px] uppercase tracking-[0.11em] text-indigo-200/60 border border-indigo-300/20 bg-indigo-400/[0.07] rounded-full px-2 py-[2px]">
+            <span className="text-[1.2rem] font-bold tracking-tight text-white">University of Minnesota</span>
+            <span className="text-[10.5px] font-semibold uppercase tracking-[0.11em] text-indigo-100 border border-indigo-300/45 bg-indigo-400/[0.16] rounded-full px-2.5 py-[4px]">
               Research
             </span>
-            <span className="text-[10.5px] text-white/35">Minnesota, USA</span>
+            <span className="text-[11.5px] text-white/50">Minnesota, USA</span>
           </div>
-          <p className="text-[11.5px] text-white/40 mb-7">
+          <p className="text-[13px] text-white/60 mb-8">
             Three funded projects, two UROP awards and an HHMI grant
           </p>
 
@@ -1255,17 +1402,11 @@ export default function Home() {
             can read rather than take on trust.
           </p>
 
-          <ResearchPanel />
-          <p className="mt-3 mb-12 text-[11px] text-white/35">
-            All three computed in the browser. The full derivations, the simulation studies and
-            the WebGL surfaces are on the project sites below.
-          </p>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="space-y-6">
             {projects
               .filter((pr) => pr.org === "University of Minnesota")
               .map((pr) => (
-                <ImplementationCard key={pr.href} pr={pr} />
+                <ImplementationBlock key={pr.href} pr={pr} />
               ))}
           </div>
         </div>
