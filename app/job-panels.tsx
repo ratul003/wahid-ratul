@@ -448,6 +448,28 @@ export function SupplyPanel() {
           <Assumptions
             items={[`${SESSION_MIN} min sessions`, `${PATIENCE_MIN} min mean patience`, "M/M/c queue"]}
           />
+
+          <p className="text-[9.5px] uppercase tracking-[0.13em] text-white/35 mt-5 mb-2.5">
+            What the grid means
+          </p>
+          <ul className="space-y-1.5">
+            {[
+              { c: "#34d399", k: "Green", d: "under 30 min wait, under 5% dropout" },
+              { c: "#fbbf24", k: "Yellow", d: "under 60 min, under 15% dropout" },
+              { c: "#fb7185", k: "Red", d: "beyond that, or demand past capacity" },
+            ].map((x) => (
+              <li key={x.k} className="flex items-start gap-2 text-[10.5px] leading-relaxed">
+                <span
+                  className="w-2.5 h-2.5 rounded-[2px] flex-shrink-0 mt-[2px]"
+                  style={{ background: x.c + "88" }}
+                />
+                <span className="text-white/70">
+                  <b className="font-semibold" style={{ color: x.c }}>{x.k}</b>
+                  <span className="text-white/45"> · {x.d}</span>
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
 
         <div className="p-4 sm:p-5">

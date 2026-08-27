@@ -256,8 +256,9 @@ function PowerCurve({ n, power, nRequired }: { n: number; power: number; nRequir
         {/* 80% target */}
         <line x1={PAD_L} x2={W - PAD_L} y1={y(TARGET_POWER)} y2={y(TARGET_POWER)}
           stroke="rgba(255,255,255,0.22)" strokeWidth="1" strokeDasharray="3 3" />
-        {/* Left-hand side: the curve is low here, so the label has room */}
-        <text x={PAD_L + 2} y={y(TARGET_POWER) - 5} fill="rgba(255,255,255,0.35)" fontSize="9" textAnchor="start">
+        {/* Right-hand side, below the line: the curve is above 80% out here, so
+            this is the one corner nothing else occupies */}
+        <text x={W - PAD_L} y={y(TARGET_POWER) + 11} fill="rgba(255,255,255,0.35)" fontSize="9" textAnchor="end">
           80% target
         </text>
 
