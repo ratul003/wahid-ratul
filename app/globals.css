@@ -341,9 +341,10 @@ body {
   box-shadow: 0 14px 40px -18px rgba(0, 0, 0, 0.9);
 }
 
-/* An implementation's header sits over the deployed site's own hero */
+/* An implementation's header, with the deployed site framed beside the copy */
 .impl-head { transition: background 0.3s ease; }
 .impl-head:hover { background: rgba(255, 255, 255, 0.015); }
+.impl-thumb { box-shadow: 0 14px 40px -20px rgba(0, 0, 0, 0.95); }
 
 /* A project named inside a role bullet, linked to the thing it names */
 .impl-link {
@@ -358,4 +359,19 @@ body {
 .impl-link:hover {
   text-decoration-color: var(--c);
   filter: brightness(1.2);
+}
+
+/* The section rail, lit so it reads as a control rather than page furniture */
+.rail-panel {
+  box-shadow:
+    0 0 0 1px rgba(129, 140, 248, 0.08),
+    0 0 28px -6px rgba(99, 102, 241, 0.45),
+    0 18px 50px -22px rgba(0, 0, 0, 0.9);
+  transition: box-shadow 0.35s ease;
+}
+.rail-panel:hover {
+  box-shadow:
+    0 0 0 1px rgba(129, 140, 248, 0.16),
+    0 0 40px -6px rgba(99, 102, 241, 0.62),
+    0 18px 50px -22px rgba(0, 0, 0, 0.9);
 }

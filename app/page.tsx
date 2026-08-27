@@ -216,7 +216,7 @@ const projects = [
       { v: "21", l: "runnable sessions" },
     ],
     detail:
-      "Service Ops ran on a 28-tab spreadsheet and every function queued behind an analyst. WorkOS is the operating layer that removed the queue: Claude wired into HubSpot, PostHog, Linear, Slack and the warehouse, with a tiered-context harness so a session opens already knowing the repo, the metric definitions and who owns what. Eleven AI workflows classify 76K tickets a year at 94% precision and close 83% without an agent replying, which let nine agents absorb 2.8x the moves. The SSO-gated dashboards it generates replaced the enterprise BI tool outright.",
+      "Claude wired into 15+ production systems, with a harness that opens every session already knowing the repo and the metric definitions. Eleven AI workflows close 83% of 76K yearly tickets without an agent ever replying.",
   },
   {
     title: "Standardised Product Metrics Across 10+ SaaS Teams",
@@ -236,7 +236,7 @@ const projects = [
       { v: "70+", l: "stakeholders self-serving" },
     ],
     detail:
-      "Ten SaaS products, ten definitions of engagement, and no way to compare any of them. I designed the cross-company instrumentation contract, stood up the identity layer that made ARR-linked engagement possible, and defined one governed L1 engagement and L2 feature-adoption metric per product. The part that actually stopped the drift was an eight-gate intake process for new events, because metric drift was never a modelling problem, it was people shipping near-duplicate events with no owner. Seventy-plus stakeholders now self-serve instead of queueing for an analyst.",
+      "Ten products, ten definitions of engagement, no way to compare any of them. One instrumentation contract, one governed metric per product, and an eight-gate intake that ended the drift for good.",
   },
   {
     title: "Built the Frequentist and Bayesian A/B Testing Framework",
@@ -256,7 +256,7 @@ const projects = [
       { v: "58% → 74%", l: "cross-sell qualification" },
     ],
     detail:
-      "A PM could launch an A/B test in minutes; the hard part was trusting the readout. I built the framework ten product teams ship on: a declared MDE before launch, a 5,000-impression floor per arm, 80% power, and dual frequentist and Bayesian inference so a borderline result gets read the same way twice. Every launch resolves to exactly one ship-or-kill call, written down where anyone can check it. Reading the results properly is also what surfaced the Dev Agent quality finding.",
+      "A PM can launch a test in minutes. Trusting the readout is the hard part. A declared MDE, a 5,000-impression floor, 80% power, and exactly one ship-or-kill call per launch.",
   },
   {
     title: "Built the Snowflake Data Warehouse and ELT Pipelines",
@@ -276,7 +276,7 @@ const projects = [
       { v: "8", l: "teams migrated in 6 months" },
     ],
     detail:
-      "You cannot build product intelligence on a broken foundation, and when I joined, eight products were generating data nobody could join together. I built the warehouse everything now runs on: four parallel ELT services landing into an immutable RAW layer, one staging model per source table, and Kimball star schemas in the only layer a dashboard is allowed to read. Reverse ETL pushes scores and segments back into Salesforce and Gainsight from the mart layer, so the number a CSM sees is the number the warehouse computed. Built and maintained without a dedicated data engineering team.",
+      "Eight products generating data nobody could join together. Four ELT services into an immutable RAW layer, Kimball marts as the only layer a dashboard may read, and Reverse ETL back into the CRM.",
   },
   {
     title: "Migrated 8 Product Teams from Mixpanel to the Warehouse",
@@ -296,7 +296,7 @@ const projects = [
       { v: "80-90%", l: "of spend traced to egress" },
     ],
     detail:
-      "Two decisions that kept being reopened because nobody had written down the cost model. The first moved the company off per-event Mixpanel pricing onto a warehouse-native stack, across eight product teams in six months, retiring the SaaS bill and giving every team one governed definition to query. The second was the Snowflake versus BigQuery question, which turned out not to be about either warehouse: 80 to 90% of the spend was egress, so choosing on compute price was answering the wrong question. Both are written as ADRs, meant to be argued with rather than believed.",
+      "Two decisions that kept being reopened because nobody had written down the cost model. Off Mixpanel across eight teams in six months, and the finding that 80-90% of warehouse spend was egress.",
   },
   {
     title: "Built the Real-Time Supply Health and Surge Pricing Engine",
@@ -316,7 +316,7 @@ const projects = [
       { v: "30-90%", l: "revenue-share bands" },
     ],
     detail:
-      "A two-sided marketplace fails on the supply side first, and it fails quietly: demand spikes, experts miss the signal, customers queue and the platform absorbs the cost in silence. I built the live operations framework that detects the imbalance as it happens rather than in a weekly report, health-scoring the queue on delay and dropout and firing the incentive engine when supply thins. When it fires, both sides are told different things: experts see a higher revenue-share band, customers see surge pricing and an honest wait. Five modules, one automated loop, no engineering team when I started.",
+      "A two-sided marketplace fails on the supply side first, and it fails quietly. Health scoring that catches it live, and pay bands that answer it, funded by the surge fees that caused them.",
   },
   {
     title: "Ranked 500+ Marketplace Experts with TOPSIS Scoring",
@@ -336,7 +336,7 @@ const projects = [
       { v: "+23%", l: "expert quality" },
     ],
     detail:
-      "An expert marketplace with no way to tell a good counsellor from a busy one. I built the scoring engine, the revenue model and the analytics layer: TOPSIS across five quality signals rather than a weighted average, because a weighted average lets a partner max one signal and coast, while a geometric distance from both the ideal and the worst profile will not. Then I wired the score to money, so ranking actually pays: tier progression, session bonuses and earnings transparency across 30 to 90% revenue-share bands. Expert quality rose 23%, and 300 of the 500-plus partners cleared verification.",
+      "TOPSIS across five quality signals, not a weighted average, because an average lets a partner max one signal and coast. Then wired to money, so ranking actually pays. Expert quality rose 23%.",
   },
   {
     title: "Found the Dispatch Intensity Where Cost and Experience Balance",
@@ -356,7 +356,7 @@ const projects = [
       { v: "€377K", l: "saved in a year" },
     ],
     detail:
-      "Stacking more orders onto one rider trip drives cost per order down and lateness up, and the whole argument in the room was about where to stop. I modelled the equilibrium per city in BigQuery, R and Tableau, and the useful finding was that the optimum is not a matter of taste: it sits wherever you price a late order, which made the disagreement a pricing question instead of an opinion. The same work carried the national order dispatch policy, surge pricing across 64 cities, and a daily compliance dashboard that flipped cancelled-order billing across 2,200-plus vendors.",
+      "Stacking cuts cost per order and raises lateness, and the whole argument was where to stop. The optimum sits wherever you price a late order, which turned an opinion into a pricing question.",
   },
   {
     title: "Built an Algorithm to Detect Directional Dependence",
@@ -376,7 +376,7 @@ const projects = [
       { v: "Monte Carlo", l: "simulation study" },
     ],
     detail:
-      "Correlation tells you two variables move together, and then stops. It cannot tell you which one is doing the moving, because a correlation coefficient is symmetric by construction. My senior thesis built a linear-model random algorithm to detect bivariate directional dependence, using order statistics and concomitants to recover the asymmetry that a single coefficient discards. The simulation study is designed so the dependence structure is known in advance, which is the only honest way to check whether a detector detects.",
+      "Correlation cannot tell you which variable is doing the moving: it is symmetric by construction. An algorithm using order statistics and concomitants to recover the asymmetry it discards.",
   },
   {
     title: "Modelled Directional Dependence Using Copulas",
@@ -396,7 +396,7 @@ const projects = [
       { v: "Monte Carlo", l: "designed for bias" },
     ],
     detail:
-      "A copula strips away the marginals and leaves the dependence structure in its pure form. Working on a Howard Hughes Medical Institute Grant, I used concomitants of order statistics on copulas to isolate directional dependence, comparing families to see which preserve the asymmetry and which flatten it. The Monte Carlo design is the substance of the work: the data is generated specifically to keep causal bias out of the directional estimate, so the estimate is measuring dependence rather than the way the sample was built.",
+      "A copula strips away the marginals and leaves dependence in its pure form. The Monte Carlo design keeps causal bias out of the estimate, so it measures dependence and not the way the sample was built.",
   },
   {
     title: "Modelled Cognitive Change Across Two NHANES Cycles",
@@ -416,7 +416,7 @@ const projects = [
       { v: "3", l: "test batteries" },
     ],
     detail:
-      "Which cognitive tests actually predict impairment, and does that change across gender, race and time? Funded twice by UROP, I modelled two cycles of NHANES on the CERAD, AFT and DSST batteries with survey-weighted logistic regression. The weighting is not a technicality: NHANES deliberately oversamples older adults, so an unweighted prevalence drifts with the sampling design while the weighted estimate does not. Getting that wrong would produce a confident number about a population that was never sampled that way.",
+      "Which cognitive tests actually predict impairment, and does that differ by gender and race? Two NHANES cycles, survey-weighted, because an unweighted prevalence drifts with a design that oversamples on purpose.",
   },
 ];
 
@@ -796,30 +796,12 @@ function ImplementationBlock({ pr }: { pr: Project }) {
 
   return (
     <article className="rounded-2xl border border-white/[0.09] bg-[#0b0b11] overflow-hidden">
-      {/* Header, over the site's own hero */}
-      <a href={pr.href} target="_blank" rel="noopener noreferrer" className="impl-head group relative block">
-        <span className="absolute inset-0 pointer-events-none">
-          <Image
-            src={pr.image}
-            alt={`${pr.name}, as deployed`}
-            fill
-            sizes="(max-width: 1024px) 100vw, 1000px"
-            className="object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]"
-          />
-          <span
-            className="absolute inset-0"
-            style={{
-              background:
-                "linear-gradient(100deg, rgba(11,11,17,0.97) 0%, rgba(11,11,17,0.9) 46%, rgba(11,11,17,0.55) 100%)",
-            }}
-          />
-          <span
-            className="absolute inset-x-0 top-0 h-px"
-            style={{ background: `linear-gradient(90deg, transparent, ${pr.color}aa, transparent)` }}
-          />
-        </span>
-
-        <span className="relative block p-5 sm:p-7">
+      {/* Header: the copy on the left, the running site as a real thumbnail on
+          the right. It used to sit behind the text as a washed background, where
+          the site's own headline ghosted through the paragraph. */}
+      <a href={pr.href} target="_blank" rel="noopener noreferrer"
+        className="impl-head group grid lg:grid-cols-[1.15fr_1fr] gap-6 lg:gap-8 p-5 sm:p-7">
+        <span className="block min-w-0">
           <span className="flex items-center gap-2.5 mb-3 flex-wrap">
             <span
               className="text-[9.5px] uppercase tracking-[0.13em] font-bold px-2.5 py-[4px] rounded-full border"
@@ -830,10 +812,10 @@ function ImplementationBlock({ pr }: { pr: Project }) {
             <span className="text-[11px] text-white/45">{pr.name}</span>
           </span>
 
-          <span className="block text-[1.3rem] sm:text-[1.6rem] font-bold tracking-tight text-white leading-[1.25] mb-3.5 max-w-2xl">
+          <span className="block text-[1.3rem] sm:text-[1.55rem] font-bold tracking-tight text-white leading-[1.25] mb-3.5">
             {pr.title}
           </span>
-          <span className="block text-[13px] text-white/70 leading-relaxed max-w-2xl mb-5">
+          <span className="block text-[13px] text-white/70 leading-relaxed mb-5">
             {pr.detail}
           </span>
 
@@ -858,6 +840,21 @@ function ImplementationBlock({ pr }: { pr: Project }) {
             Open {pr.name}
             <ArrowUpRight />
           </span>
+        </span>
+
+        {/* The deployed site, framed */}
+        <span className="impl-thumb relative block self-start rounded-xl overflow-hidden border"
+          style={{ borderColor: pr.color + "33" }}>
+          <Image
+            src={pr.image}
+            alt={`${pr.name}, as deployed`}
+            width={1600}
+            height={900}
+            sizes="(max-width: 1024px) 100vw, 440px"
+            className="w-full h-auto transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          />
+          <span className="absolute inset-0 pointer-events-none"
+            style={{ boxShadow: `inset 0 0 40px -12px ${pr.color}66` }} />
         </span>
       </a>
 
@@ -1026,7 +1023,6 @@ function JobSection({ role, n }: { role: Role; n: string }) {
           </span>
           {role.location && <span className="text-[11.5px] text-white/50">{role.location}</span>}
         </div>
-        <p className="text-[13px] text-white/60 mb-8">{f.status}</p>
 
         <h2 className="text-[1.3rem] sm:text-[1.6rem] font-bold tracking-tight text-white leading-[1.25] mb-4 max-w-4xl">
           {f.headline}
@@ -1034,9 +1030,6 @@ function JobSection({ role, n }: { role: Role; n: string }) {
         <p className="text-sm text-white/60 max-w-3xl mb-12 leading-relaxed">{f.narrative}</p>
 
         {/* The role itself */}
-        <p className="text-[10px] uppercase tracking-[0.16em] text-white/35 mb-5">
-          The role
-        </p>
         <div className={`mb-16 ${role.positions.length > 1 ? "relative pl-5" : ""}`}>
           {role.positions.length > 1 && (
             <div
@@ -1429,10 +1422,6 @@ export default function Home() {
             </span>
             <span className="text-[11.5px] text-white/50">Minnesota, USA</span>
           </div>
-          <p className="text-[13px] text-white/60 mb-8">
-            Three funded projects, two UROP awards and a Howard Hughes Medical Institute
-            Grant, amounting to +$14,000 awarded
-          </p>
 
           <h2 className="text-[1.6rem] sm:text-[2rem] font-bold tracking-tight text-white leading-tight mb-3.5">
             Undergraduate Research Assistant expanding in areas of Econometrics,

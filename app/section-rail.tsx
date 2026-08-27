@@ -58,9 +58,12 @@ export default function SectionRail() {
   return (
     <nav
       aria-label="Sections"
-      className="hidden xl:block fixed right-5 top-1/2 -translate-y-1/2 z-40"
+      className="hidden xl:block fixed left-5 top-1/2 -translate-y-1/2 z-40"
     >
-      <div className="rounded-2xl border border-white/[0.08] bg-[#0b0b11]/85 backdrop-blur-md p-2.5 flex flex-col gap-0.5">
+      <div
+        className="rail-panel rounded-2xl border bg-[#0b0b11]/85 backdrop-blur-md p-2.5 flex flex-col gap-0.5"
+        style={{ borderColor: "rgba(165,180,252,0.22)" }}
+      >
         {SECTIONS.map((s) => {
           const on = active === s.id;
           return (
@@ -68,21 +71,12 @@ export default function SectionRail() {
               key={s.id}
               href={`#${s.id}`}
               aria-current={on ? "true" : undefined}
-              className="rail-item flex items-center justify-end gap-2.5 rounded-lg pl-3 pr-2 py-[7px] transition-all duration-300"
+              className="rail-item flex items-center gap-2.5 rounded-lg pl-2 pr-3.5 py-[7px] transition-all duration-300"
               style={{
                 background: on ? "rgba(129,140,248,0.16)" : "transparent",
                 boxShadow: on ? "inset 0 0 0 1px rgba(165,180,252,0.4)" : undefined,
               }}
             >
-              <span
-                className="text-[11px] whitespace-nowrap transition-all duration-300"
-                style={{
-                  color: on ? "#e0e7ff" : "rgba(255,255,255,0.45)",
-                  fontWeight: on ? 600 : 400,
-                }}
-              >
-                {s.label}
-              </span>
               {s.logo ? (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
@@ -104,6 +98,16 @@ export default function SectionRail() {
                   {s.glyph}
                 </span>
               )}
+              <span
+                className="text-[11px] whitespace-nowrap transition-all duration-300"
+                style={{
+                  color: on ? "#e0e7ff" : "rgba(255,255,255,0.45)",
+                  fontWeight: on ? 600 : 400,
+                  textShadow: on ? "0 0 10px rgba(165,180,252,0.55)" : undefined,
+                }}
+              >
+                {s.label}
+              </span>
             </a>
           );
         })}
