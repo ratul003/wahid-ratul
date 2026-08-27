@@ -3,22 +3,23 @@
 import { useEffect, useState } from "react";
 
 /**
- * The fixed section rail, same pattern as the case-study sites: rail-only
- * navigation, labels always visible, the active one lit. Replaces the row of
- * company names that was duplicating the page's own section headers in the
- * header bar.
+ * The fixed section rail, on the right, carrying each employer's mark so a
+ * reader can navigate by company rather than by section name. Replaces the row
+ * of company links that used to duplicate the page's own headers in the header.
  */
 
-const SECTIONS = [
-  { id: "expertise", label: "Expertise" },
-  { id: "output", label: "Output" },
-  { id: "just-move-in", label: "Just Move In" },
-  { id: "optimizely", label: "Optimizely" },
-  { id: "coto", label: "Coto" },
-  { id: "foodpanda", label: "foodpanda" },
-  { id: "research", label: "Research" },
-  { id: "about", label: "Foundations" },
-  { id: "writing", label: "Articles" },
+const FAV = (domain: string) => `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
+
+const SECTIONS: { id: string; label: string; logo?: string; glyph?: string }[] = [
+  { id: "expertise", label: "Expertise", glyph: "◈" },
+  { id: "output", label: "Output", glyph: "◉" },
+  { id: "just-move-in", label: "Just Move In", logo: FAV("justmovein.com") },
+  { id: "optimizely", label: "Optimizely", logo: FAV("optimizely.com") },
+  { id: "coto", label: "Coto", logo: FAV("coto.world") },
+  { id: "foodpanda", label: "foodpanda", logo: FAV("foodpanda.com") },
+  { id: "research", label: "Research", logo: FAV("umn.edu") },
+  { id: "about", label: "Foundations", glyph: "◇" },
+  { id: "writing", label: "Articles", glyph: "✎" },
 ];
 
 export default function SectionRail() {
@@ -28,15 +29,16 @@ export default function SectionRail() {
     const nodes = SECTIONS.map((s) => document.getElementById(s.id)).filter(Boolean) as HTMLElement[];
     if (!nodes.length) return;
 
-    // The section whose top is nearest the upper third of the viewport wins, so
-    // the rail tracks what you are reading rather than what merely intersects.
+    // Whichever section sits nearest the upper third of the viewport wins, so the
+    // rail tracks what you are reading rather than whatever merely intersects.
     const pick = () => {
       const mark = window.innerHeight * 0.32;
       let best: string | null = null;
       let bestD = Infinity;
       for (const n of nodes) {
-        const d = Math.abs(n.getBoundingClientRect().top - mark);
-        if (n.getBoundingClientRect().bottom > 0 && d < bestD) {
+        const r = n.getBoundingClientRect();
+        const d = Math.abs(r.top - mark);
+        if (r.bottom > 0 && d < bestD) {
           bestD = d;
           best = n.id;
         }
@@ -56,38 +58,56 @@ export default function SectionRail() {
   return (
     <nav
       aria-label="Sections"
-      className="hidden xl:flex fixed left-6 top-1/2 -translate-y-1/2 z-40 flex-col gap-1.5"
+      className="hidden xl:block fixed right-5 top-1/2 -translate-y-1/2 z-40"
     >
-      {SECTIONS.map((s) => {
-        const on = active === s.id;
-        return (
-          <a
-            key={s.id}
-            href={`#${s.id}`}
-            className="rail-item group flex items-center gap-2.5"
-            aria-current={on ? "true" : undefined}
-          >
-            <span
-              className="rounded-full transition-all duration-300 flex-shrink-0"
+      <div className="rounded-2xl border border-white/[0.08] bg-[#0b0b11]/85 backdrop-blur-md p-2.5 flex flex-col gap-0.5">
+        {SECTIONS.map((s) => {
+          const on = active === s.id;
+          return (
+            <a
+              key={s.id}
+              href={`#${s.id}`}
+              aria-current={on ? "true" : undefined}
+              className="rail-item flex items-center justify-end gap-2.5 rounded-lg pl-3 pr-2 py-[7px] transition-all duration-300"
               style={{
-                width: on ? 14 : 6,
-                height: on ? 3 : 2,
-                background: on ? "#a5b4fc" : "rgba(255,255,255,0.25)",
-                boxShadow: on ? "0 0 8px #818cf8cc" : undefined,
-              }}
-            />
-            <span
-              className="text-[10.5px] tracking-wide transition-all duration-300"
-              style={{
-                color: on ? "#c7d2fe" : "rgba(255,255,255,0.32)",
-                fontWeight: on ? 600 : 400,
+                background: on ? "rgba(129,140,248,0.16)" : "transparent",
+                boxShadow: on ? "inset 0 0 0 1px rgba(165,180,252,0.4)" : undefined,
               }}
             >
-              {s.label}
-            </span>
-          </a>
-        );
-      })}
+              <span
+                className="text-[11px] whitespace-nowrap transition-all duration-300"
+                style={{
+                  color: on ? "#e0e7ff" : "rgba(255,255,255,0.45)",
+                  fontWeight: on ? 600 : 400,
+                }}
+              >
+                {s.label}
+              </span>
+              {s.logo ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={s.logo}
+                  alt=""
+                  width={17}
+                  height={17}
+                  className="rounded-[4px] object-contain flex-shrink-0 transition-all duration-300"
+                  style={{
+                    opacity: on ? 1 : 0.5,
+                    filter: on ? "drop-shadow(0 0 6px rgba(129,140,248,0.85))" : "grayscale(0.45)",
+                  }}
+                />
+              ) : (
+                <span
+                  className="w-[17px] text-center text-[11px] flex-shrink-0 transition-all duration-300"
+                  style={{ color: on ? "#a5b4fc" : "rgba(255,255,255,0.3)" }}
+                >
+                  {s.glyph}
+                </span>
+              )}
+            </a>
+          );
+        })}
+      </div>
     </nav>
   );
 }
