@@ -1382,7 +1382,6 @@ export default function Home() {
       <section id="output" className="scroll-mt-20 py-20 px-6 border-b border-white/[0.06]">
         <div className="max-w-5xl mx-auto">
           <div className="flex items-baseline gap-4 mb-4">
-            <span className="text-[11px] font-mono text-white/40">00</span>
             <p className="text-[11px] uppercase tracking-[0.2em] text-white/55">Output</p>
           </div>
           <h2 className="text-[1.3rem] sm:text-[1.6rem] font-bold tracking-tight text-white leading-[1.25] mb-3.5">
