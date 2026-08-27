@@ -460,7 +460,7 @@ const roles: Role[] = [
       industry: "Enterprise SaaS",
       status: "Global digital experience platform, 100K+ B2B customers",
       headline:
-        "Built the Product Intelligence Platform 10+ SaaS Product Teams Ship On",
+        "Built the Product Intelligence Platform and Experimentation Framework 10+ SaaS Product Teams Ship On",
       narrative:
         "Ten product teams shipped against one governed metric per product and one gate: 5,000 impressions per arm, 80% power against a declared MDE. This is that gate, running in your browser.",
     },
