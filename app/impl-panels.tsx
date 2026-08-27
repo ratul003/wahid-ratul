@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { PanelFrame } from "./job-panels";
 
 /**
@@ -201,97 +201,6 @@ export function StackPanel() {
   );
 }
 
-// ── Data Engineering Foundation: the three layers, and what moves between ────
-
-const SOURCES = [
-  { key: "segment", name: "Segment", rows: "1.2M / day", staged: 34, marts: 11, note: "product events, the identity spine" },
-  { key: "fivetran", name: "Fivetran", rows: "410K / day", staged: 22, marts: 8, note: "Salesforce, Zendesk, billing" },
-  { key: "airbyte", name: "Airbyte", rows: "96K / day", staged: 9, marts: 4, note: "long-tail SaaS connectors" },
-  { key: "custom", name: "Custom ELT", rows: "58K / day", staged: 7, marts: 3, note: "the loads nothing off-the-shelf covered" },
-];
-
-const LAYERS = [
-  { name: "RAW", tone: "#64748b", desc: "Immutable landing. Append only, never modelled in place." },
-  { name: "STAGING", tone: "#0ea5e9", desc: "One dbt model per source table. Renamed, typed, tested." },
-  { name: "MARTS", tone: "#10b981", desc: "Kimball star schemas. The only layer a dashboard may read." },
-];
-
-/** Four parallel ELT services, three dbt layers, and Reverse ETL back out. */
-export function LineagePanel() {
-  const [src, setSrc] = useState(0);
-  const s = SOURCES[src];
-  const totalStaged = SOURCES.reduce((a, x) => a + x.staged, 0);
-  const totalMarts = SOURCES.reduce((a, x) => a + x.marts, 0);
-
-  return (
-    <PanelFrame uri="warehouse://lineage/three-layer" meta="4 ELT services">
-      <div className="grid md:grid-cols-[1fr_1.3fr] divide-y md:divide-y-0 md:divide-x divide-white/[0.06]">
-        <div className="p-4 sm:p-5">
-          <p className="text-[10px] uppercase tracking-[0.16em] text-white/35 mb-3">
-            Ingestion service
-          </p>
-          <div className="space-y-2 mb-5">
-            {SOURCES.map((x, i) => (
-              <button key={x.key} onClick={() => setSrc(i)} aria-pressed={i === src}
-                className="w-full text-left px-3 py-2 rounded-lg border transition-all"
-                style={i === src
-                  ? { borderColor: "#10b981", background: "#10b9811f" }
-                  : { borderColor: "rgba(255,255,255,0.1)" }}>
-                <span className="flex items-baseline justify-between gap-2">
-                  <span className="text-[12px] font-medium" style={{ color: i === src ? "#6ee7b7" : "rgba(255,255,255,0.7)" }}>
-                    {x.name}
-                  </span>
-                  <span className="text-[10px] text-white/40 tabular-nums">{x.rows}</span>
-                </span>
-              </button>
-            ))}
-          </div>
-          <Row label="Staging models" value={`${s.staged} of ${totalStaged}`} />
-          <Row label="Mart models" value={`${s.marts} of ${totalMarts}`} />
-          <p className="text-[10px] text-white/30 leading-relaxed mt-3.5">
-            {s.note}. Reverse ETL pushes mart columns back into Salesforce and
-            Gainsight, so the score a CSM sees is the score the warehouse computed.
-          </p>
-        </div>
-
-        <div className="p-4 sm:p-5">
-          {/* The path this source takes through the stack */}
-          <div className="space-y-2.5 mb-4">
-            {LAYERS.map((l, i) => (
-              <div key={l.name} className="relative">
-                <div className="rounded-lg border px-3.5 py-2.5 transition-all"
-                  style={{ borderColor: l.tone + "55", background: l.tone + "12" }}>
-                  <div className="flex items-baseline justify-between gap-3 mb-1">
-                    <span className="text-[11px] font-bold tracking-[0.08em]" style={{ color: l.tone }}>
-                      {l.name}
-                    </span>
-                    <span className="text-[10.5px] text-white/55 tabular-nums">
-                      {i === 0 ? s.rows : i === 1 ? `${s.staged} models` : `${s.marts} models`}
-                    </span>
-                  </div>
-                  <p className="text-[10.5px] text-white/45 leading-relaxed">{l.desc}</p>
-                </div>
-                {i < LAYERS.length - 1 && (
-                  <div className="flex justify-center py-[3px]">
-                    <span className="text-white/25 text-[11px]">↓</span>
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-          <div className="rounded-lg border border-white/[0.08] bg-white/[0.02] px-3.5 py-2.5">
-            <p className="text-[11px] font-bold tracking-[0.08em] text-white/60 mb-1">REVERSE ETL</p>
-            <p className="text-[10.5px] text-white/45 leading-relaxed">
-              Scores and segments pushed back into Salesforce and Gainsight, from the
-              mart layer only. Nothing operational reads RAW.
-            </p>
-          </div>
-        </div>
-      </div>
-    </PanelFrame>
-  );
-}
-
 // ── Systems Architecture: the egress finding that settled the ADR ────────────
 
 // Published list rates, stated so the model can be argued with.
@@ -306,7 +215,7 @@ const EGRESS_RATE = 90;     // $ per TB moved out
  * warehouse. Move the export slider and watch which line the bill actually
  * follows: egress dominates long before compute does.
  */
-export function EgressPanel() {
+function EgressBody() {
   const [exportTb, setExportTb] = useState(14);
   const [storeTb, setStoreTb] = useState(38);
   const [credits, setCredits] = useState(2400);
@@ -334,8 +243,7 @@ export function EgressPanel() {
   const share = Math.max(r.egressShareSnow, r.egressShareBq);
 
   return (
-    <PanelFrame uri="adr://warehouse/snowflake-vs-bigquery" meta="list rates">
-      <div className="grid md:grid-cols-[1fr_1.3fr] divide-y md:divide-y-0 md:divide-x divide-white/[0.06]">
+    <div className="grid md:grid-cols-[1fr_1.3fr] divide-y md:divide-y-0 md:divide-x divide-white/[0.06]">
         <div className="p-4 sm:p-5">
           <p className="text-[10px] uppercase tracking-[0.16em] text-white/35 mb-4">Monthly workload</p>
           <Slider label="Exported out of the warehouse" value={exportTb} display={`${exportTb} TB`}
@@ -403,9 +311,8 @@ export function EgressPanel() {
               </span>
             ))}
           </div>
-        </div>
       </div>
-    </PanelFrame>
+    </div>
   );
 }
 
@@ -531,6 +438,435 @@ export function TopsisPanel() {
           </p>
         </div>
       </div>
+    </PanelFrame>
+  );
+}
+
+// ── Data Engineering Foundation: the DAG, and what each stage does to a row ──
+
+type ModelDetail = {
+  note: string;
+  tags?: { t: string; tone: string }[];
+  sql: string;
+  row: { k: string; v: string; was?: string; how?: string }[];
+};
+
+type StageRow = {
+  key: string; label: string; tone: string; desc: string;
+  models: { id: string | null; name: string; meta?: string }[];
+};
+
+const STAGE_ROWS: StageRow[] = [
+  {
+    key: "source", label: "Source", tone: "#94a3b8",
+    desc: "Raw experiment event tables: append-only, no transforms applied",
+    models: [{ id: "raw", name: "Experiment Event Sources", meta: "exposures · conversions · flag evaluations" }],
+  },
+  {
+    key: "staging", label: "Staging", tone: "#0ea5e9",
+    desc: "Cast · rename · deduplicate: one model per source, no business logic",
+    models: [
+      { id: "stg", name: "stg_experiment_exposures" },
+      { id: null, name: "stg_experiment_conversions" },
+      { id: null, name: "stg_experiment_flags" },
+      { id: null, name: "stg_accounts" },
+    ],
+  },
+  {
+    key: "intermediate", label: "Intermediate", tone: "#f59e0b",
+    desc: "Ephemeral: statistical aggregation and variation rollups, no table cost",
+    models: [
+      { id: "int", name: "int_experiment_daily_stats" },
+      { id: null, name: "int_variation_aggregates" },
+      { id: null, name: "int_experiment_results" },
+    ],
+  },
+  {
+    key: "marts", label: "Marts", tone: "#34d399",
+    desc: "Consumer-facing conformed tables: materialized in reporting layer",
+    models: [
+      { id: "fact", name: "fact_experiment_results" },
+      { id: null, name: "fact_daily_impressions" },
+      { id: null, name: "dim_experiment" },
+      { id: null, name: "dim_account" },
+    ],
+  },
+  {
+    key: "consumers", label: "Consumers", tone: "#a78bfa",
+    desc: "One DAG, three audiences: experiment dashboards · stat analysis · flag health",
+    models: [
+      { id: null, name: "Product Managers", meta: "winner detection & dashboards" },
+      { id: null, name: "Data Science", meta: "power analysis & stat testing" },
+      { id: null, name: "Engineering", meta: "flag rollout health & coverage" },
+    ],
+  },
+];
+
+const DETAILS: Record<string, ModelDetail> = {
+  raw: {
+    note: "Lands exactly as it arrived. Unix timestamp, abbreviated names, no dedup guard.",
+    sql: `-- append-only vault, verbatim from source
+SELECT *
+FROM   raw.experiment_events
+WHERE  evt_type = 'EXPERIMENT_EXPOSURE'`,
+    row: [
+      { k: "experiment_id", v: "'exp-001'" },
+      { k: "source_user_id", v: "'usr_abc123'" },
+      { k: "exposure_ts", v: "1709683200" },
+      { k: "var_key", v: "'var_b'" },
+      { k: "evt_type", v: "'EXPERIMENT_EXPOSURE'" },
+    ],
+  },
+  stg: {
+    note: "Cast, renamed, deduped. One model per source, no business logic.",
+    tags: [
+      { t: "RENAME ×2", tone: "#0ea5e9" },
+      { t: "CAST", tone: "#22d3ee" },
+      { t: "DERIVE", tone: "#34d399" },
+      { t: "DEDUPE", tone: "#fb7185" },
+    ],
+    sql: `SELECT
+  experiment_id,
+  source_user_id        AS user_id,
+  TO_TIMESTAMP_NTZ(
+    exposure_ts)        AS exposure_at,
+  var_key               AS variation_key,
+  DATE(exposure_at)     AS exposure_date
+FROM raw.experiment_events
+WHERE evt_type = 'EXPERIMENT_EXPOSURE'
+QUALIFY ROW_NUMBER() OVER (
+  PARTITION BY experiment_id,
+               user_id, variation_key
+  ORDER BY exposure_at
+) = 1`,
+    row: [
+      { k: "experiment_id", v: "'exp-001'" },
+      { k: "user_id", v: "'usr_abc123'", was: "source_user_id", how: "renamed" },
+      { k: "exposure_at", v: "'2024-03-06 00:00:00 UTC'", was: "1709683200", how: "unix epoch" },
+      { k: "variation_key", v: "'var_b'", was: "var_key", how: "renamed" },
+      { k: "exposure_date", v: "'2024-03-06'", was: "derived from exposure_at" },
+    ],
+  },
+  int: {
+    note: "Ephemeral: no table cost. Joins to conversions and aggregates by day.",
+    tags: [
+      { t: "JOIN", tone: "#f59e0b" },
+      { t: "AGGREGATE", tone: "#fbbf24" },
+      { t: "EPHEMERAL", tone: "#94a3b8" },
+    ],
+    sql: `SELECT
+  e.experiment_id,
+  e.variation_key,
+  e.exposure_date,
+  COUNT(DISTINCT e.user_id)  AS exposures,
+  COUNT(DISTINCT c.user_id)  AS conversions
+FROM stg_experiment_exposures e
+LEFT JOIN stg_experiment_conversions c
+       ON e.experiment_id = c.experiment_id
+      AND e.user_id       = c.user_id
+GROUP BY 1, 2, 3`,
+    row: [
+      { k: "experiment_id", v: "'exp-001'" },
+      { k: "variation_key", v: "'var_b'" },
+      { k: "exposure_date", v: "'2024-03-06'" },
+      { k: "exposures", v: "847", was: "individual rows", how: "counted" },
+      { k: "conversions", v: "124", was: "left join", how: "counted" },
+    ],
+  },
+  fact: {
+    note: "Materialized table. Totals rolled up, winner detected, dimension context joined.",
+    tags: [
+      { t: "ROLLUP", tone: "#34d399" },
+      { t: "ENRICH", tone: "#22d3ee" },
+      { t: "MATERIALIZE", tone: "#818cf8" },
+    ],
+    sql: `SELECT
+  experiment_id, variation_key,
+  SUM(exposures)        AS impression_count,
+  SUM(conversions)      AS conversion_count,
+  ROUND(
+    SUM(conversions) /
+    NULLIF(SUM(exposures), 0), 4)
+                        AS conversion_rate,
+  conversion_rate >
+    LAG(conversion_rate) OVER (
+      PARTITION BY experiment_id
+      ORDER BY conversion_rate)
+  AND variation_key != 'control'
+                        AS is_winner,
+  a.arr_tier
+FROM int_experiment_results r
+JOIN dim_account a USING (account_id)`,
+    row: [
+      { k: "impression_count", v: "12,840", was: "847 / day", how: "summed" },
+      { k: "conversion_count", v: "1,847", was: "124 / day", how: "summed" },
+      { k: "conversion_rate", v: "0.1439 (14.4%)", was: "derived" },
+      { k: "is_winner", v: "true", was: "derived" },
+      { k: "arr_tier", v: "'Enterprise'", was: "from dim_account" },
+    ],
+  },
+};
+
+/**
+ * The DAG, and then what one row actually looks like at each stage. The point of
+ * a layered warehouse is that each stage does exactly one job, which is only
+ * convincing if you can see the row change shape as it moves.
+ */
+export function DbtPanel() {
+  const [sel, setSel] = useState("stg");
+  const d = DETAILS[sel];
+  const selName = STAGE_ROWS.flatMap((s) => s.models).find((m) => m.id === sel)?.name ?? sel;
+
+  return (
+    <PanelFrame uri="warehouse://dbt/experiment-dag" meta="5 stages">
+      <div className="p-4 sm:p-5">
+        {/* The DAG */}
+        <div className="space-y-0">
+          {STAGE_ROWS.map((st, i) => (
+            <div key={st.key}>
+              <div className="flex flex-col sm:flex-row rounded-lg border overflow-hidden"
+                style={{ borderColor: st.tone + "26", background: st.tone + "08" }}>
+                <div className="flex-shrink-0 sm:w-[132px] px-3.5 py-3 flex flex-col justify-center"
+                  style={{ background: st.tone + "12" }}>
+                  <span className="text-[9.5px] uppercase tracking-[0.14em] font-bold" style={{ color: st.tone }}>
+                    {st.label}
+                  </span>
+                  <span className="block w-6 h-px mt-1.5" style={{ background: st.tone + "66" }} />
+                </div>
+                <div className="flex-1 px-3.5 py-3 min-w-0">
+                  <p className="text-[11px] italic text-white/45 mb-2.5 leading-snug">{st.desc}</p>
+                  <div className="flex flex-wrap gap-2">
+                    {st.models.map((m) => {
+                      const clickable = m.id !== null;
+                      const on = m.id === sel;
+                      return (
+                        <button
+                          key={m.name}
+                          onClick={() => clickable && setSel(m.id!)}
+                          disabled={!clickable}
+                          aria-pressed={on}
+                          className={`text-left px-2.5 py-1.5 rounded-md border font-mono text-[11px] transition-all ${clickable ? "" : "cursor-default"}`}
+                          style={{
+                            borderColor: on ? st.tone : st.tone + "33",
+                            background: on ? st.tone + "26" : st.tone + "0d",
+                            color: on ? "#fff" : st.tone,
+                            opacity: clickable ? 1 : 0.72,
+                          }}
+                        >
+                          {m.name}
+                          {m.meta && (
+                            <span className="font-sans text-white/40 ml-1.5">{m.meta}</span>
+                          )}
+                          {clickable && <span className="text-white/35 ml-1.5">›</span>}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+              {i < STAGE_ROWS.length - 1 && (
+                <div className="pl-[18px] py-1">
+                  <span className="block text-[12px]" style={{ color: STAGE_ROWS[i + 1].tone + "aa" }}>↓</span>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+
+        {/* What the row looks like at the selected stage */}
+        <div className="mt-6 rounded-xl border border-white/[0.08] overflow-hidden">
+          <div className="flex flex-wrap items-center gap-2 px-4 py-2.5 border-b border-white/[0.07] bg-white/[0.02]">
+            <code className="text-[12px] font-bold text-white">{selName}</code>
+            {d.tags?.map((t) => (
+              <span key={t.t} className="text-[8.5px] font-bold tracking-[0.08em] px-1.5 py-[3px] rounded"
+                style={{ background: t.tone + "26", color: t.tone }}>
+                {t.t}
+              </span>
+            ))}
+            <span className="ml-auto text-[10.5px] italic text-white/40 hidden sm:block">{d.note}</span>
+          </div>
+          <div className="grid md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-white/[0.06]">
+            <div className="p-4 min-w-0">
+              <p className="text-[9px] uppercase tracking-[0.13em] text-white/35 mb-2.5">SQL</p>
+              <pre className="text-[10.5px] leading-relaxed text-sky-200/85 font-mono overflow-x-auto">{d.sql}</pre>
+            </div>
+            <div className="p-4">
+              <p className="text-[9px] uppercase tracking-[0.13em] text-white/35 mb-2.5">Sample row</p>
+              <div className="space-y-1.5">
+                {d.row.map((f) => (
+                  <div key={f.k}
+                    className={`flex flex-col sm:flex-row sm:items-baseline gap-x-3 ${f.was ? "rounded-md border border-white/[0.07] bg-white/[0.02] px-2.5 py-2" : "px-2.5 py-1"}`}>
+                    <span className="text-[10.5px] font-mono text-white/45 sm:w-[124px] flex-shrink-0">{f.k}</span>
+                    <span className="min-w-0">
+                      {f.was && (
+                        <span className="block text-[10px] font-mono text-white/25 line-through">
+                          {f.was}{f.how && <span className="no-underline"> · {f.how}</span>}
+                        </span>
+                      )}
+                      <span className="block text-[11px] font-mono text-white/85">{f.v}</span>
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+        <p className="text-[10px] text-white/30 mt-3">
+          Click any model with a chevron to see its SQL and what it does to the row.
+          Struck-through values are what the stage above handed it.
+        </p>
+      </div>
+    </PanelFrame>
+  );
+}
+
+// ── Systems Architecture: what the stack looks like after the migration ──────
+
+const SUITE = [
+  { name: "Experimentation", cloud: "GCP", tone: "#818cf8" },
+  { name: "CMS", cloud: "Azure", tone: "#38bdf8" },
+  { name: "Welcome", cloud: "AWS", tone: "#fbbf24" },
+  { name: "Data Platform", cloud: "AWS", tone: "#34d399" },
+  { name: "AI Orchestration", cloud: "GCP", tone: "#a78bfa" },
+];
+
+const CONSUMERS = [
+  { name: "Analytics Platform", sub: "product managers · product exploration", tone: "#818cf8" },
+  { name: "Power BI", sub: "Finance · board reporting", tone: "#fbbf24" },
+  { name: "AI Orchestration", sub: "Agents · board prep · alerts", tone: "#a78bfa" },
+];
+
+const HOLDS = [
+  "One warehouse, one source of truth",
+  "ARR + behavioral joins in SQL",
+  "No sync layer, no version skew",
+];
+
+function Hop({ label, tone }: { label: string; tone: string }) {
+  return (
+    <div className="flex flex-col items-center py-2">
+      <span className="w-px h-3.5" style={{ background: tone + "66" }} />
+      <span className="text-[11px] leading-none" style={{ color: tone + "aa" }}>⌄</span>
+      <span className="text-[10.5px] text-white/40 mt-1.5 text-center px-2">{label}</span>
+    </div>
+  );
+}
+
+function Box({ name, sub, tone, wide = false }: { name: string; sub?: string; tone: string; wide?: boolean }) {
+  return (
+    <div className={`rounded-xl border px-4 py-3 text-center ${wide ? "" : "flex-1"}`}
+      style={{ borderColor: tone + "40", background: tone + "12" }}>
+      <p className="text-[13px] font-bold leading-tight" style={{ color: tone }}>{name}</p>
+      {sub && <p className="text-[10.5px] text-white/45 mt-1 leading-snug">{sub}</p>}
+    </div>
+  );
+}
+
+/** The architecture the ADR argued for, and the cost model that decided it. */
+export function ArchPanel() {
+  const [tab, setTab] = useState<"arch" | "cost">("arch");
+
+  return (
+    <PanelFrame
+      uri={tab === "arch" ? "adr://architecture/warehouse-native" : "adr://warehouse/snowflake-vs-bigquery"}
+      meta={tab === "arch" ? "current state" : "list rates"}
+    >
+      <div className="flex flex-wrap gap-2 px-4 sm:px-5 py-3 border-b border-white/[0.06]">
+        {([["arch", "Current architecture"], ["cost", "The egress finding"]] as const).map(([k, l]) => (
+          <button key={k} onClick={() => setTab(k)} aria-pressed={tab === k}
+            className="text-[11.5px] px-3 py-1.5 rounded-full border transition-all"
+            style={tab === k
+              ? { background: "#f43f5e", borderColor: "#f43f5e", color: "#1a0409", fontWeight: 600 }
+              : { borderColor: "rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.7)" }}>
+            {l}
+          </button>
+        ))}
+      </div>
+
+      {tab === "cost" ? (
+        <EgressBody />
+      ) : (
+        <div className="p-4 sm:p-6">
+          <p className="text-[10px] uppercase tracking-[0.16em] font-bold text-emerald-300/80 text-center mb-6">
+            Current architecture · warehouse-native
+          </p>
+
+          <p className="text-[9.5px] uppercase tracking-[0.14em] text-white/35 text-center mb-3">
+            Product suite
+          </p>
+          <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
+            {SUITE.map((x) => (
+              <div key={x.name} className="rounded-xl border px-3 py-3 text-center"
+                style={{ borderColor: x.tone + "33", background: x.tone + "0d" }}>
+                <p className="text-[12px] font-bold leading-tight mb-2" style={{ color: x.tone }}>{x.name}</p>
+                <span className="text-[9px] font-bold px-1.5 py-[3px] rounded"
+                  style={{ background: x.tone + "26", color: x.tone }}>{x.cloud}</span>
+              </div>
+            ))}
+          </div>
+
+          <Hop label="Segment SDK: identify / group / track" tone="#94a3b8" />
+          <div className="sm:max-w-[52%] sm:mx-auto">
+            <Box name="Segment" sub="Event collection + Protocols gate" tone="#34d399" wide />
+          </div>
+
+          <Hop label="Protocols rejects unplanned events at ingestion" tone="#fbbf24" />
+
+          {/* The landing zone, with what else lands beside it */}
+          <div className="grid lg:grid-cols-[1fr_1.15fr_1fr] gap-4 items-center">
+            <div className="text-center">
+              <div className="flex flex-wrap gap-1.5 justify-center mb-1.5">
+                {["Salesforce", "Zendesk", "NetSuite", "Gainsight"].map((x, i) => (
+                  <span key={x} className="text-[9.5px] font-semibold px-2 py-1 rounded"
+                    style={{ background: ["#38bdf8", "#818cf8", "#fb7185", "#fbbf24"][i] + "1f", color: ["#38bdf8", "#818cf8", "#fb7185", "#fbbf24"][i] }}>
+                    {x}
+                  </span>
+                ))}
+              </div>
+              <p className="text-[10px] text-white/35">Fivetran ↓</p>
+            </div>
+            <Box name="Snowflake RAW" sub="Single landing zone · append-only" tone="#38bdf8" wide />
+            <div className="text-center">
+              <div className="flex flex-wrap gap-1.5 justify-center mb-1.5">
+                {["GCP", "Azure", "AWS"].map((x, i) => (
+                  <span key={x} className="text-[9.5px] font-semibold px-2 py-1 rounded"
+                    style={{ background: ["#818cf8", "#38bdf8", "#fbbf24"][i] + "1f", color: ["#818cf8", "#38bdf8", "#fbbf24"][i] }}>
+                    {x}
+                  </span>
+                ))}
+              </div>
+              <p className="text-[10px] text-white/35">RAW extracts ↓</p>
+            </div>
+          </div>
+
+          <Hop label="dbt: staging → intermediate → mart" tone="#fb7185" />
+          <div className="sm:max-w-[52%] sm:mx-auto">
+            <Box name="dbt" sub="Transform layer · 100% test coverage" tone="#fb7185" wide />
+          </div>
+
+          <Hop label="ARR-joined · identity-resolved · cross-product" tone="#818cf8" />
+          <div className="sm:max-w-[62%] sm:mx-auto">
+            <Box name="Reporting Layer" sub="Consumer-ready · <2s P95 · 100+ weekly active users" tone="#818cf8" wide />
+          </div>
+
+          <Hop label="" tone="#94a3b8" />
+          <div className="grid sm:grid-cols-3 gap-2.5">
+            {CONSUMERS.map((c) => <Box key={c.name} {...c} />)}
+          </div>
+
+          {/* Why it holds */}
+          <div className="mt-6 rounded-xl border border-emerald-400/25 bg-emerald-400/[0.07] px-4 py-4">
+            <div className="flex flex-wrap justify-center gap-x-8 gap-y-2">
+              {HOLDS.map((h) => (
+                <span key={h} className="flex items-center gap-2 text-[12px] text-white/80">
+                  <span className="text-emerald-300">✔</span>
+                  {h}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </PanelFrame>
   );
 }

@@ -222,76 +222,105 @@ function IntervalPlot({
   );
 }
 
-// ── Power curve ───────────────────────────────────────────────────────────────
+// ── How the distributions separate ────────────────────────────────────────────
+
+const CTRL = "#818cf8";
+const TREAT = "#34d399";
 
 /**
- * Power against sample size, with the 80% target and where this test currently
- * sits. This is the picture that makes the verdict obvious: you can see how far
- * along the curve you are, and how much more traffic buys you a decision.
+ * The two arms as sampling distributions of their own means. Both narrow as
+ * impressions accumulate, so significance is something you watch happen rather
+ * than something the panel asserts. Driven by the same two sliders, which is
+ * what accumulating impressions actually looks like.
  */
-function PowerCurve({ n, power, nRequired }: { n: number; power: number; nRequired: number }) {
-  const W = 620;
-  const H = 118;
-  const PAD_L = 4;
-  const PAD_B = 16;
-  const N_MAX = 60000;
+function Distributions({
+  pc, pt, diff, n, pValue, gated,
+}: { pc: number; pt: number; diff: number; n: number; pValue: number; gated: boolean }) {
+  const W = 720, H = 232, PAD = 8, BASE = H - 26;
 
-  const x = (v: number) => PAD_L + (v / N_MAX) * (W - PAD_L * 2);
-  const y = (p: number) => H - PAD_B - p * (H - PAD_B - 8);
+  const seArm = Math.sqrt((pc * (1 - pc)) / Math.max(n, 1));
+  const centre = (pc + pt) / 2;
+  const half = Math.max(seArm * 3.6, Math.abs(diff) * 2.1, 1e-4);
+  const x = (v: number) => PAD + ((v - (centre - half)) / (2 * half)) * (W - PAD * 2);
+  const peak = 1 / (seArm * Math.sqrt(2 * Math.PI));
+  const y = (d: number) => BASE - (d / peak) * (H - 58);
 
-  const pts: string[] = [];
-  for (let s = 500; s <= N_MAX; s += 500) {
-    const dMde = BASELINE * MDE_REL;
-    const pBarMde = (BASELINE + BASELINE * (1 + MDE_REL)) / 2;
-    const se = Math.sqrt((pBarMde * (1 - pBarMde) * 2) / s);
-    pts.push(`${pts.length ? "L" : "M"}${x(s).toFixed(1)} ${y(Phi(dMde / se - Z_ALPHA)).toFixed(1)}`);
-  }
+  const path = (mu: number) => {
+    const pts: string[] = [];
+    for (let i = 0; i <= 130; i++) {
+      const v = centre - half + (i / 130) * 2 * half;
+      const d = Math.exp(-((v - mu) ** 2) / (2 * seArm ** 2)) / (seArm * Math.sqrt(2 * Math.PI));
+      pts.push(`${i ? "L" : "M"}${x(v).toFixed(1)} ${y(d).toFixed(1)}`);
+    }
+    return pts.join(" ");
+  };
+  const fill = (mu: number) =>
+    `${path(mu)} L ${x(centre + half).toFixed(1)} ${BASE} L ${x(centre - half).toFixed(1)} ${BASE} Z`;
 
-  const tick = (v: number) => (v >= 1000 ? `${v / 1000}k` : `${v}`);
+  const sig = pValue < 0.05;
+  const verdict = !gated
+    ? { t: "Below the 5,000 impression gate", c: "#94a3b8" }
+    : sig
+      ? { t: "Effect is statistically significant", c: TREAT }
+      : { t: "Not separated at this sample size", c: "#fbbf24" };
 
   return (
     <figure className="m-0">
+      <div className="flex flex-wrap items-center justify-between gap-3 mb-2">
+        <p className="text-[10px] uppercase tracking-[0.13em] text-white/45">
+          Statistical significance: how the distributions separate
+        </p>
+        <div className="flex items-center gap-4">
+          {[{ c: CTRL, l: "Control" }, { c: TREAT, l: "Treatment" }].map((k) => (
+            <span key={k.l} className="flex items-center gap-1.5 text-[11px] text-white/60">
+              <span className="w-4 h-[3px] rounded" style={{ background: k.c }} />
+              {k.l}
+            </span>
+          ))}
+        </div>
+      </div>
+
       <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img"
-        aria-label={`Power against sample size. At ${n.toLocaleString()} per arm, power is ${(power * 100).toFixed(0)} percent; 80 percent needs ${nRequired.toLocaleString()}.`}>
-        {/* 80% target */}
-        <line x1={PAD_L} x2={W - PAD_L} y1={y(TARGET_POWER)} y2={y(TARGET_POWER)}
-          stroke="rgba(255,255,255,0.22)" strokeWidth="1" strokeDasharray="3 3" />
-        {/* Right-hand side, below the line: the curve is above 80% out here, so
-            this is the one corner nothing else occupies */}
-        <text x={W - PAD_L} y={y(TARGET_POWER) + 11} fill="rgba(255,255,255,0.35)" fontSize="9" textAnchor="end">
-          80% target
-        </text>
-
-        {/* The impression gate: below this, nothing is read at all */}
-        <line x1={x(GATE)} x2={x(GATE)} y1={8} y2={H - PAD_B}
-          stroke="rgba(148,163,184,0.35)" strokeWidth="1" strokeDasharray="2 3" />
-        <text x={x(GATE) + 4} y={16} fill="rgba(148,163,184,0.55)" fontSize="8.5">gate</text>
-
-        {/* The curve */}
-        <path d={pts.join(" ")} fill="none" stroke="#818cf8" strokeWidth="2" strokeLinecap="round" />
-
-        {/* Where 80% is reached */}
-        {nRequired <= N_MAX && (
-          <circle cx={x(nRequired)} cy={y(TARGET_POWER)} r="3" fill="#34d399" />
-        )}
-
-        {/* This test */}
-        <line x1={x(n)} x2={x(n)} y1={y(power)} y2={H - PAD_B}
-          stroke="rgba(255,255,255,0.2)" strokeWidth="1" />
-        <circle cx={x(n)} cy={y(power)} r="5" fill="#0b0b11" />
-        <circle cx={x(n)} cy={y(power)} r="3.2" fill="#fff" />
-
-        {/* Axis */}
-        <line x1={PAD_L} x2={W - PAD_L} y1={H - PAD_B} y2={H - PAD_B} stroke="rgba(255,255,255,0.12)" strokeWidth="1" />
-        {[0, 15000, 30000, 45000, 60000].map((v) => (
-          <text key={v} x={x(v)} y={H - 4} fill="rgba(255,255,255,0.3)" fontSize="9"
-            textAnchor={v === 0 ? "start" : v === 60000 ? "end" : "middle"}>
-            {tick(v)}
-          </text>
+        aria-label={`Two sampling distributions at ${n.toLocaleString()} impressions per arm; p equals ${pValue.toFixed(4)}`}>
+        <path d={fill(pc)} fill={CTRL} fillOpacity="0.13" />
+        <path d={fill(pt)} fill={TREAT} fillOpacity="0.13" />
+        {[{ mu: pc, c: CTRL, l: "μ₀" }, { mu: pt, c: TREAT, l: "μ₁" }].map((m) => (
+          <g key={m.l}>
+            <line x1={x(m.mu)} x2={x(m.mu)} y1={y(peak) - 3} y2={BASE}
+              stroke={m.c} strokeOpacity="0.55" strokeWidth="1" strokeDasharray="4 3" />
+            <text x={x(m.mu)} y={y(peak) - 7} fill={m.c} fontSize="11" textAnchor="middle">{m.l}</text>
+          </g>
         ))}
+        <path d={path(pc)} fill="none" stroke={CTRL} strokeWidth="2.5" strokeLinecap="round" />
+        <path d={path(pt)} fill="none" stroke={TREAT} strokeWidth="2.5" strokeLinecap="round" />
+        <line x1={PAD} x2={W - PAD} y1={BASE} y2={BASE} stroke="rgba(255,255,255,0.14)" strokeWidth="1" />
+
+        <text x={W / 2} y={H / 2 + 10} fill={verdict.c} fontSize="18" fontWeight="700" textAnchor="middle">
+          {verdict.t}
+        </text>
+        <text x={W - PAD - 4} y={40} fill={verdict.c} fontSize="20" fontWeight="700" textAnchor="end">
+          p = {pValue < 0.0001 ? "<0.0001" : pValue.toFixed(4)}{gated && sig ? " ✓" : ""}
+        </text>
       </svg>
-      <figcaption className="text-[10px] text-white/40 text-center mt-1">
-        Power against impressions per arm, at a +{(MDE_REL * 100).toFixed(0)}% declared MDE
+
+      {/* Impressions, and the gate they have to clear */}
+      <div className="mt-1">
+        <div className="flex items-baseline justify-between mb-1.5">
+          <span className="text-[10.5px] text-white/45">Impressions accumulating</span>
+          <span className="text-[10.5px] tabular-nums" style={{ color: gated ? TREAT : "#94a3b8" }}>
+            {n.toLocaleString()}{gated ? " ✓ past 5K gate" : ` · ${(GATE - n).toLocaleString()} to the gate`}
+          </span>
+        </div>
+        <div className="relative h-[6px] rounded-full bg-white/[0.06] overflow-hidden">
+          <div className="absolute inset-y-0 left-0 rounded-full"
+            style={{ width: `${(n / 60000) * 100}%`, background: `linear-gradient(90deg, ${CTRL}, ${TREAT})` }} />
+          {/* The gate is a count of impressions, so it marks this axis, not the metric axis */}
+          <div className="absolute inset-y-0 w-px bg-amber-300/70" style={{ left: `${(GATE / 60000) * 100}%` }} />
+        </div>
+      </div>
+      <figcaption className="text-[10px] text-white/35 mt-2.5">
+        Both arms drawn as N(p, √(p(1−p)/n)). Drag impressions per arm and the curves
+        narrow until they separate, which is the whole of what significance means here.
       </figcaption>
     </figure>
   );
@@ -463,9 +492,9 @@ export default function ExperimentConsole() {
         </div>
       </div>
 
-      {/* Full width, because the curve is the argument */}
+      {/* Full width, because the separation is the argument */}
       <div className="px-4 sm:px-5 py-4 border-t border-white/[0.06]">
-        <PowerCurve n={n} power={power} nRequired={nRequired} />
+        <Distributions pc={pc} pt={pt} diff={diff} n={n} pValue={pValue} gated={n >= GATE} />
       </div>
     </div>
   );

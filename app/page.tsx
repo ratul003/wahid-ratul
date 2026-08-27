@@ -5,7 +5,7 @@ import { MARKS } from "./skill-marks";
 import ExperimentConsole from "./experiment-console";
 import { WorkOsPanel, DispatchPanel, SupplyPanel } from "./job-panels";
 import { CopulaSurface, DirectionalDependence, SurveyWeights } from "./research-panels";
-import { StackPanel, LineagePanel, EgressPanel, TopsisPanel } from "./impl-panels";
+import { StackPanel, DbtPanel, ArchPanel, TopsisPanel } from "./impl-panels";
 
 // ── Project icons ──────────────────────────────────────────────────────────────
 
@@ -944,8 +944,8 @@ const VISUALS: Record<string, React.ComponentType> = {
   workos: WorkOsPanel,
   stack: StackPanel,
   console: ExperimentConsole,
-  lineage: LineagePanel,
-  egress: EgressPanel,
+  lineage: DbtPanel,
+  egress: ArchPanel,
   supply: SupplyPanel,
   topsis: TopsisPanel,
   dispatch: DispatchPanel,
