@@ -6,7 +6,6 @@ import ExperimentConsole from "./experiment-console";
 import { WorkOsPanel, DispatchPanel, SupplyPanel } from "./job-panels";
 import { CopulaSurface, DirectionalDependence, SurveyWeights } from "./research-panels";
 import SectionRail from "./section-rail";
-import OutputPanel from "./output-panel";
 import { StackPanel, DbtPanel, ArchPanel, TopsisPanel } from "./impl-panels";
 
 // ── Project icons ──────────────────────────────────────────────────────────────
@@ -1375,23 +1374,6 @@ export default function Home() {
                 </div>
               ))}
             </div>
-        </div>
-      </section>
-
-      {/* ── Working output: one snapshot, one live feed ── */}
-      <section id="output" className="scroll-mt-20 py-20 px-6 border-b border-white/[0.06]">
-        <div className="max-w-5xl mx-auto">
-          <div className="flex items-baseline gap-4 mb-4">
-            <p className="text-[11px] uppercase tracking-[0.2em] text-white/55">Output</p>
-          </div>
-          <h2 className="text-[1.3rem] sm:text-[1.6rem] font-bold tracking-tight text-white leading-[1.25] mb-3.5">
-            What the last month of building actually looked like.
-          </h2>
-          <p className="text-sm text-white/60 max-w-2xl mb-8 leading-relaxed">
-            Not a claim about how I work. The agent transcripts and the push history, counted.
-            One is a snapshot because there is no API for it; the other is read live on load.
-          </p>
-          <OutputPanel />
         </div>
       </section>
 

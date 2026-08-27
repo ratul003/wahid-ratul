@@ -12,7 +12,6 @@ const FAV = (domain: string) => `https://www.google.com/s2/favicons?domain=${dom
 
 const SECTIONS: { id: string; label: string; logo?: string; glyph?: string }[] = [
   { id: "expertise", label: "Expertise", glyph: "◈" },
-  { id: "output", label: "Output", glyph: "◉" },
   { id: "just-move-in", label: "Just Move In", logo: FAV("justmovein.com") },
   { id: "optimizely", label: "Optimizely", logo: FAV("optimizely.com") },
   { id: "coto", label: "Coto", logo: FAV("coto.world") },
@@ -58,7 +57,13 @@ export default function SectionRail() {
   return (
     <nav
       aria-label="Sections"
-      className="hidden xl:block fixed left-5 top-1/2 -translate-y-1/2 z-40"
+      /* Measured: the rail is 136px wide, so it clears a max-w-5xl column only
+         from ~1400px up. At xl (1280px) the content starts at 128px and the rail
+         ends at 156px, which clipped the first characters of every paragraph.
+         Anchored to the column rather than the viewport, so the gap stays
+         constant instead of drifting on very wide screens. */
+      className="hidden min-[1400px]:block fixed top-1/2 -translate-y-1/2 z-40"
+      style={{ left: "max(1.25rem, calc(50% - 32rem - 156px))" }}
     >
       <div
         className="rail-panel rounded-2xl border bg-[#0b0b11]/85 backdrop-blur-md p-2.5 flex flex-col gap-0.5"
