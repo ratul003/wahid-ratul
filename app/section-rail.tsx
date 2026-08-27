@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 
 const SECTIONS = [
   { id: "expertise", label: "Expertise" },
+  { id: "output", label: "Output" },
   { id: "just-move-in", label: "Just Move In" },
   { id: "optimizely", label: "Optimizely" },
   { id: "coto", label: "Coto" },
@@ -55,7 +56,7 @@ export default function SectionRail() {
   return (
     <nav
       aria-label="Sections"
-      className="hidden xl:flex fixed right-6 top-1/2 -translate-y-1/2 z-40 flex-col gap-1.5"
+      className="hidden xl:flex fixed left-6 top-1/2 -translate-y-1/2 z-40 flex-col gap-1.5"
     >
       {SECTIONS.map((s) => {
         const on = active === s.id;
@@ -63,18 +64,9 @@ export default function SectionRail() {
           <a
             key={s.id}
             href={`#${s.id}`}
-            className="rail-item group flex items-center gap-2.5 justify-end"
+            className="rail-item group flex items-center gap-2.5"
             aria-current={on ? "true" : undefined}
           >
-            <span
-              className="text-[10.5px] tracking-wide transition-all duration-300"
-              style={{
-                color: on ? "#c7d2fe" : "rgba(255,255,255,0.32)",
-                fontWeight: on ? 600 : 400,
-              }}
-            >
-              {s.label}
-            </span>
             <span
               className="rounded-full transition-all duration-300 flex-shrink-0"
               style={{
@@ -84,6 +76,15 @@ export default function SectionRail() {
                 boxShadow: on ? "0 0 8px #818cf8cc" : undefined,
               }}
             />
+            <span
+              className="text-[10.5px] tracking-wide transition-all duration-300"
+              style={{
+                color: on ? "#c7d2fe" : "rgba(255,255,255,0.32)",
+                fontWeight: on ? 600 : 400,
+              }}
+            >
+              {s.label}
+            </span>
           </a>
         );
       })}

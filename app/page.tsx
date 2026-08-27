@@ -6,6 +6,7 @@ import ExperimentConsole from "./experiment-console";
 import { WorkOsPanel, DispatchPanel, SupplyPanel } from "./job-panels";
 import { CopulaSurface, DirectionalDependence, SurveyWeights } from "./research-panels";
 import SectionRail from "./section-rail";
+import OutputPanel from "./output-panel";
 import { StackPanel, DbtPanel, ArchPanel, TopsisPanel } from "./impl-panels";
 
 // ── Project icons ──────────────────────────────────────────────────────────────
@@ -34,6 +35,46 @@ function SkillMark({ name, color, size = 14 }: { name: string; color: string; si
   );
 }
 
+/**
+ * Project names that appear inside role bullets, linked to the thing they name
+ * and coloured to match its card. A reader should not have to guess that
+ * "WorkOS" in a bullet is the same WorkOS shown below it.
+ */
+const LINKED: { term: string; href: string; color: string }[] = [
+  { term: "Product Intelligence Platform", href: "https://product-intelligence-platform.vercel.app", color: "#6366f1" },
+  { term: "experimentation platform", href: "https://experimentation-science.vercel.app", color: "#f59e0b" },
+  { term: "Snowflake-to-BigQuery", href: "https://systems-architecture.vercel.app", color: "#f43f5e" },
+  { term: "warehouse-native stack", href: "https://systems-architecture.vercel.app", color: "#f43f5e" },
+  { term: "WorkOS", href: "https://claude-ing.vercel.app", color: "#F5A524" },
+  { term: "partner-ranking product", href: "https://rank-reward-retain.vercel.app", color: "#8b5cf6" },
+  { term: "dynamic pay engine", href: "https://when-demand-exceeds-supply.vercel.app", color: "#06b6d4" },
+  { term: "demand-supply engine", href: "https://when-demand-exceeds-supply.vercel.app", color: "#06b6d4" },
+  { term: "national order dispatch policy", href: "https://cost-benefit-optimization.vercel.app", color: "#f97316" },
+];
+
+/** One bullet chunk: bold the **figures**, link and colour any project named. */
+function Linkify({ text }: { text: string }) {
+  const hit = LINKED.find((l) => text.includes(l.term));
+  if (!hit) return <>{text}</>;
+  const [before, ...rest] = text.split(hit.term);
+  return (
+    <>
+      {before}
+      <a
+        href={hit.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="impl-link font-medium"
+        style={{ color: hit.color, "--c": hit.color } as React.CSSProperties}
+      >
+        {hit.term}
+        <ArrowUpRight />
+      </a>
+      <Linkify text={rest.join(hit.term)} />
+    </>
+  );
+}
+
 /** Renders **wrapped** spans as emphasised figures. */
 function Impact({ text }: { text: string }) {
   return (
@@ -41,10 +82,10 @@ function Impact({ text }: { text: string }) {
       {text.split("**").map((chunk, i) =>
         i % 2 === 1 ? (
           <b key={i} className="font-semibold text-white/90">
-            {chunk}
+            <Linkify text={chunk} />
           </b>
         ) : (
-          chunk
+          <Linkify key={i} text={chunk} />
         )
       )}
     </>
@@ -1347,6 +1388,24 @@ export default function Home() {
                 </div>
               ))}
             </div>
+        </div>
+      </section>
+
+      {/* ── Working output: one snapshot, one live feed ── */}
+      <section id="output" className="scroll-mt-20 py-20 px-6 border-b border-white/[0.06]">
+        <div className="max-w-5xl mx-auto">
+          <div className="flex items-baseline gap-4 mb-4">
+            <span className="text-[11px] font-mono text-white/40">00</span>
+            <p className="text-[11px] uppercase tracking-[0.2em] text-white/55">Output</p>
+          </div>
+          <h2 className="text-[1.3rem] sm:text-[1.6rem] font-bold tracking-tight text-white leading-[1.25] mb-3.5">
+            What the last month of building actually looked like.
+          </h2>
+          <p className="text-sm text-white/60 max-w-2xl mb-8 leading-relaxed">
+            Not a claim about how I work. The agent transcripts and the push history, counted.
+            One is a snapshot because there is no API for it; the other is read live on load.
+          </p>
+          <OutputPanel />
         </div>
       </section>
 

@@ -344,3 +344,18 @@ body {
 /* An implementation's header sits over the deployed site's own hero */
 .impl-head { transition: background 0.3s ease; }
 .impl-head:hover { background: rgba(255, 255, 255, 0.015); }
+
+/* A project named inside a role bullet, linked to the thing it names */
+.impl-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--c) 45%, transparent);
+  text-underline-offset: 2.5px;
+  transition: text-decoration-color 0.2s ease, filter 0.2s ease;
+}
+.impl-link:hover {
+  text-decoration-color: var(--c);
+  filter: brightness(1.2);
+}

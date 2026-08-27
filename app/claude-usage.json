@@ -1,0 +1,111 @@
+{
+ "generatedAt": "2026-08-27",
+ "from": "2026-07-31",
+ "to": "2026-08-27",
+ "sessions": 14,
+ "activeDays": 11,
+ "turns": 4872,
+ "outputTokens": 6418981,
+ "inputTokens": 1641070208,
+ "models": [
+  {
+   "name": "claude-opus-5",
+   "turns": 4333
+  },
+  {
+   "name": "claude-fable-5",
+   "turns": 538
+  }
+ ],
+ "tools": [
+  {
+   "name": "Bash",
+   "calls": 1551
+  },
+  {
+   "name": "Edit",
+   "calls": 407
+  },
+  {
+   "name": "Read",
+   "calls": 348
+  },
+  {
+   "name": "Write",
+   "calls": 91
+  },
+  {
+   "name": "WebSearch",
+   "calls": 35
+  },
+  {
+   "name": "ToolSearch",
+   "calls": 18
+  },
+  {
+   "name": "WebFetch",
+   "calls": 18
+  },
+  {
+   "name": "AskUserQuestion",
+   "calls": 15
+  }
+ ],
+ "daily": [
+  {
+   "d": "2026-07-31",
+   "turns": 731,
+   "out": 863184
+  },
+  {
+   "d": "2026-08-01",
+   "turns": 3,
+   "out": 1056
+  },
+  {
+   "d": "2026-08-05",
+   "turns": 701,
+   "out": 1058169
+  },
+  {
+   "d": "2026-08-06",
+   "turns": 15,
+   "out": 17789
+  },
+  {
+   "d": "2026-08-07",
+   "turns": 146,
+   "out": 141056
+  },
+  {
+   "d": "2026-08-09",
+   "turns": 340,
+   "out": 351912
+  },
+  {
+   "d": "2026-08-23",
+   "turns": 1246,
+   "out": 1666437
+  },
+  {
+   "d": "2026-08-24",
+   "turns": 634,
+   "out": 865458
+  },
+  {
+   "d": "2026-08-25",
+   "turns": 390,
+   "out": 493278
+  },
+  {
+   "d": "2026-08-26",
+   "turns": 479,
+   "out": 646172
+  },
+  {
+   "d": "2026-08-27",
+   "turns": 187,
+   "out": 314470
+  }
+ ]
+}
