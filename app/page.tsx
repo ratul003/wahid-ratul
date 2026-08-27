@@ -1325,7 +1325,7 @@ export default function Home() {
       <section className="py-14 px-6 border-y border-white/[0.06]">
         <div className="max-w-5xl mx-auto">
           <p className="text-[10px] uppercase tracking-[0.18em] text-white/35 mb-6">
-            Tech Stack
+            Areas of Expertise
           </p>
             <div className="space-y-4">
               {skillGroups.map((g) => (
