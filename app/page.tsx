@@ -340,21 +340,21 @@ const projects = [
     title: "Modelled Directional Dependence Using Copulas",
     name: "Directional Dependence via Copulas",
     org: "University of Minnesota",
-    label: "HHMI Research",
+    label: "Howard Hughes Medical Institute",
     description:
-      "Concomitants of order statistics on copulas, with Monte Carlo data designed specifically to keep causal bias out of the directional estimate. Funded by an HHMI grant.",
+      "Concomitants of order statistics on copulas, with Monte Carlo data designed specifically to keep causal bias out of the directional estimate. Funded by a Howard Hughes Medical Institute Grant.",
     inside: "Copula families · Monte Carlo design · order statistics",
     color: "#14b8a6",
     href: "https://research-copulas-directional-depend.vercel.app",
     image: "/shots/research-copulas.jpg",
     interactive: "copula" as const,
     magnitude: [
-      { v: "HHMI", l: "funded research" },
+      { v: "+$14,000", l: "in research grants awarded" },
       { v: "Copula", l: "families compared" },
       { v: "Monte Carlo", l: "designed for bias" },
     ],
     detail:
-      "A copula strips away the marginals and leaves the dependence structure in its pure form. Working on an HHMI grant, I used concomitants of order statistics on copulas to isolate directional dependence, comparing families to see which preserve the asymmetry and which flatten it. The Monte Carlo design is the substance of the work: the data is generated specifically to keep causal bias out of the directional estimate, so the estimate is measuring dependence rather than the way the sample was built.",
+      "A copula strips away the marginals and leaves the dependence structure in its pure form. Working on a Howard Hughes Medical Institute Grant, I used concomitants of order statistics on copulas to isolate directional dependence, comparing families to see which preserve the asymmetry and which flatten it. The Monte Carlo design is the substance of the work: the data is generated specifically to keep causal bias out of the directional estimate, so the estimate is measuring dependence rather than the way the sample was built.",
   },
   {
     title: "Modelled Cognitive Change Across Two NHANES Cycles",
@@ -607,7 +607,7 @@ const campusRoles: CampusRole[] = [
     title: "Undergraduate Research Assistant",
     period: "2016 - 2019",
     detail:
-      "Four projects across probability, econometrics and biostatistics, funded by an HHMI grant and UROP twice: directional dependence through order statistics and copulas, conditional cash transfers and maternal health in Bangladesh, and survey-weighted models of NHANES cognitive testing.",
+      "Four projects across probability, econometrics and biostatistics, funded by a Howard Hughes Medical Institute Grant and UROP twice: directional dependence through order statistics and copulas, conditional cash transfers and maternal health in Bangladesh, and survey-weighted models of NHANES cognitive testing.",
   },
   {
     title: "Research Analyst",
@@ -690,7 +690,7 @@ const honors = [
   "Scholar of the College Award",
   "Faculty Assistantship",
   "UROP recipient ×2",
-  "HHMI research grant",
+  "Howard Hughes Medical Institute Grant",
 ];
 
 // Skills grouped by domain, each group shares a shining colour. Every label
@@ -1390,11 +1390,13 @@ export default function Home() {
             <span className="text-[11.5px] text-white/50">Minnesota, USA</span>
           </div>
           <p className="text-[13px] text-white/60 mb-8">
-            Three funded projects, two UROP awards and an HHMI grant
+            Three funded projects, two UROP awards and a Howard Hughes Medical Institute
+            Grant, amounting to +$14,000 awarded
           </p>
 
           <h2 className="text-[1.6rem] sm:text-[2rem] font-bold tracking-tight text-white leading-tight mb-3.5">
-            Statistics research, before the product work.
+            Undergraduate Research Assistant expanding in areas of Econometrics,
+            Causal Inference and Biostatistics.
           </h2>
           <p className="text-sm text-white/60 max-w-2xl mb-10 leading-relaxed">
             Before the pipelines and the launches there was the lab and the proof. Each of these
