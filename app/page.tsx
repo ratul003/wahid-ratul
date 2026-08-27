@@ -5,6 +5,7 @@ import { MARKS } from "./skill-marks";
 import ExperimentConsole from "./experiment-console";
 import { WorkOsPanel, DispatchPanel, SupplyPanel } from "./job-panels";
 import { CopulaSurface, DirectionalDependence, SurveyWeights } from "./research-panels";
+import SectionRail from "./section-rail";
 import { StackPanel, DbtPanel, ArchPanel, TopsisPanel } from "./impl-panels";
 
 // ── Project icons ──────────────────────────────────────────────────────────────
@@ -1080,6 +1081,7 @@ function JobSection({ role, n }: { role: Role; n: string }) {
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#0a0a0f] text-white">
+      <SectionRail />
 
       {/* Abstract background */}
       <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
@@ -1148,27 +1150,12 @@ export default function Home() {
       {/* ── Nav ── */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/[0.06] bg-[#0a0a0f]/90 backdrop-blur-md">
         <div className="max-w-5xl mx-auto px-6 h-14 flex items-center justify-end gap-5">
-          {/* Section links: the page is long enough now that arriving at the top
-              with no map is a real cost. Hidden on small screens, where the
-              anchors are all a short scroll apart anyway. */}
-          <div className="hidden md:flex items-center gap-5 mr-auto">
-            {[
-              { label: "Optimizely", href: "#optimizely" },
-              { label: "Just Move In", href: "#just-move-in" },
-              { label: "Coto", href: "#coto" },
-              { label: "foodpanda", href: "#foodpanda" },
-              { label: "Research", href: "#research" },
-              { label: "Articles", href: "#writing" },
-            ].map(({ label, href }) => (
-              <a
-                key={label}
-                href={href}
-                className="text-[13px] font-medium text-white/45 hover:text-white transition-colors"
-              >
-                {label}
-              </a>
-            ))}
-          </div>
+          <a
+            href="#just-move-in"
+            className="text-[13px] font-medium text-white/45 hover:text-white transition-colors mr-auto"
+          >
+            The work
+          </a>
           <a
             href="/resume"
             className="text-[13px] font-medium text-white/55 hover:text-white transition-colors"
@@ -1322,7 +1309,7 @@ export default function Home() {
 
       {/* ── The stack, in full. This replaced a marquee that scrolled the
              same 34 labels past the reader without letting them read any. ── */}
-      <section className="py-14 px-6 border-y border-white/[0.06]">
+      <section id="expertise" className="scroll-mt-20 py-14 px-6 border-y border-white/[0.06]">
         <div className="max-w-5xl mx-auto">
           <p className="text-[10px] uppercase tracking-[0.18em] text-white/35 mb-6">
             Areas of Expertise
