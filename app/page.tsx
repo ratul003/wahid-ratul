@@ -5,7 +5,7 @@ import { MARKS } from "./skill-marks";
 import ExperimentConsole from "./experiment-console";
 import { WorkOsPanel, DispatchPanel, SupplyPanel } from "./job-panels";
 import { CopulaSurface, DirectionalDependence, SurveyWeights } from "./research-panels";
-import { GatePanel, LineagePanel, EgressPanel, TopsisPanel } from "./impl-panels";
+import { StackPanel, LineagePanel, EgressPanel, TopsisPanel } from "./impl-panels";
 
 // ── Project icons ──────────────────────────────────────────────────────────────
 
@@ -187,7 +187,7 @@ const projects = [
     color: "#6366f1",
     href: "https://product-intelligence-platform.vercel.app",
     image: "/shots/product-intelligence-platform.jpg",
-    interactive: "gate" as const,
+    interactive: "stack" as const,
     magnitude: [
       { v: "10+", l: "product teams shipping on it" },
       { v: "1.2M+", l: "events a day" },
@@ -942,7 +942,7 @@ function ArticlePreview({ a, featured = false }: { a: ArticleCard; featured?: bo
 /** Each implementation's own interactive visual, keyed off the project. */
 const VISUALS: Record<string, React.ComponentType> = {
   workos: WorkOsPanel,
-  gate: GatePanel,
+  stack: StackPanel,
   console: ExperimentConsole,
   lineage: LineagePanel,
   egress: EgressPanel,

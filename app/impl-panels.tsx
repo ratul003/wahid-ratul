@@ -37,122 +37,165 @@ function Row({ label, value, hint }: { label: string; value: string; hint?: stri
   );
 }
 
-// ── Product Intelligence Platform: the gate a new event has to clear ─────────
+// ── Product Intelligence Platform: the stack, end to end ────────────────────
 
-type Candidate = {
-  name: string;
-  owner: boolean;
-  naming: boolean;
-  schema: boolean;
-  pii: boolean;
-  volume: number;
-  duplicate: boolean;
-  consumers: boolean;
-  tested: boolean;
-};
-
-const CANDIDATES: Candidate[] = [
-  {
-    name: "checkout_completed",
-    owner: true, naming: true, schema: true, pii: true,
-    volume: 41200, duplicate: false, consumers: true, tested: true,
-  },
-  {
-    name: "Button Clicked",
-    owner: false, naming: false, schema: false, pii: true,
-    volume: 880000, duplicate: true, consumers: false, tested: false,
-  },
-  {
-    name: "trial_started_v2",
-    owner: true, naming: true, schema: true, pii: true,
-    volume: 2900, duplicate: true, consumers: true, tested: false,
-  },
-  {
-    name: "user_email_captured",
-    owner: true, naming: true, schema: true, pii: false,
-    volume: 15400, duplicate: false, consumers: true, tested: true,
-  },
+/** The ten-plus products instrumented against one contract. */
+const PRODUCTS = [
+  "Experimentation",
+  "Content Marketing Platform",
+  "AI Orchestration",
+  "Customer Data Platform (CDP)",
+  "Product Recommendations",
+  "Content Management",
 ];
 
-const VOLUME_GATE = 5000;
+type NodeKey = "segment" | "snowflake" | "models" | "analytics" | "powerbi" | "salesforce";
+
+const NODES: Record<NodeKey, { name: string; sub: string; tone: string }> = {
+  segment:    { name: "Segment",           sub: "Real-time event stream",                    tone: "#34d399" },
+  snowflake:  { name: "Snowflake",         sub: "Raw event storage",                         tone: "#22d3ee" },
+  models:     { name: "Transformed Models",sub: "Dimensional + reporting layer",             tone: "#f97316" },
+  analytics:  { name: "Analytics Platform",sub: "Product analytics · PM-facing",             tone: "#818cf8" },
+  powerbi:    { name: "PowerBI",           sub: "Business intelligence",                     tone: "#fbbf24" },
+  salesforce: { name: "Salesforce",        sub: "Account health · CS workflows · activation", tone: "#38bdf8" },
+};
+
+const STAGES = [
+  { key: "collection", label: "Collection",  head: "Segment · Fivetran · Airbyte",  desc: "Real-time event stream plus SaaS connector ingestion", tone: "#34d399", nodes: ["segment"] },
+  { key: "warehouse",  label: "Warehouse",   head: "Snowflake",                     desc: "Immutable raw layer, then modelled, then reporting",   tone: "#22d3ee", nodes: ["snowflake"] },
+  { key: "transform",  label: "Transform",   head: "dbt",                           desc: "Dimensional models and reporting aggregates",          tone: "#f97316", nodes: ["models"] },
+  { key: "analytics",  label: "Analytics",   head: "Analytics Platform + PowerBI",   desc: "Warehouse-native, no sync, ARR-joinable queries",      tone: "#818cf8", nodes: ["analytics", "powerbi"] },
+  { key: "activation", label: "Activation",  head: "Reverse ETL → Salesforce",       desc: "Account health and engagement signals pushed to CRM",  tone: "#38bdf8", nodes: ["salesforce"] },
+] as const;
+
+function StackNode({ k, lit }: { k: NodeKey; lit: boolean }) {
+  const nd = NODES[k];
+  return (
+    <div
+      className="rounded-lg border px-3.5 py-2.5 transition-all duration-300"
+      style={{
+        borderColor: lit ? nd.tone : nd.tone + "33",
+        background: lit ? nd.tone + "1f" : nd.tone + "0a",
+        boxShadow: lit ? `0 0 20px -6px ${nd.tone}` : undefined,
+      }}
+    >
+      <p className="text-[12.5px] font-bold text-white leading-tight mb-0.5">{nd.name}</p>
+      <p className="text-[9.5px] uppercase tracking-[0.09em] font-semibold leading-snug" style={{ color: nd.tone }}>
+        {nd.sub}
+      </p>
+    </div>
+  );
+}
+
+const Arrow = ({ label, down = false }: { label?: string; down?: boolean }) => (
+  <div className={`flex items-center justify-center gap-1.5 ${down ? "flex-col py-1.5" : "px-1"}`}>
+    {label && <span className="text-[10px] text-white/40 whitespace-nowrap">{label}</span>}
+    <span className="text-white/25 text-[12px]">{down ? "↓" : "→"}</span>
+  </div>
+);
 
 /**
- * The eight gates a proposed event cleared before it could become a governed
- * metric. Metric drift was never a modelling problem: it was people shipping
- * near-duplicate events with no owner, so the fix was a gate, not a dashboard.
+ * The instrumentation contract, drawn. Ten-plus products emit against one event
+ * spec, everything lands in one warehouse, and the only thing allowed to reach a
+ * dashboard or a CRM is the modelled layer. Pick a stage to trace it.
  */
-export function GatePanel() {
-  const [pick, setPick] = useState(0);
-  const c = CANDIDATES[pick];
-
-  const gates = useMemo(() => [
-    { g: "Named to the convention", ok: c.naming, why: "snake_case, object_verb, past tense" },
-    { g: "Owner assigned", ok: c.owner, why: "a named PM, not a team alias" },
-    { g: "Schema declared", ok: c.schema, why: "required properties and their types" },
-    { g: "No PII in properties", ok: c.pii, why: "identifiers hashed or dropped" },
-    { g: `Clears ${VOLUME_GATE.toLocaleString()}/mo`, ok: c.volume >= VOLUME_GATE, why: `${c.volume.toLocaleString()} last month` },
-    { g: "Not a duplicate", ok: !c.duplicate, why: c.duplicate ? "an existing event already answers this" : "nothing else covers it" },
-    { g: "Consumers declared", ok: c.consumers, why: "who reads it, and in which dashboard" },
-    { g: "Modelled and tested", ok: c.tested, why: "a dbt model with tests, not a raw tap" },
-  ], [c]);
-
-  const failed = gates.filter((x) => !x.ok);
-  const ships = failed.length === 0;
+export function StackPanel() {
+  const [stage, setStage] = useState<string | null>(null);
+  const [product, setProduct] = useState(0);
+  const litNodes: string[] = stage ? (STAGES.find((s) => s.key === stage)?.nodes as unknown as string[]) ?? [] : [];
+  const lit = (k: NodeKey) => litNodes.includes(k);
+  const anyLit = stage !== null;
 
   return (
-    <PanelFrame uri="governance://events/proposed" meta={`${gates.length} gates`}>
-      <div className="grid md:grid-cols-[1fr_1.3fr] divide-y md:divide-y-0 md:divide-x divide-white/[0.06]">
-        <div className="p-4 sm:p-5">
-          <p className="text-[10px] uppercase tracking-[0.16em] text-white/35 mb-3">
-            Proposed event
-          </p>
-          <div className="space-y-2 mb-5">
-            {CANDIDATES.map((x, i) => (
-              <button key={x.name} onClick={() => setPick(i)} aria-pressed={i === pick}
-                className="w-full text-left px-3 py-2 rounded-lg border font-mono text-[11.5px] transition-all"
-                style={i === pick
-                  ? { borderColor: "#6366f1", background: "#6366f11f", color: "#e0e7ff" }
-                  : { borderColor: "rgba(255,255,255,0.1)", color: "rgba(255,255,255,0.6)" }}>
-                {x.name}
+    <PanelFrame uri="platform://instrumentation/one-contract" meta="10+ products">
+      <div className="p-4 sm:p-5">
+        {/* The products emitting into it */}
+        <div className="flex flex-wrap items-center gap-2 mb-6">
+          <span className="text-[9.5px] uppercase tracking-[0.13em] text-white/35 mr-1">
+            User events
+          </span>
+          {PRODUCTS.map((x, i) => (
+            <button
+              key={x}
+              onClick={() => setProduct(i)}
+              aria-pressed={i === product}
+              className="text-[11px] font-semibold px-2.5 py-1.5 rounded-lg border transition-all"
+              style={
+                i === product
+                  ? { borderColor: "#818cf8", background: "#818cf826", color: "#e0e7ff" }
+                  : { borderColor: "rgba(129,140,248,0.22)", color: "rgba(199,210,254,0.7)" }
+              }
+            >
+              {x}
+            </button>
+          ))}
+        </div>
+
+        {/* Collection -> warehouse -> transform */}
+        <div className="grid sm:grid-cols-[1fr_auto_1fr_auto_1fr] items-center gap-y-2 mb-1">
+          <StackNode k="segment" lit={!anyLit || lit("segment")} />
+          <Arrow label="+ SaaS connectors" />
+          <StackNode k="snowflake" lit={!anyLit || lit("snowflake")} />
+          <Arrow label="dbt models" />
+          <StackNode k="models" lit={!anyLit || lit("models")} />
+        </div>
+
+        {/* Down into the read layer */}
+        <div className="grid sm:grid-cols-[1fr_auto_1fr_auto_1fr]">
+          <div />
+          <div />
+          <Arrow down />
+          <div />
+          <Arrow down />
+        </div>
+
+        <div className="grid sm:grid-cols-2 gap-3 mb-1 sm:max-w-[70%] sm:mx-auto">
+          <StackNode k="analytics" lit={!anyLit || lit("analytics")} />
+          <StackNode k="powerbi" lit={!anyLit || lit("powerbi")} />
+        </div>
+
+        {/* And back out to the CRM */}
+        <div className="flex justify-center">
+          <Arrow down label="Reverse ETL" />
+        </div>
+        <div className="sm:max-w-[70%] sm:mx-auto mb-6">
+          <StackNode k="salesforce" lit={!anyLit || lit("salesforce")} />
+        </div>
+
+        {/* The five stages, as the trace control */}
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-2.5">
+          {STAGES.map((st) => {
+            const on = stage === st.key;
+            return (
+              <button
+                key={st.key}
+                onClick={() => setStage(on ? null : st.key)}
+                aria-pressed={on}
+                className="text-left rounded-lg border px-3 py-2.5 transition-all"
+                style={{
+                  borderColor: on ? st.tone : "rgba(255,255,255,0.08)",
+                  background: on ? st.tone + "14" : "rgba(255,255,255,0.015)",
+                }}
+              >
+                <span
+                  className="block text-[9px] uppercase tracking-[0.13em] font-bold mb-1.5"
+                  style={{ color: st.tone }}
+                >
+                  {st.label}
+                </span>
+                <span className="block text-[12px] font-semibold text-white leading-snug mb-1">
+                  {st.head}
+                </span>
+                <span className="block text-[10px] text-white/45 leading-relaxed">{st.desc}</span>
               </button>
-            ))}
-          </div>
-          <Row label="Volume" value={`${c.volume.toLocaleString()}/mo`} />
-          <Row label="Gates passed" value={`${gates.length - failed.length} / ${gates.length}`} />
-          <p className="text-[10px] text-white/30 leading-relaxed mt-3.5">
-            One governed metric per product meant one definition, so anything that
-            could fork a definition had to be stopped at intake.
-          </p>
+            );
+          })}
         </div>
-
-        <div className="p-4 sm:p-5">
-          <div className="rounded-lg px-3.5 py-3 mb-4 border"
-            style={{ borderColor: ships ? "#34d3994d" : "#fb71854d", background: ships ? "#34d39912" : "#fb718512" }}>
-            <p className="text-[13px] font-semibold mb-1" style={{ color: ships ? "#34d399" : "#fb7185" }}>
-              {ships ? "Ships as a governed event" : `Blocked on ${failed.length} gate${failed.length > 1 ? "s" : ""}`}
-            </p>
-            <p className="text-[11px] leading-relaxed text-white/60">
-              {ships
-                ? "Instrumented, modelled and pointed at a named consumer. It can carry a metric."
-                : `Fix ${failed.map((f) => f.g.toLowerCase()).slice(0, 2).join(", ")}${failed.length > 2 ? ` and ${failed.length - 2} more` : ""}, then resubmit.`}
-            </p>
-          </div>
-
-          <ul className="space-y-[7px]">
-            {gates.map((x) => (
-              <li key={x.g} className="flex items-start gap-2.5">
-                <span className="text-[11px] mt-[1px] flex-shrink-0 w-3"
-                  style={{ color: x.ok ? "#34d399" : "#fb7185" }}>
-                  {x.ok ? "✓" : "✕"}
-                </span>
-                <span className="min-w-0">
-                  <span className="text-[11.5px] text-white/80">{x.g}</span>
-                  <span className="text-[10.5px] text-white/35"> · {x.why}</span>
-                </span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <p className="text-[10px] text-white/30 mt-3.5">
+          {stage
+            ? `Tracing ${STAGES.find((s) => s.key === stage)?.label.toLowerCase()}. Click it again to show the whole stack.`
+            : "Click a stage to trace it through the stack. Every product above emits against the same event contract."}
+        </p>
       </div>
     </PanelFrame>
   );
