@@ -215,7 +215,7 @@ const projects = [
       { v: "21", l: "runnable sessions" },
     ],
     detail:
-      "Claude wired into 15+ production systems, with a harness that opens every session already knowing the repo and the metric definitions. Eleven AI workflows close 83% of 76K yearly tickets without an agent ever replying.",
+      "Claude wired into 15+ production systems, with a harness that opens every session already knowing the repo and the metric definitions. AI-native classification auto-solves 52% of 117K tickets at 99.9% accuracy.",
   },
   {
     title: "Standardised Product Metrics Across 10+ SaaS Teams",
@@ -483,11 +483,12 @@ const roles: Role[] = [
         title: "Product Manager",
         period: "2026 - present",
         impact: [
-          "Own the product end to end across **seven workstreams**: experimentation, analytics, reporting, automation and AI initiatives, UAT, feature building, and the new digital journey.",
-          "Shipped the digital move journey against a **£1M ARR target**: broadband, energy and insurance deals fetched live by API, personalising **580K mover journeys** and 40K+ emails at a 52.9% open rate, A/B tested in PostHog.",
-          "Turned Service Ops' 28-tab spreadsheet into an in-house ticketing product on HubSpot: 11 AI workflows classify 76K tickets/yr at 94% precision, **83% closing with no agent reply**; 9 agents absorb **2.8× the moves, averting £100-175K/yr in hires**.",
-          "Founded WorkOS, an internal AI product across **6 job functions**: Claude wired to **15+ production systems** for user-acceptance testing, bug triage, data pipelines and **every function**'s reporting; SSO-gated dashboards **replaced enterprise BI**.",
-          "Shipped the funnel product for phone sales, its largest channel: **1.4M call records** stitched to **880K moves**; the board attributes **~90% of phone revenue** through it, its daily digest coaching closers.",
+          "Founded WorkOS, an internal AI product across **6 functions**: Claude wired to 15+ systems for UAT, triage, pipelines and reporting, replacing enterprise BI, **saving 10 hours a week**.",
+          "Shipped the recommendation engine in the **mobile app** behind the **£1M ARR** digital move journey: live broadband, energy and insurance deals ranked per household across **580K mover journeys**.",
+          "Replaced Service Ops' 28-tab spreadsheet with a ticketing product on HubSpot built on AI-native classification: auto-solved tickets rose **from 0.2% to 52% of 117K at 99.9% accuracy**, and the same team now handles **2.8× the moves, averting £100-175K/yr in hires**.",
+          "Built an **AI call quality compliance platform** on the CRM, phone system and HubSpot: transcribes sales calls, rates sentiment and scores each on a 104-question checklist, **automating manual QA**.",
+          "Built the sales analytics platform for phone sales, the largest channel: linked **1.4M calls to 880K moves** so leadership sees which agents, partners and products drive **~90% of phone revenue**.",
+          "Launched a **multi-tier incentive compensation plan** for ~50 sales agents: weighted product points, an 8-tier accelerator ladder and a **call-quality gate on payout**, tracked on a real-time earnings dashboard.",
         ],
         links: [{ label: "Claude-ing WorkOS", href: "https://claude-ing.vercel.app", color: CS.workos }],
       },
