@@ -777,3 +777,96 @@ export function ArchPanel() {
     </PanelFrame>
   );
 }
+
+// ── QA Compliance Platform: one call under three rulesets ───────────────────
+
+type QaRules = "core" | "dpa" | "critical";
+type QaCall = { label: string; call: number; energy: number; critIn: "call" | "energy" | null; dpa: boolean; missold: boolean; energyNo: boolean };
+
+/** Section points earned out of 100 each. Synthetic calls, production arithmetic. */
+const QA_CALLS: QaCall[] = [
+  { label: "Clean call", call: 100, energy: 100, critIn: null, dpa: false, missold: false, energyNo: false },
+  { label: "Recording notice missed", call: 90, energy: 100, critIn: "call", dpa: true, missold: false, energyNo: false },
+  { label: "Unit rate not read", call: 100, energy: 80, critIn: "energy", dpa: false, missold: false, energyNo: true },
+  { label: "Service missold", call: 100, energy: 100, critIn: "call", dpa: false, missold: true, energyNo: false },
+];
+
+const QA_RULES: { key: QaRules; label: string; note: string }[] = [
+  { key: "core", label: "Original rules", note: "Parity with the old system. A critical miss costs its weight and nothing more." },
+  { key: "dpa", label: "Notice fails the call", note: "A missed recording notice or data protection check scores the call 0%." },
+  { key: "critical", label: "Critical by section", note: "A critical miss zeroes its own section. A missold service zeroes the whole call." },
+];
+
+function qaScore(c: QaCall, rules: QaRules) {
+  // Original rules: pooled points; the call section passes at 80 with no missold flag, energy fails on any No.
+  let call = c.call, energy = c.energy;
+  let pass = c.call >= 80 && !c.missold && !c.energyNo;
+  let total = (call + energy) / 2;
+  if (rules === "dpa" && c.dpa) { total = 0; pass = false; }
+  if (rules === "critical" && c.critIn) {
+    pass = false;
+    if (c.missold) total = 0;
+    else {
+      if (c.critIn === "call") call = 0; else energy = 0;
+      total = (call + energy) / 2;
+    }
+  }
+  return { call, energy, total, pass };
+}
+
+/** The scoring rule the project turned on, run on four synthetic calls. */
+export function CompliancePanel() {
+  const [rules, setRules] = useState<QaRules>("core");
+  const [i, setI] = useState(1);
+  const r = qaScore(QA_CALLS[i], rules);
+  const tone = "#84cc16";
+
+  return (
+    <PanelFrame uri={`qa://scorecard/ruleset=${rules}`} badge="runs here" meta="synthetic calls">
+      <div className="flex flex-wrap gap-2 px-4 sm:px-5 py-3 border-b border-white/[0.06]">
+        {QA_RULES.map((x) => (
+          <button key={x.key} onClick={() => setRules(x.key)} aria-pressed={rules === x.key}
+            className="text-[11.5px] px-3 py-1.5 rounded-full border transition-all"
+            style={rules === x.key
+              ? { background: tone, borderColor: tone, color: "#0f1a02", fontWeight: 600 }
+              : { borderColor: "rgba(255,255,255,0.12)", color: "rgba(255,255,255,0.7)" }}>
+            {x.label}
+          </button>
+        ))}
+      </div>
+
+      <div className="grid md:grid-cols-[1fr_1.1fr] gap-0">
+        <div className="p-4 sm:p-5 border-b md:border-b-0 md:border-r border-white/[0.06]">
+          <p className="text-[9.5px] uppercase tracking-[0.14em] text-white/35 mb-3">The call</p>
+          <div className="flex flex-col gap-2">
+            {QA_CALLS.map((c, k) => (
+              <button key={c.label} onClick={() => setI(k)} aria-pressed={i === k}
+                className="text-left text-[12.5px] px-3 py-2.5 rounded-lg border transition-all"
+                style={i === k
+                  ? { borderColor: tone + "66", background: tone + "14", color: "#fff" }
+                  : { borderColor: "rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.6)" }}>
+                {c.label}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        <div className="p-4 sm:p-5">
+          <div className="flex items-end gap-3 mb-4">
+            <span className="text-[44px] leading-none font-black tabular-nums" style={{ color: tone }}>{r.total}%</span>
+            <span className="text-[10.5px] font-bold uppercase tracking-[0.12em] px-2 py-1 rounded mb-1.5"
+              style={r.pass
+                ? { color: "#34d399", background: "rgba(52,211,153,0.12)" }
+                : { color: "#f87171", background: "rgba(248,113,113,0.12)" }}>
+              {r.pass ? "pass" : "fail"}
+            </span>
+          </div>
+          <Row label="Call scorecard" value={`${r.call}%`} hint="weighted, passes at 80" />
+          <Row label="Energy scorecard" value={`${r.energy}%`} hint="any No fails it" />
+          <Row label="Overall" value={`${r.total}%`} hint="points pooled, not averaged scores" />
+          <p className="text-[11.5px] leading-relaxed text-white/50 mt-4">{QA_RULES.find((x) => x.key === rules)!.note}</p>
+        </div>
+      </div>
+    </PanelFrame>
+  );
+}

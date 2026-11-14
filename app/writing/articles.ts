@@ -24,14 +24,14 @@ export type Article = {
 export const articles: Article[] = [
   {
     slug: "the-power-of-mcp",
-    title: "The Power of MCP: I Used to Be the Integration Layer",
+    title: "The Power of MCPs",
     subtitle:
-      "How a copy-paste complaint from two engineers became the plumbing of the whole industry, and quietly turned my one job into five.",
+      "MCPs let you wear many hats at one job: Product Manager, Designer, Engineer, Data Scientist, Solutions Architect.",
     topic: "AI · Product · Careers",
     date: "November 2026",
-    readTime: "10 min read",
+    readTime: "13 min read",
     excerpt:
-      "An AI tool once answered every question I asked with the same fifteen characters. A year on, eighteen systems are wired into one protocol, the cable job is gone, and I wear five hats. Where MCP came from, how it spread, what it changed, and what it means for the jobs market.",
+      "An AI tool once answered every question I asked with the same fifteen characters. A year on, eighteen systems are wired into one protocol, the cable job is gone, and I wear six hats. Where MCP came from, how it spread, what it changed, and what it means for the jobs market.",
     color: "#fb923c",
     cover: "/writing/the-power-of-mcp/mcp-cover.png",
     thumb: "/writing/the-power-of-mcp/thumb.png",

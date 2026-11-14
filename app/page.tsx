@@ -6,7 +6,7 @@ import ExperimentConsole from "./experiment-console";
 import { WorkOsPanel, DispatchPanel, SupplyPanel } from "./job-panels";
 import { CopulaSurface, DirectionalDependence, SurveyWeights } from "./research-panels";
 import SectionRail from "./section-rail";
-import { StackPanel, DbtPanel, ArchPanel, TopsisPanel } from "./impl-panels";
+import { StackPanel, DbtPanel, ArchPanel, TopsisPanel, CompliancePanel } from "./impl-panels";
 
 // ── Project icons ──────────────────────────────────────────────────────────────
 
@@ -216,6 +216,26 @@ const projects = [
     ],
     detail:
       "Claude wired into 15+ production systems, with a harness that opens every session already knowing the repo and the metric definitions. AI-native classification auto-solves 52% of 117K tickets at 99.9% accuracy.",
+  },
+  {
+    title: "Rebuilt Call Quality Compliance and Proved It on 1,281 Reviews",
+    name: "QA Compliance Platform",
+    org: "Just Move In",
+    label: "Compliance Product",
+    description:
+      "A standalone call quality platform that replaced the review section of the core system. An exact copy first, proven by re-scoring 1,281 of 1,281 historical reviews to the same result, then rebuilt around the analysts' working day.",
+    inside: "Live scorecard · three rulesets · synthetic heat map",
+    color: "#84cc16",
+    href: "https://qa-compliance-platform.vercel.app",
+    image: "/shots/qa-compliance-platform.jpg",
+    interactive: "compliance" as const,
+    magnitude: [
+      { v: "1,281 / 1,281", l: "reviews re-scored identically" },
+      { v: "15", l: "scorecards, 240+ questions" },
+      { v: "15 min", l: "read-only sync" },
+    ],
+    detail:
+      "The old review tool worked and could not be changed without an engineering release. A copy proven identical on every historical review, then a queue, keyboard scoring, challenges and reporting built around the analysts. Running in parallel, not yet cut over.",
   },
   {
     title: "Standardised Product Metrics Across 10+ SaaS Teams",
@@ -431,6 +451,7 @@ const LOGO = {
 // published work it produced.
 const CS = {
   workos: "#F5A524",
+  qa: "#84cc16",
   pip: "#6366f1",
   def: "#10b981",
   arch: "#f43f5e",
@@ -486,11 +507,14 @@ const roles: Role[] = [
           "Founded WorkOS, an internal AI product across **6 functions**: Claude wired to 15+ systems for UAT, triage, pipelines and reporting, replacing enterprise BI, **saving 10 hours a week**.",
           "Shipped the recommendation engine in the **mobile app** behind the **£1M ARR** digital move journey: live broadband, energy and insurance deals ranked per household across **580K mover journeys**.",
           "Replaced Service Ops' 28-tab spreadsheet with a ticketing product on HubSpot built on AI-native classification: auto-solved tickets rose **from 0.2% to 52% of 117K at 99.9% accuracy**, and the same team now handles **2.8× the moves, averting £100-175K/yr in hires**.",
-          "Built an **AI call quality compliance platform** on the CRM, phone system and HubSpot: transcribes sales calls, rates sentiment and scores each on a 104-question checklist, **automating manual QA**.",
+          "Built a **call quality compliance platform** replacing the core system's review tool: **1,281 of 1,281** historical reviews re-scored identically, a prioritised review queue and computed coaching heat maps, **ending the engineering dependency for rule changes**.",
           "Built the sales analytics platform for phone sales, the largest channel: linked **1.4M calls to 880K moves** so leadership sees which agents, partners and products drive **~90% of phone revenue**.",
           "Launched a **multi-tier incentive compensation plan** for ~50 sales agents: weighted product points, an 8-tier accelerator ladder and a **call-quality gate on payout**, tracked on a real-time earnings dashboard.",
         ],
-        links: [{ label: "Claude-ing WorkOS", href: "https://claude-ing.vercel.app", color: CS.workos }],
+        links: [
+          { label: "Claude-ing WorkOS", href: "https://claude-ing.vercel.app", color: CS.workos },
+          { label: "QA Compliance Platform", href: "https://qa-compliance-platform.vercel.app", color: CS.qa },
+        ],
       },
     ],
   },
@@ -981,6 +1005,7 @@ function ArticlePreview({ a, featured = false }: { a: ArticleCard; featured?: bo
 /** Each implementation's own interactive visual, keyed off the project. */
 const VISUALS: Record<string, React.ComponentType> = {
   workos: WorkOsPanel,
+  compliance: CompliancePanel,
   stack: StackPanel,
   console: ExperimentConsole,
   lineage: DbtPanel,

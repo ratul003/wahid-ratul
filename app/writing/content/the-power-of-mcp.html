@@ -8,7 +8,7 @@
 
 <p>That was my first date with the Model Context Protocol, MCP to its friends. It went badly. I pulled the transcript with four lines of Python instead and sulked.</p>
 
-<p>I am now completely, embarrassingly in love with it. This is the story of how that happened, where the thing came from, and why I think it is rewriting job descriptions faster than any model release.</p>
+<p>I am now completely, embarrassingly in love with it. I also think it is rewriting job descriptions faster than any model release has, mine included.</p>
 
 <h2>It started with a man tired of Ctrl+C</h2>
 
@@ -31,9 +31,9 @@
 
 <h2>Then the rivals said yes</h2>
 
-<p>Here is the part that still surprises me. On 26 March 2025, Sam Altman posted that "people love MCP" and that OpenAI would support it across its products. Two weeks later, on 9 April, Demis Hassabis said Google would add it to Gemini. On 19 May, Microsoft announced it was building the protocol into Windows 11 at its Build conference.</p>
+<p>On 26 March 2025, Sam Altman posted that "people love MCP" and that OpenAI would support it across its products. Two weeks later, on 9 April, Demis Hassabis said Google would add it to Gemini. On 19 May, Microsoft announced it was building the protocol into Windows 11 at its Build conference.</p>
 
-<p>Think about how strange that is. These companies agree on almost nothing. It is like Coke shipping in Pepsi's bottle because, frankly, it is a good bottle.</p>
+<p>These companies agree on almost nothing. It is like Coke shipping in Pepsi's bottle because, frankly, it is a good bottle.</p>
 
 <p>Then in December 2025, Anthropic gave the protocol away entirely, donating it to a new Agentic AI Foundation under the Linux Foundation, alongside projects from OpenAI and Block. The foundation launched with 49 members. By October 2026 it had 286. A standard one vendor owns is a product. A standard nobody owns is a road.</p>
 
@@ -52,10 +52,7 @@
   <img src="/writing/the-power-of-mcp/mcp-downloads.png" alt="Bar chart of monthly npm downloads of the MCP TypeScript SDK: 0.1 million in December 2024, 31.3 million in September 2025, 38.5 million in December 2025, 231.9 million in September 2026.">
 </figure>
 
-<figure>
-  <img src="/writing/the-power-of-mcp/mcp-registry.png" alt="Bar chart of servers in the official MCP registry: about 2,000 in November 2025, 9,599 in May 2026, 25,761 in August 2026, 47,879 in October 2026.">
-  <figcaption>Roughly one new server every 4 minutes through September 2026. Some of them even work.</figcaption>
-</figure>
+<p>The official registry of servers tells the same story: about 2,000 listed in November 2025, 47,879 by October 2026. Roughly one new server every 4 minutes through September 2026. Some of them even work.</p>
 
 <h2>What everyone is actually doing with it</h2>
 
@@ -67,15 +64,11 @@
 
 <p>A server sits in front of a system and publishes a menu: here are my tools, here is what each one does, here is what it needs. The model reads the menu and orders. Most of the craft in a good server is writing descriptions a model can understand, which is a strange thing to say about software and I enjoy it every time.</p>
 
-<p>What people do with that depends on the chair they sit in:</p>
+<p>Engineers got there first. The error from Sentry, the ticket from Linear and the failing deployment now arrive in the code editor, which is where the code already was.</p>
 
-<p><strong>Engineers</strong> stopped leaving the code editor. The error from Sentry, the ticket from Linear and the failing deployment all arrive where the code is.</p>
+<p>Then it leaked out of engineering. "Did that release move the number?" used to be a ticket to the data team and a wait. Now it is a sentence. That sounds like bad news for the data team until you look at what they get asked once the lookups are gone, which is the hard stuff. A promotion disguised as a threat.</p>
 
-<p><strong>Product managers</strong> stopped waiting. The question "did that release move the number?" used to be a ticket to the data team. Now it is a sentence.</p>
-
-<p><strong>Data scientists</strong> stopped being a help desk for lookups, and get asked the harder questions instead. This is a promotion disguised as a threat.</p>
-
-<p>And companies noticed.</p>
+<p>Companies noticed.</p>
 
 <figure>
   <img src="/writing/the-power-of-mcp/mcp-enterprise.png" alt="Survey of 100 software companies: 45% running MCP servers in production, 30% piloting, 49% call it a top-5 priority, 64% say security is the top obstacle.">
@@ -84,18 +77,16 @@
 
 <h2>Five hats, one head</h2>
 
-<p>Now the part I actually came here to tell you.</p>
-
 <p>I run product operations at a UK startup. I am the entire function: no dedicated engineer, about 28 hours a week of real project time once meetings have eaten their share. My work lives in eighteen systems, and for years I was the cable between them. Every Monday before my 1:1, I carried context from tab to tab like a waiter with too many plates.</p>
 
-<p>Here is the wiring today, copied from my actual configuration and not from a vendor slide.</p>
+<p>This is the wiring today, copied out of my configuration file. No vendor slide was harmed.</p>
 
 <figure>
-  <img src="/writing/the-power-of-mcp/mcp-setup.png" alt="Flow chart: one question goes from me, through Claude Code, the Claude app or Codex, through MCP, out to connectors grouped by job: plan and track (Linear, Notion), talk and meet (Slack, Gmail, Calendar, Granola), files (Drive, Docs, Sheets, Slides), measure (PostHog, Metabase), customers (HubSpot, Customer.io), design and ship (Figma, Vercel, Railway, WorkOS), plus three local servers.">
-  <figcaption>Eighteen hosted connectors I signed into once, plus three small servers on my laptop. Yes, the YouTube one is still there. We have made our peace.</figcaption>
+  <img src="/writing/the-power-of-mcp/mcp-setup.png" alt="Flow chart: one question goes from me, through Claude Code, the Claude app or Codex, into a single MCP hub, then fans out to 20 servers grouped by job: plan and track (Linear, Notion), talk and meet (Slack, Gmail, Calendar, Granola), files (Drive, Docs, Sheets, Slides), measure (PostHog, Metabase), customers (HubSpot, Customer.io), design and ship (Figma, Vercel, Railway, WorkOS), plus two local YouTube servers on my laptop. A dashed line carries the answer back to me. Three rules sit underneath: reads are wired up freely, writes wait for my yes, numbers are checked against the system of record.">
+  <figcaption>Eighteen hosted connectors I signed into once, plus two small servers on my laptop. Yes, the YouTube one is still there. We have made our peace.</figcaption>
 </figure>
 
-<p>Notice what the picture does not contain: me, in the middle, holding a clipboard.</p>
+<p>Notice what the picture does not contain: me, in the middle, holding a clipboard. The three boxes along the bottom are rules I paid for. We will get to them.</p>
 
 <p>With those eighteen systems wired in over MCP, the cable job went away. What surprised me was what filled the space. I did not get faster at one job. I started doing five.</p>
 
@@ -115,19 +106,43 @@
 
 <p>None of these are jobs I was hired to do separately. A few years ago each one was a different person, a different queue and a different two-week wait. The honest description of what MCP did is that it deleted the queues between my own hats.</p>
 
+<h2>Then all of them at once</h2>
+
+<p>Everything above was one hat at a time. The newest thing I built needed every one of them in the same week.</p>
+
+<p>Our quality team scores sales calls against compliance scorecards. The scoring lived inside the company's core system, where changing a question or a weighting meant waiting for engineering time, and the list of changes waiting was long. The analysts scored seven or eight calls a day each, by hand.</p>
+
+<p>On 15 October I was asked to scope a way out. By 28 October a like-for-like copy was live, and it re-scored 1,281 of the old system's 1,281 reviews to exactly the same result. Then a session with the quality team on 5 November showed me it had copied the old system but not their working day. On 6 November I demoed the version built around that day, about 48 hours of building. This week it is running side by side with the old system, and every page carries a banner saying so.</p>
+
+<p>It opens on the one call you should score next, chosen because that agent is furthest under their monthly minimum of five reviews. Scoring is done from the keyboard: Y, N or A answers a question and moves to the next, J and K step down and up. Behind that sit 15 scorecards holding more than 240 questions, a log of every review, a heat map of which agents miss which criteria, a challenge window that closes on the 5th of the following month, and scores that lock on the 9th. The guide is a six-minute narrated video in 24 chapters.</p>
+
+<p>Two decisions do not show up in a demo. Customer names are read live from the core system when a page opens and are never stored. And the notes box refuses emails, phone numbers and postcodes.</p>
+
+<p>People sign in with their company Google account. Calls and recordings refresh every 15 minutes, read from the core system through Metabase. It runs on Railway, in the same project as the call board from two hats ago.</p>
+
+<p>Count the systems in that. The requirements came out of meeting notes in Granola. The tickets are in Linear. The brief was a Google Doc and the scorecard a Google Sheet. The data arrives through Metabase and the thing lives on Railway. Six of the eighteen, one product.</p>
+
+<p>Railway keeps the receipts. I deployed it 34 times between 28 October and 13 November, and 14 of those were on demo day.</p>
+
+<p>No other person touched it. I wrote the requirements, decided the screens and the data model, and approved every deploy, with Claude Code doing the typing. That is a product manager, a designer, an engineer, a data person and an architect, and none of them had to book a meeting with the others.</p>
+
+<p>Designer, by the way, is not on the chart above. Somebody had to decide where the buttons go.</p>
+
+<p>It has not replaced anything yet. The two systems run in parallel until the new one has earned the switch. The obvious next step, letting a model score the calls, will run alongside the human reviewers until it agrees with them at least 95% of the time. Until then, people score the calls.</p>
+
 <h2>Where it bites</h2>
 
 <p>Back to <code>[object Object]</code>, and to that 64%.</p>
 
-<p>A connection that is up is not a connection that works. My transcript server passed every health check while returning nonsense. If I had not read the output myself, I would have concluded the video had no transcript and moved on, wrong and cheerful.</p>
+<p>Up and working turn out to be different states. My transcript server passed every health check while returning nonsense. If I had not read the output myself, I would have concluded the video had no transcript and moved on, wrong and cheerful.</p>
 
-<p>That is harmless for a transcript. It is not harmless when the server can write. A connector that can send a campaign, close a ticket or edit a customer record can do real damage at the speed of a sentence. The Customer.io server I use handles this well: before any change it must tell me the account, the workspace and the region it will land in, then wait for a yes. Production, EU, this campaign, pause it. Go ahead? Small friction, exactly where it belongs.</p>
+<p>A wrong transcript costs me an afternoon. A server that can write is another matter. A connector that can send a campaign, close a ticket or edit a customer record can do real damage at the speed of a sentence. The Customer.io server I use handles this well: before any change it must tell me the account, the workspace and the region it will land in, then wait for a yes. Production, EU, this campaign, pause it. Go ahead? Small friction, exactly where it belongs.</p>
 
-<p>My rule is short. Reads get wired up freely. Writes get a human gate. And every number goes back to its system of record before it goes in front of a person.</p>
+<p>So the rule is short, and it is the one drawn under the flow chart. Reads get wired up freely. Writes get a human gate. And every number goes back to its system of record before it goes in front of a person.</p>
 
 <p>I learned the last part the usual way. An early version of my call board announced that 95.5% of our calls connected. Ninety-five! We were, apparently, the most answered company in Britain. The real figure, once I used the reporting team's own definition of answered calls over dials, was 30 to 31%. Nothing was broken. The connector ran my query perfectly. I had simply asked it with the wrong denominator, and it had no reason to argue.</p>
 
-<p>The write side got the same treatment. Every branch of the ticket automation that can close a ticket on its own carries one guard: if the person on the other end is a customer in the middle of a move, never auto-close. I would rather a human read ten tickets they did not need to than have a machine dismiss the one that mattered.</p>
+<p>The write side got the same treatment. Every branch of the ticket automation that can close a ticket on its own carries one guard: if the person on the other end is a customer in the middle of a move, never auto-close. I would rather a human read ten tickets they did not need to than have a machine dismiss the one that mattered. The automation wakes every 5 minutes, and it has a dry-run switch, so a new rule can report what it would do before it is allowed to do it.</p>
 
 <h2>So what happens to the jobs?</h2>
 
@@ -139,24 +154,21 @@
 
 <p>The World Economic Forum expects 170 million roles created and 92 million displaced by 2030. People quote whichever half matches their mood. Both are true.</p>
 
-<figure>
-  <img src="/writing/the-power-of-mcp/mcp-premium.png" alt="PwC 2026: wage premium for AI skills rose from 57% to 62%; jobs asking for AI skills grew 69% against 9% for the overall market.">
-  <figcaption>The fine print matters: a separate Payscale survey found 55% of employers pay nothing extra for AI skills. The premium is advertised. Collect it in writing.</figcaption>
-</figure>
-
 <p>PwC read more than a billion job adverts and found roles asking for AI skills growing about eight times as fast as the rest, with an advertised wage premium of 62%. The same report found junior roles in AI-exposed fields are seven times as likely to ask for skills that used to be expected of seniors.</p>
 
-<p>Read that last one twice. The job description is getting wider. The market is not asking for a product manager, or a data scientist, or an architect. It is increasingly asking for the person who can be whichever one the afternoon requires, and who knows enough about each to check the work.</p>
+<p>The fine print matters: a separate Payscale survey found 55% of employers pay nothing extra for AI skills. The premium is advertised. Collect it in writing.</p>
 
-<p>That last clause is the whole game. MCP gave me reach. It did not give me judgement. I could wear the data scientist's hat because I spent years being one. The protocol removed the waiting, and what was left was exactly as good as the person asking.</p>
+<p>I read that one twice. The job description is getting wider. Fewer adverts want a product manager, or a data scientist, or an architect. More of them want whoever can be each of those as the afternoon requires, and who knows enough about each to check the work.</p>
+
+<p>The checking is where I would put my money. MCP gave me reach and no judgement whatsoever. I could wear the data scientist's hat because I spent years being one, and even then I put 95.5% on a board. The protocol removed the waiting. What was left was exactly as good as the person asking.</p>
 
 <h2>The principle</h2>
 
 <p>For two years we argued about which model was smartest. In my working week the model has not been the bottleneck for a long time. The wiring was.</p>
 
-<p>A brilliant model with no access is a consultant locked out of the building. MCP is the door. And once the door is open, the question stops being "what is my job title" and becomes "how many hats can I wear well."</p>
+<p>Soria Parra's model in a jar was never short of intelligence. It was short of a way out. Now that it has one, my job title tells you less about my week than the number of hats I can wear well.</p>
 
-<p>I count five. I am fairly sure there is a sixth.</p>
+<p>I counted five hats when I started writing this. The compliance tool made it six, and I doubt it stops there.</p>
 
 <p>How many tabs do you have open right now, and how many of them are you only there to copy from?</p>
 
