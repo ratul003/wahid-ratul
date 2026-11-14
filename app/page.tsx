@@ -224,7 +224,7 @@ const projects = [
     label: "Compliance Product",
     description:
       "A standalone call quality platform that replaced the review section of the core system. An exact copy first, proven by re-scoring 1,281 of 1,281 historical reviews to the same result, then rebuilt around the analysts' working day.",
-    inside: "Live scorecard · three rulesets · synthetic heat map",
+    inside: "Live scorecard · parity grid · product mock · deployment chart",
     color: "#84cc16",
     href: "https://qa-compliance-platform.vercel.app",
     image: "/shots/qa-compliance-platform.jpg",
@@ -235,7 +235,7 @@ const projects = [
       { v: "15 min", l: "read-only sync" },
     ],
     detail:
-      "The old review tool worked and could not be changed without an engineering release. A copy proven identical on every historical review, then a queue, keyboard scoring, challenges and reporting built around the analysts. Running in parallel, not yet cut over.",
+      "The old review tool could not be changed without an engineering release. I copied it exactly, proved the copy on every historical review, then rebuilt it around the analysts' day.",
   },
   {
     title: "Standardised Product Metrics Across 10+ SaaS Teams",
