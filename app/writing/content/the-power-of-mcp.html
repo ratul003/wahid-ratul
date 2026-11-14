@@ -1,0 +1,181 @@
+<figure>
+  <img src="/writing/the-power-of-mcp/mcp-cover.png" alt="Eighteen work systems, from Linear to WorkOS, each with its logo, all connected to a single hub labelled MCP.">
+</figure>
+
+<p>An AI tool once answered every question I asked it with the same fifteen characters: <code>[object Object]</code>.</p>
+
+<p>I had asked for a YouTube transcript. Full link, then just the video ID, then the link again with the tracking junk stripped off. Same reply, every time, delivered with total confidence. The connection was green. The server was running. It was technically, faithfully, uselessly returning something.</p>
+
+<p>That was my first date with the Model Context Protocol, MCP to its friends. It went badly. I pulled the transcript with four lines of Python instead and sulked.</p>
+
+<p>I am now completely, embarrassingly in love with it. This is the story of how that happened, where the thing came from, and why I think it is rewriting job descriptions faster than any model release.</p>
+
+<h2>It started with a man tired of Ctrl+C</h2>
+
+<p>Every great piece of infrastructure begins with somebody being annoyed.</p>
+
+<p>In 2024, David Soria Parra was an engineer at Anthropic, asked to get more of his colleagues using AI. He kept hitting the same wall. The model was clever, but it lived, in his words, "kind of put into a jar." It could not reach the code, the documents or the error logs. So he did what all of us were doing: copy from the tool, paste into the chat, copy the answer, paste it back. All day. Like a very well-paid clipboard.</p>
+
+<p>His first idea was a small app that would sit next to Claude and connect it to things. He called it "Claude Connect."</p>
+
+<p>I need to pause here, because I laughed out loud when I read that. Months ago I wired HubSpot into my own setup through a private app token, and with zero imagination I named it "claude connect." The inventor of the protocol and I independently arrived at the same lazy name. Mine still exists. His, thankfully, did not survive.</p>
+
+<p>Because when he took it to his colleague Justin Spahr-Summers, they worked out that an app was the wrong shape. The problem was many AI clients needing to reach many systems. That calls for a protocol, a shared language, the way every website speaks HTTP without asking permission from the others. The first version was tiny: a client starts a program and talks to it, and the program offers three things, tools, resources and prompts. They showed it at an internal hack week and colleagues started building servers for their own workflows almost at once, which is the only product research that really counts.</p>
+
+<p>On 25 November 2024, Anthropic open-sourced it. Then things got silly.</p>
+
+<figure>
+  <img src="/writing/the-power-of-mcp/mcp-timeline.png" alt="Timeline of MCP from mid 2024 to July 2026.">
+  <figcaption>Thirteen months from launch to "nobody owns this any more." Standards normally take a decade and at least one lawsuit.</figcaption>
+</figure>
+
+<h2>Then the rivals said yes</h2>
+
+<p>Here is the part that still surprises me. On 26 March 2025, Sam Altman posted that "people love MCP" and that OpenAI would support it across its products. Two weeks later, on 9 April, Demis Hassabis said Google would add it to Gemini. On 19 May, Microsoft announced it was building the protocol into Windows 11 at its Build conference.</p>
+
+<p>Think about how strange that is. These companies agree on almost nothing. It is like Coke shipping in Pepsi's bottle because, frankly, it is a good bottle.</p>
+
+<p>Then in December 2025, Anthropic gave the protocol away entirely, donating it to a new Agentic AI Foundation under the Linux Foundation, alongside projects from OpenAI and Block. The foundation launched with 49 members. By October 2026 it had 286. A standard one vendor owns is a product. A standard nobody owns is a road.</p>
+
+<p>The economics are the reason it spread, and my degree is in economics, so indulge me for one picture.</p>
+
+<figure>
+  <img src="/writing/the-power-of-mcp/mcp-nxm.png" alt="Left: 54 tangled point-to-point integrations between 18 tools and 3 AI clients. Right: the same tools and clients joined through one hub, 21 connections.">
+  <figcaption>My real setup. Nobody was ever going to build me 54 bridges. Twenty-one, apparently, the market will do for free.</figcaption>
+</figure>
+
+<p>Before a standard, every AI app needs a custom bridge to every tool. Eighteen tools times three clients is 54 integrations, each built and broken separately. With a standard, each side plugs in once: 18 plus 3 is 21. Multiplication becomes addition, and the thing that was uneconomic for one person becomes free.</p>
+
+<p>The numbers that followed are slightly unhinged.</p>
+
+<figure>
+  <img src="/writing/the-power-of-mcp/mcp-downloads.png" alt="Bar chart of monthly npm downloads of the MCP TypeScript SDK: 0.1 million in December 2024, 31.3 million in September 2025, 38.5 million in December 2025, 231.9 million in September 2026.">
+</figure>
+
+<figure>
+  <img src="/writing/the-power-of-mcp/mcp-registry.png" alt="Bar chart of servers in the official MCP registry: about 2,000 in November 2025, 9,599 in May 2026, 25,761 in August 2026, 47,879 in October 2026.">
+  <figcaption>Roughly one new server every 4 minutes through September 2026. Some of them even work.</figcaption>
+</figure>
+
+<h2>What everyone is actually doing with it</h2>
+
+<p>The mechanics are almost boring, which is the highest compliment you can pay infrastructure.</p>
+
+<figure>
+  <img src="/writing/the-power-of-mcp/mcp-anatomy.png" alt="Five steps: I ask, the model reads the menu of tools, the model picks a tool, the server does the work against the real system, the answer comes back.">
+</figure>
+
+<p>A server sits in front of a system and publishes a menu: here are my tools, here is what each one does, here is what it needs. The model reads the menu and orders. Most of the craft in a good server is writing descriptions a model can understand, which is a strange thing to say about software and I enjoy it every time.</p>
+
+<p>What people do with that depends on the chair they sit in:</p>
+
+<p><strong>Engineers</strong> stopped leaving the code editor. The error from Sentry, the ticket from Linear and the failing deployment all arrive where the code is.</p>
+
+<p><strong>Product managers</strong> stopped waiting. The question "did that release move the number?" used to be a ticket to the data team. Now it is a sentence.</p>
+
+<p><strong>Data scientists</strong> stopped being a help desk for lookups, and get asked the harder questions instead. This is a promotion disguised as a threat.</p>
+
+<p>And companies noticed.</p>
+
+<figure>
+  <img src="/writing/the-power-of-mcp/mcp-enterprise.png" alt="Survey of 100 software companies: 45% running MCP servers in production, 30% piloting, 49% call it a top-5 priority, 64% say security is the top obstacle.">
+  <figcaption>Three in four running or piloting it. Two in three nervous. Hold that second number, we are coming back to it.</figcaption>
+</figure>
+
+<h2>Five hats, one head</h2>
+
+<p>Now the part I actually came here to tell you.</p>
+
+<p>I run product operations at a UK startup. I am the entire function: no dedicated engineer, about 28 hours a week of real project time once meetings have eaten their share. My work lives in eighteen systems, and for years I was the cable between them. Every Monday before my 1:1, I carried context from tab to tab like a waiter with too many plates.</p>
+
+<p>Here is the wiring today, copied from my actual configuration and not from a vendor slide.</p>
+
+<figure>
+  <img src="/writing/the-power-of-mcp/mcp-setup.png" alt="Flow chart: one question goes from me, through Claude Code, the Claude app or Codex, through MCP, out to connectors grouped by job: plan and track (Linear, Notion), talk and meet (Slack, Gmail, Calendar, Granola), files (Drive, Docs, Sheets, Slides), measure (PostHog, Metabase), customers (HubSpot, Customer.io), design and ship (Figma, Vercel, Railway, WorkOS), plus three local servers.">
+  <figcaption>Eighteen hosted connectors I signed into once, plus three small servers on my laptop. Yes, the YouTube one is still there. We have made our peace.</figcaption>
+</figure>
+
+<p>Notice what the picture does not contain: me, in the middle, holding a clipboard.</p>
+
+<p>With those eighteen systems wired in over MCP, the cable job went away. What surprised me was what filled the space. I did not get faster at one job. I started doing five.</p>
+
+<figure>
+  <img src="/writing/the-power-of-mcp/mcp-hats.png" alt="Five cards, one per role: Product Manager, Data Scientist, Data Architect and Engineer, QA Analyst, Solutions Architect, each with the artefact shipped and its headline number.">
+</figure>
+
+<p><strong>Product manager.</strong> The day job. The connectors read tickets, docs and threads so that I can spend my time on the decision. The best output was a 15-slide business case showing our service team was handling 2.8 times the customer moves it handled in January with the same nine or so agents, and that automating the rest would avoid £100,000 to £175,000 a year in hires that never need to be made.</p>
+
+<p><strong>Data scientist.</strong> A partner's conversion rate fell from about 17% to 11.8% and the room wanted a villain. Pulling the cohorts apart showed roughly 3.5 points of that was maturation, customers who simply had not finished converting yet, and only 1.5 to 2 points was real. My favourite piece of analysis this year was a recommendation to <em>not</em> run an A/B test: at about 3,815 sends and 33 conversions it could never reach significance. Knowing when not to experiment is half the discipline.</p>
+
+<p><strong>Data architect and engineer.</strong> Our phone team is the company's largest revenue source. Its funnel reporting was handed to me on 8 June. By 17 June there was a live board over 1.4 million call records, drawn from three databases that cannot be joined directly, reconciled to the team's reference sheet within about 0.1%. Nine days. One of them was spent discovering that a self-referencing key made the query builder politely return zero rows. An <code>[object Object]</code> in a nicer suit.</p>
+
+<p><strong>Quality assurance analyst.</strong> After building ticket classification, I did not take its word for it. A retro-sweep scanned 4,773 tickets and updated 3,150 with zero errors, and a hand-checked sample put precision around 94%. A separate audit found four live email campaigns with no conversion goal set at all. One had a 60.1% open rate and, officially, 0% conversion. It was doing brilliantly and nobody could prove it.</p>
+
+<p><strong>Solutions architect.</strong> The service team now runs on instrumented ticketing with 11 classification workflows, designed and built inside software the company already paid for. New spend: £0.</p>
+
+<p>None of these are jobs I was hired to do separately. A few years ago each one was a different person, a different queue and a different two-week wait. The honest description of what MCP did is that it deleted the queues between my own hats.</p>
+
+<h2>Where it bites</h2>
+
+<p>Back to <code>[object Object]</code>, and to that 64%.</p>
+
+<p>A connection that is up is not a connection that works. My transcript server passed every health check while returning nonsense. If I had not read the output myself, I would have concluded the video had no transcript and moved on, wrong and cheerful.</p>
+
+<p>That is harmless for a transcript. It is not harmless when the server can write. A connector that can send a campaign, close a ticket or edit a customer record can do real damage at the speed of a sentence. The Customer.io server I use handles this well: before any change it must tell me the account, the workspace and the region it will land in, then wait for a yes. Production, EU, this campaign, pause it. Go ahead? Small friction, exactly where it belongs.</p>
+
+<p>My rule is short. Reads get wired up freely. Writes get a human gate. And every number goes back to its system of record before it goes in front of a person.</p>
+
+<p>I learned the last part the usual way. An early version of my call board announced that 95.5% of our calls connected. Ninety-five! We were, apparently, the most answered company in Britain. The real figure, once I used the reporting team's own definition of answered calls over dials, was 30 to 31%. Nothing was broken. The connector ran my query perfectly. I had simply asked it with the wrong denominator, and it had no reason to argue.</p>
+
+<p>The write side got the same treatment. Every branch of the ticket automation that can close a ticket on its own carries one guard: if the person on the other end is a customer in the middle of a move, never auto-close. I would rather a human read ten tickets they did not need to than have a machine dismiss the one that mattered.</p>
+
+<h2>So what happens to the jobs?</h2>
+
+<p>I would be lying if I said this section did not make me a little nervous to write.</p>
+
+<figure>
+  <img src="/writing/the-power-of-mcp/mcp-jobs.png" alt="World Economic Forum forecast to 2030: 170 million roles created, 92 million displaced, net 78 million new.">
+</figure>
+
+<p>The World Economic Forum expects 170 million roles created and 92 million displaced by 2030. People quote whichever half matches their mood. Both are true.</p>
+
+<figure>
+  <img src="/writing/the-power-of-mcp/mcp-premium.png" alt="PwC 2026: wage premium for AI skills rose from 57% to 62%; jobs asking for AI skills grew 69% against 9% for the overall market.">
+  <figcaption>The fine print matters: a separate Payscale survey found 55% of employers pay nothing extra for AI skills. The premium is advertised. Collect it in writing.</figcaption>
+</figure>
+
+<p>PwC read more than a billion job adverts and found roles asking for AI skills growing about eight times as fast as the rest, with an advertised wage premium of 62%. The same report found junior roles in AI-exposed fields are seven times as likely to ask for skills that used to be expected of seniors.</p>
+
+<p>Read that last one twice. The job description is getting wider. The market is not asking for a product manager, or a data scientist, or an architect. It is increasingly asking for the person who can be whichever one the afternoon requires, and who knows enough about each to check the work.</p>
+
+<p>That last clause is the whole game. MCP gave me reach. It did not give me judgement. I could wear the data scientist's hat because I spent years being one. The protocol removed the waiting, and what was left was exactly as good as the person asking.</p>
+
+<h2>The principle</h2>
+
+<p>For two years we argued about which model was smartest. In my working week the model has not been the bottleneck for a long time. The wiring was.</p>
+
+<p>A brilliant model with no access is a consultant locked out of the building. MCP is the door. And once the door is open, the question stops being "what is my job title" and becomes "how many hats can I wear well."</p>
+
+<p>I count five. I am fairly sure there is a sixth.</p>
+
+<p>How many tabs do you have open right now, and how many of them are you only there to copy from?</p>
+
+<p><strong>Sources</strong></p>
+
+<p><a href="https://www.anthropic.com/news/model-context-protocol" target="_blank" rel="noopener">Introducing the Model Context Protocol</a>, Anthropic, November 2024</p>
+
+<p><a href="https://stackoverflow.blog/2026/03/03/no-need-for-ctrl-c-when-you-have-mcp/" target="_blank" rel="noopener">No need for Ctrl+C when you have MCP</a>, Stack Overflow, March 2026</p>
+
+<p><a href="https://www.linuxfoundation.org/press/linux-foundation-announces-the-formation-of-the-agentic-ai-foundation" target="_blank" rel="noopener">Linux Foundation announces the formation of the Agentic AI Foundation</a>, December 2025</p>
+
+<p><a href="https://techcrunch.com/2025/03/26/openai-adopts-rival-anthropics-standard-for-connecting-ai-models-to-data/" target="_blank" rel="noopener">OpenAI adopts rival Anthropic's standard</a>, TechCrunch, March 2025</p>
+
+<p><a href="https://techcrunch.com/2025/04/09/google-says-itll-embrace-anthropics-standard-for-connecting-ai-models-to-data/" target="_blank" rel="noopener">Google to embrace Anthropic's standard</a>, TechCrunch, April 2025</p>
+
+<p><a href="https://blogs.windows.com/windowsdeveloper/2025/05/19/advancing-windows-for-ai-development-new-platform-capabilities-and-tools-introduced-at-build-2025/" target="_blank" rel="noopener">Advancing Windows for AI development</a>, Windows Developer Blog, May 2025</p>
+
+<p><a href="https://www.digitalapplied.com/blog/mcp-adoption-statistics-2026-model-context-protocol" target="_blank" rel="noopener">MCP adoption statistics 2026</a>, registry and download readings</p>
+
+<p><a href="https://www.weforum.org/press/2025/01/future-of-jobs-report-2025-78-million-new-job-opportunities-by-2030-but-urgent-upskilling-needed-to-prepare-workforces/" target="_blank" rel="noopener">Future of Jobs Report 2025</a>, World Economic Forum</p>
+
+<p><a href="https://www.prnewswire.com/news-releases/ai-reshapes-global-labour-market-into-two-distinct-paths-rewarding-human-skills-pwc-2026-global-ai-jobs-barometer-302798987.html" target="_blank" rel="noopener">2026 Global AI Jobs Barometer</a>, PwC</p>
