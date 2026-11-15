@@ -24,14 +24,14 @@ export type Article = {
 export const articles: Article[] = [
   {
     slug: "the-power-of-mcp",
-    title: "MCP Turned My One Job Into Six",
+    title: "MCP Turned This Product Manager Into an Engineer, Designer and Data Scientist",
     subtitle:
-      "The Model Context Protocol wired my eighteen work systems together, and I stopped being the copy and paste between them.",
+      "The Model Context Protocol wired my eighteen work systems together, and I stopped being the copy and paste between them. Now I am also the engineer, the data scientist, the designer, the quality assurance analyst, the marketer and the project manager.",
     topic: "AI · Product · Careers",
     date: "November 2026",
     readTime: "10 min read",
     excerpt:
-      "An AI tool once answered every question I asked with the same fifteen characters. A year on, eighteen systems are wired into one protocol, the cable job is gone, and I wear six hats. Where the Model Context Protocol came from, what it changed in my week, and where it bites.",
+      "An AI tool once answered every question I asked with the same fifteen characters. A year on, eighteen systems are wired into one protocol, the cable job is gone, and I wear eight hats. Where the Model Context Protocol came from, what it changed in my week, and where it bites.",
     color: "#fb923c",
     cover: "/writing/the-power-of-mcp/mcp-cover.png",
     thumb: "/writing/the-power-of-mcp/thumb.png",
