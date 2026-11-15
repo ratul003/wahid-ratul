@@ -218,8 +218,8 @@ const projects = [
       "Claude wired into 15+ production systems, with a harness that opens every session already knowing the repo and the metric definitions. AI-native classification auto-solves 52% of 117K tickets at 99.9% accuracy.",
   },
   {
-    title: "Rebuilt Call Quality Compliance in 4 Weeks, With Zero Scoring Mismatches",
-    name: "Call Quality Compliance Platform",
+    title: "Built the Portal That Scores Sales Calls, Maps Every Missed Rule and Turns It Into Coaching",
+    name: "QA Compliance Platform",
     org: "Just Move In",
     label: "Compliance Product",
     description:
@@ -513,7 +513,7 @@ const roles: Role[] = [
         ],
         links: [
           { label: "Claude-ing WorkOS", href: "https://claude-ing.vercel.app", color: CS.workos },
-          { label: "Call Quality Compliance Platform", href: "https://qa-compliance-platform.vercel.app", color: CS.qa },
+          { label: "QA Compliance Platform", href: "https://qa-compliance-platform.vercel.app", color: CS.qa },
         ],
       },
     ],
