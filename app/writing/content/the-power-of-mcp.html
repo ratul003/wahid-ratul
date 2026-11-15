@@ -10,7 +10,7 @@
 
 <p>I am now completely, embarrassingly in love with it. It has also turned my one job into six, which is the part I did not see coming.</p>
 
-<h2>I used to be the cable</h2>
+<h2>Eighteen systems, one waiter</h2>
 
 <p>I run product operations at a UK startup, from Dhaka, which means most of my meetings land in my evening. I am the entire function: no dedicated engineer, and about 28 hours a week of real project time once those meetings have eaten their share.</p>
 
@@ -26,7 +26,7 @@
 
 <p>I need to pause here, because I laughed out loud when I read that. Months ago I wired HubSpot into my own setup through a private app token, and with zero imagination I named it "claude connect." The inventor of the protocol and I independently arrived at the same lazy name. Mine still exists. His, thankfully, did not survive.</p>
 
-<p>When he took it to his colleague Justin Spahr-Summers, they worked out that an app was the wrong shape. The problem was many AI clients needing to reach many systems, and that calls for a protocol, a shared language, the way every website speaks HTTP without asking the others for permission. The first version was tiny: a client starts a program and talks to it, and the program offers tools, resources and prompts. They showed it at an internal hack week and colleagues began building servers for their own workflows almost at once, which is the only product research that really counts.</p>
+<p>When he took it to his colleague Justin Spahr-Summers, they worked out that an app was the wrong shape. The problem was many AI clients needing to reach many systems, and that calls for a protocol, a shared language, the way every website speaks HTTP without asking the others for permission. They showed it at an internal hack week and colleagues began building servers for their own workflows almost at once, which is the only product research that really counts.</p>
 
 <p>On 25 November 2024, Anthropic open-sourced it. Then things got silly.</p>
 
@@ -35,9 +35,9 @@
   <figcaption>Thirteen months from launch to "nobody owns this any more." Standards normally take a decade and at least one lawsuit.</figcaption>
 </figure>
 
-<p>On 26 March 2025, Sam Altman posted that "people love MCP" and that OpenAI would support it across its products. Two weeks later Demis Hassabis said Google would add it to Gemini, and in May Microsoft announced it was building the protocol into Windows 11. These companies agree on almost nothing. It is like Coke shipping in Pepsi's bottle because, frankly, it is a good bottle.</p>
+<p>Within six months OpenAI, Google and Microsoft had all adopted it. These companies agree on almost nothing. It is like Coke shipping in Pepsi's bottle because, frankly, it is a good bottle.</p>
 
-<p>In December 2025, Anthropic gave the protocol away entirely, donating it to a new foundation under the Linux Foundation. It launched with 49 members and had 286 by October 2026. A standard one vendor owns is a product. A standard nobody owns is a road.</p>
+<p>In December 2025, Anthropic gave the protocol away entirely, donating it to a new foundation under the Linux Foundation.</p>
 
 <p>My degree is in economics, so indulge me for one picture of why it spread.</p>
 
@@ -47,12 +47,6 @@
 </figure>
 
 <p>Before a standard, every AI app needs a custom bridge to every tool. Eighteen tools times three clients is 54 integrations, each built and broken separately. With a standard, each side plugs in once, and 18 plus 3 is 21. Multiplication becomes addition, and something that was uneconomic for one person becomes free.</p>
-
-<p>The numbers that followed are slightly unhinged.</p>
-
-<figure>
-  <img src="/writing/the-power-of-mcp/mcp-downloads.png" alt="Bar chart of monthly npm downloads of the MCP TypeScript SDK: 0.1 million in December 2024, 31.3 million in September 2025, 38.5 million in December 2025, 231.9 million in September 2026.">
-</figure>
 
 <p>The official registry of servers went from about 2,000 in November 2025 to 47,879 by October 2026, roughly one new server every 4 minutes through September. Some of them even work.</p>
 
@@ -90,15 +84,13 @@
   <img src="/writing/the-power-of-mcp/mcp-hats.png" alt="Six cards, one per role: Product Manager, Data Scientist, Data Architect and Engineer, QA Analyst, Solutions Architect, Designer, each with the artefact shipped and its headline number.">
 </figure>
 
-<p><strong>Product manager.</strong> The day job. The connectors read the tickets, docs and threads so that I can spend my time on the decision. The best output was a 15-slide business case showing our service team was handling 2.8 times the customer moves it handled in January with the same nine or so agents, and that automating the rest would avoid £100,000 to £175,000 a year in hires that never need to be made.</p>
+<p>The cards carry the full list. Three of them fit in a sentence each. As a product manager, the day job, I built a 15-slide business case showing our service team was handling 2.8 times the customer moves it handled in January with the same nine or so agents. As a quality assurance analyst, I swept 4,773 tickets to check my own classifier, and a hand-checked sample put its precision around 94%. As a solutions architect, I rebuilt the service team's ticketing around 11 classification workflows, inside software the company already paid for. New spend: £0.</p>
 
-<p><strong>Data scientist.</strong> A partner's conversion rate fell from about 17% to 11.8% and the room wanted a villain. Pulling the cohorts apart showed roughly 3.5 points of that was maturation, customers who simply had not finished converting yet, and only 1.5 to 2 points was real. My favourite piece of analysis this year was a recommendation to <em>not</em> run an A/B test: at about 3,815 sends and 33 conversions it could never reach significance. Knowing when not to experiment is half the discipline.</p>
+<p>Two hats deserve more room.</p>
 
-<p><strong>Data architect and engineer.</strong> Our phone team is the company's largest revenue source. Its funnel reporting was handed to me on 8 June. By 17 June there was a live board over 1.4 million call records, drawn from three databases that cannot be joined directly, reconciled to the team's reference sheet within about 0.1%. Nine days. One of them went on discovering that a self-referencing key made the query builder politely return zero rows. An <code>[object Object]</code> in a nicer suit.</p>
+<p>The data scientist's came out when a partner's conversion rate fell from about 17% to 11.8% and the room wanted a villain. Pulling the cohorts apart showed roughly 3.5 points of that was maturation, customers who simply had not finished converting yet, and only 1.5 to 2 points was real. My favourite piece of analysis this year was a recommendation to <em>not</em> run an A/B test: at about 3,815 sends and 33 conversions it could never reach significance.</p>
 
-<p><strong>Quality assurance analyst.</strong> After building ticket classification, I did not take its word for it. A retro-sweep scanned 4,773 tickets and updated 3,150 with zero errors, and a hand-checked sample put precision around 94%. A separate audit found four live email campaigns with no conversion goal set at all. One had a 60.1% open rate and, officially, 0% conversion. It was doing brilliantly and nobody could prove it.</p>
-
-<p><strong>Solutions architect.</strong> The service team now runs on instrumented ticketing with 11 classification workflows, designed and built inside software the company already paid for. New spend: £0.</p>
+<p>The data engineer's came with a deadline. Our phone team is the company's largest revenue source, and its funnel reporting was handed to me on 8 June. By 17 June there was a live board over 1.4 million call records, drawn from three databases that cannot be joined directly, reconciled to the team's reference sheet within about 0.1%. Nine days. One of them went on discovering that a self-referencing key made the query builder politely return zero rows. An <code>[object Object]</code> in a nicer suit.</p>
 
 <p>A few years ago each of those was a different person, a different queue and a different two-week wait. What MCP did, honestly described, is delete the queues between my own hats.</p>
 
@@ -160,15 +152,9 @@
 
 <p>I would be lying if I said this section did not make me a little nervous to write.</p>
 
-<figure>
-  <img src="/writing/the-power-of-mcp/mcp-jobs.png" alt="World Economic Forum forecast to 2030: 170 million roles created, 92 million displaced, net 78 million new.">
-</figure>
+<p>PwC read more than a billion job adverts this year. One finding stayed with me: in AI-exposed fields, junior roles are seven times as likely to ask for skills that used to be expected of seniors.</p>
 
-<p>The World Economic Forum expects 170 million roles created and 92 million displaced by 2030. People quote whichever half matches their mood. Both are true.</p>
-
-<p>PwC read more than a billion job adverts and found roles asking for AI skills growing about eight times as fast as the rest, with an advertised wage premium of 62%. The fine print matters: a separate Payscale survey found 55% of employers pay nothing extra for those skills. The premium is advertised. Collect it in writing.</p>
-
-<p>The line that stayed with me is a different one. In AI-exposed fields, junior roles are seven times as likely to ask for skills that used to be expected of seniors. The job description is getting wider. Fewer adverts want a product manager, or a data scientist, or an architect. More of them want whoever can be each of those as the afternoon requires, and who knows enough about each to check the work.</p>
+<p>The job description is getting wider. Fewer adverts want a product manager, or a data scientist, or an architect. More of them want whoever can be each of those as the afternoon requires, and who knows enough about each to check the work.</p>
 
 <p>The checking is where I would put my money. MCP gave me reach and no judgement whatsoever. I could wear the data scientist's hat because I spent years being one, and even then I put 95.5% on a board. The protocol removed the waiting. What was left was exactly as good as the person asking.</p>
 
@@ -197,7 +183,5 @@
 <p><a href="https://blogs.windows.com/windowsdeveloper/2025/05/19/advancing-windows-for-ai-development-new-platform-capabilities-and-tools-introduced-at-build-2025/" target="_blank" rel="noopener">Advancing Windows for AI development</a>, Windows Developer Blog, May 2025</p>
 
 <p><a href="https://www.digitalapplied.com/blog/mcp-adoption-statistics-2026-model-context-protocol" target="_blank" rel="noopener">MCP adoption statistics 2026</a>, registry and download readings</p>
-
-<p><a href="https://www.weforum.org/press/2025/01/future-of-jobs-report-2025-78-million-new-job-opportunities-by-2030-but-urgent-upskilling-needed-to-prepare-workforces/" target="_blank" rel="noopener">Future of Jobs Report 2025</a>, World Economic Forum</p>
 
 <p><a href="https://www.prnewswire.com/news-releases/ai-reshapes-global-labour-market-into-two-distinct-paths-rewarding-human-skills-pwc-2026-global-ai-jobs-barometer-302798987.html" target="_blank" rel="noopener">2026 Global AI Jobs Barometer</a>, PwC</p>
