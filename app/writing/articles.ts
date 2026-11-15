@@ -29,7 +29,7 @@ export const articles: Article[] = [
       "MCPs let you wear many hats at one job: Product Manager, Designer, Engineer, Data Scientist, Solutions Architect.",
     topic: "AI · Product · Careers",
     date: "November 2026",
-    readTime: "13 min read",
+    readTime: "12 min read",
     excerpt:
       "An AI tool once answered every question I asked with the same fifteen characters. A year on, eighteen systems are wired into one protocol, the cable job is gone, and I wear six hats. Where MCP came from, how it spread, what it changed, and what it means for the jobs market.",
     color: "#fb923c",
