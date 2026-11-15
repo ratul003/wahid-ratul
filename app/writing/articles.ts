@@ -24,9 +24,9 @@ export type Article = {
 export const articles: Article[] = [
   {
     slug: "the-power-of-mcp",
-    title: "MCP Turned This Product Manager Into an Engineer, Designer and Data Scientist",
+    title: "MCP Turned My Product Manager role into a SWE, Data Engineer, Product Designer, and many more",
     subtitle:
-      "The Model Context Protocol wired my eighteen work systems together, and I stopped being the copy and paste between them. Now I am also the engineer, the data scientist, the designer, the quality assurance analyst, the marketer and the project manager.",
+      "The Model Context Protocol wired my eighteen work systems together, and I stopped being the copy and paste between them. Now I am also the full stack software engineer, the data scientist, the designer, the quality assurance analyst, the marketer and the project manager.",
     topic: "AI · Product · Careers",
     date: "November 2026",
     readTime: "10 min read",
