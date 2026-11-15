@@ -218,24 +218,24 @@ const projects = [
       "Claude wired into 15+ production systems, with a harness that opens every session already knowing the repo and the metric definitions. AI-native classification auto-solves 52% of 117K tickets at 99.9% accuracy.",
   },
   {
-    title: "Built a Call Quality Compliance Platform",
+    title: "Rebuilt Call Quality Compliance in 4 Weeks, With Zero Scoring Mismatches",
     name: "Call Quality Compliance Platform",
     org: "Just Move In",
     label: "Compliance Product",
     description:
-      "A standalone call quality platform that replaced the review section of the core system. An exact copy first, proven by re-scoring 1,281 of 1,281 historical reviews to the same result, then rebuilt around the analysts' working day.",
-    inside: "Live scorecard · parity grid · product mock · deployment chart",
+      "Compliance scores feed agent pay, yet every rule change waited in an engineering queue. I rebuilt the review tool as a standalone platform with Claude Code: an exact copy first, proven on all 1,281 historical reviews, then a keyboard-first queue, heat maps computed from the answers and stricter rules behind a switch.",
+    inside: "6-minute narrated tour · scorecard you can run · parity proof · heat map",
     color: "#84cc16",
     href: "https://qa-compliance-platform.vercel.app",
-    image: "/shots/qa-compliance-platform.jpg",
+    image: "/shots/call-quality-compliance-platform.jpg",
     interactive: "compliance" as const,
     magnitude: [
       { v: "1,281 / 1,281", l: "reviews re-scored identically" },
-      { v: "15", l: "scorecards, 240+ questions" },
-      { v: "15 min", l: "read-only sync" },
+      { v: "13 days", l: "scope to live copy" },
+      { v: "34", l: "deployments, one builder" },
     ],
     detail:
-      "Gives the quality team control of its own compliance rules, with no engineering release in the way. An exact replica that reproduced all 1,281 historical reviews, then a workflow shaped around the analysts.",
+      "The quality team now changes its own compliance rules, with no engineering release in the way. Proving the copy identical first turned a stricter rule into a measurable change, sized on three months of real history before it touched anyone's pay. Running in parallel with the old system, not yet cut over.",
   },
   {
     title: "Standardised Product Metrics Across 10+ SaaS Teams",
