@@ -218,7 +218,7 @@ const projects = [
       "Claude wired into 15+ production systems, with a harness that opens every session already knowing the repo and the metric definitions. AI-native classification auto-solves 52% of 117K tickets at 99.9% accuracy.",
   },
   {
-    title: "Rebuilt Call Quality Compliance and Proved It on 1,281 Reviews",
+    title: "Gave the Quality Team Self-Serve Compliance, Proven on 1,281 Reviews",
     name: "QA Compliance Platform",
     org: "Just Move In",
     label: "Compliance Product",
@@ -235,7 +235,7 @@ const projects = [
       { v: "15 min", l: "read-only sync" },
     ],
     detail:
-      "The old review tool could not be changed without an engineering release. I copied it exactly, proved the copy on every historical review, then rebuilt it around the analysts' day.",
+      "Gives the quality team control of its own compliance rules, with no engineering release in the way. An exact replica that reproduced all 1,281 historical reviews, then a workflow shaped around the analysts.",
   },
   {
     title: "Standardised Product Metrics Across 10+ SaaS Teams",
