@@ -218,7 +218,7 @@ const projects = [
       "Claude wired into 15+ production systems, with a harness that opens every session already knowing the repo and the metric definitions. AI-native classification auto-solves 52% of 117K tickets at 99.9% accuracy.",
   },
   {
-    title: "Built the Portal That Scores Sales Calls, Maps Every Missed Rule and Turns It Into Coaching",
+    title: "Runs Call QA End to End: Score the Call, Spot the Miss, Coach the Agent",
     name: "QA Compliance Platform",
     org: "Just Move In",
     label: "Compliance Product",
@@ -235,7 +235,7 @@ const projects = [
       { v: "34", l: "deployments, one builder" },
     ],
     detail:
-      "The quality team now changes its own compliance rules, with no engineering release in the way. Proving the copy identical first turned a stricter rule into a measurable change, sized on three months of real history before it touched anyone's pay. Running in parallel with the old system, not yet cut over.",
+      "Analysts work a ranked queue and score each sales call from the keyboard. Every answer feeds a live heat map of which agent missed which rule, a coaching list, and the scores that set bonuses. The quality team edits its own scorecards and rules, with no engineer in the loop. All 1,281 past reviews re-score identically; it runs in parallel with the old system, not yet cut over.",
   },
   {
     title: "Standardised Product Metrics Across 10+ SaaS Teams",
