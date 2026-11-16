@@ -227,7 +227,7 @@ const projects = [
     inside: "6-minute narrated tour · scorecard you can run · parity proof · heat map",
     color: "#84cc16",
     href: "https://qa-compliance-platform.vercel.app",
-    image: "/shots/call-quality-compliance-platform.jpg",
+    image: "/shots/qa-compliance-platform.jpg",
     interactive: "compliance" as const,
     magnitude: [
       { v: "1,281 / 1,281", l: "reviews re-scored identically" },
