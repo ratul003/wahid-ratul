@@ -235,7 +235,7 @@ const projects = [
       { v: "34", l: "deployments, one builder" },
     ],
     detail:
-      "Analysts work a ranked queue and score each sales call from the keyboard. Every answer feeds a live heat map of which agent missed which rule, a coaching list, and the scores that set bonuses. The quality team edits its own scorecards and rules, with no engineer in the loop. All 1,281 past reviews re-score identically; it runs in parallel with the old system, not yet cut over.",
+      "Analysts work a ranked queue and score each sales call from the keyboard. Every answer feeds a live heat map of which agent missed which rule, a coaching list, and the scores that set bonuses. The quality team edits its own scorecards and rules, with no engineer in the loop. All 1,281 past reviews re-score identically. Phase one was released in 13 days and is live alongside the old system.",
   },
   {
     title: "Standardised Product Metrics Across 10+ SaaS Teams",
