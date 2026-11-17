@@ -29,7 +29,7 @@ export const articles: Article[] = [
       "I walked into an empty bar in Penang and blamed two wars and the AI boom. The data said the tourists were all there. The same statistical mistake is holding up the price of AI.",
     topic: "AI · Economics · Statistics",
     date: "November 2026",
-    readTime: "7 min read",
+    readTime: "8 min read",
     excerpt:
       "The neon sign said FULLY BOOKED and we were the first customers of the day. I blamed wars, fuel and AI layoffs, then checked the numbers: arrivals were up. What a 1979 demography paper says about averages, and why flat AI pricing rests on the same one.",
     color: "#f87171",
