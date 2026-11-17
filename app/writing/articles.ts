@@ -26,12 +26,12 @@ export const articles: Article[] = [
     slug: "the-frailty-in-the-economics-of-ai",
     title: "The Frailty in the Economics of AI",
     subtitle:
-      "AI is making companies richer by making their customers poorer, fuel is making every trip dearer, and the towns that live on other people's spare income feel it first. I saw it from an empty bar in Penang.",
+      "The trip got dearer and the traveller got poorer. I am part of the reason, and I found out in an empty bar in Penang.",
     topic: "AI · Economics · Statistics",
     date: "November 2026",
-    readTime: "8 min read",
+    readTime: "6 min read",
     excerpt:
-      "The neon sign said FULLY BOOKED and we were the first customers of the day. Fuel at a record, 206,000 tech jobs cut in a year of $700 billion spent on AI, and a fallacy older than both: every job a machine takes is a customer some other business loses.",
+      "The neon sign said FULLY BOOKED and every chair was empty. A record fuel price, 206,000 tech jobs cut in a year of $700 billion spent on AI, and the eight jobs I do from one chair. Every job a machine takes is a chair left empty somewhere else.",
     color: "#f87171",
     cover: "/writing/the-frailty-in-the-economics-of-ai/frailty-cover-fully-booked.jpg",
     thumb: "/writing/the-frailty-in-the-economics-of-ai/thumb.jpg",
