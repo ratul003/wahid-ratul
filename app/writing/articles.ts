@@ -23,6 +23,23 @@ export type Article = {
 
 export const articles: Article[] = [
   {
+    slug: "the-frailty-in-the-economics-of-ai",
+    title: "The Frailty in the Economics of AI",
+    subtitle:
+      "I walked into an empty bar in Penang and blamed two wars and the AI boom. The data said the tourists were all there. The same statistical mistake is holding up the price of AI.",
+    topic: "AI · Economics · Statistics",
+    date: "November 2026",
+    readTime: "7 min read",
+    excerpt:
+      "The neon sign said FULLY BOOKED and we were the first customers of the day. I blamed wars, fuel and AI layoffs, then checked the numbers: arrivals were up. What a 1979 demography paper says about averages, and why flat AI pricing rests on the same one.",
+    color: "#f87171",
+    cover: "/writing/the-frailty-in-the-economics-of-ai/frailty-cover-fully-booked.jpg",
+    thumb: "/writing/the-frailty-in-the-economics-of-ai/thumb.jpg",
+    coverAlt:
+      "An empty bar in Penang lit in red, every table unoccupied, with a neon sign by the stage reading FULLY BOOKED",
+    coverInBody: true,
+  },
+  {
     slug: "the-power-of-mcp",
     title: "MCP Turned My Product Manager role into a SWE, Data Engineer, Product Designer, and many more",
     subtitle:
