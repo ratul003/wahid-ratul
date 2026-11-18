@@ -222,11 +222,23 @@ export function FrailtyChairs() {
     return () => io.disconnect();
   }, []);
 
-  const W = 1020;
-  const H = 330;
-  const n = ROLES.length;
-  const step = W / n;
-  const cy = 104;
+  // On a phone the eight chairs sit in two rows of four, so the job titles stay readable.
+  const [narrow, setNarrow] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 640px)");
+    const set = () => setNarrow(mq.matches);
+    set();
+    mq.addEventListener("change", set);
+    return () => mq.removeEventListener("change", set);
+  }, []);
+
+  const cols = narrow ? 4 : 8;
+  const W = narrow ? 520 : 1020;
+  const rowH = 150;
+  const cy0 = 104;
+  const H = narrow ? 560 : 330;
+  const step = W / cols;
+  const stackY = narrow ? cy0 + rowH + 72 + 34 : cy0 + 72;
   const BLUE = "#3b82f6";
   const DIM = "rgba(255,255,255,0.16)";
   const gap = 0.5; // seconds between one chair emptying and the next
@@ -260,11 +272,12 @@ export function FrailtyChairs() {
 
         <svg viewBox={`0 0 ${W} ${H}`} className="mt-5 block w-full h-auto" role="img" aria-label="Eight chairs, each with a person and a job title. Seven of the people fade away and their job titles move to the first chair, leaving seven chairs empty.">
           {ROLES.map((role, i) => {
-            const x = step * i + step / 2;
+            const x = step * (i % cols) + step / 2;
+            const cy = cy0 + Math.floor(i / cols) * rowH;
             const d = on ? `${0.5 + (i - 1) * gap}s` : "0s";
             const gone = on && i > 0;
             const dx = step / 2 - x;
-            const dy = i * 19;
+            const dy = stackY + i * 19 - (cy + 72);
             return (
               <g key={role}>
                 {/* chair */}
@@ -298,7 +311,7 @@ export function FrailtyChairs() {
                   fontWeight={600}
                   style={{
                     fill: i === 0 || gone ? "#ffffff" : "rgba(255,255,255,0.5)",
-                    transform: gone ? `translate(${dx}px, ${dy}px)` : "translate(0px, 0px)",
+                    transform: gone || (on && i === 0) ? `translate(${dx}px, ${dy}px)` : "translate(0px, 0px)",
                     transition: `transform 900ms cubic-bezier(.3,.7,.2,1) ${d}, fill 600ms ease ${d}`,
                   }}
                 >
@@ -308,7 +321,7 @@ export function FrailtyChairs() {
             );
           })}
           <g style={{ opacity: on ? 1 : 0, transition: `opacity 900ms ease ${on ? 0.5 + 7 * gap + 0.4 : 0}s` }}>
-            <text x={W - 20} y={H - 36} textAnchor="end" fontSize={30} fontWeight={700} fill="#ffffff">
+            <text x={W - 20} y={H - 36} textAnchor="end" fontSize={narrow ? 26 : 30} fontWeight={700} fill="#ffffff">
               Eight jobs. One chair.
             </text>
             <text x={W - 20} y={H - 10} textAnchor="end" fontSize={15} fill="rgba(255,255,255,0.55)">
