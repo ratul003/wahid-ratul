@@ -11,6 +11,7 @@ import {
   SupplyResponse,
   RecoveryTimeline,
 } from "../widgets/when-demand";
+import { FrailtyHero, FrailtyWeek, FrailtyChairs } from "../widgets/frailty";
 
 /**
  * Marker name in an article body -> the live component it stands for.
@@ -24,6 +25,9 @@ const WIDGETS: Record<string, React.ComponentType> = {
   barometer: Barometer,
   response: SupplyResponse,
   recovery: RecoveryTimeline,
+  "frailty-hero": FrailtyHero,
+  "frailty-week": FrailtyWeek,
+  "frailty-chairs": FrailtyChairs,
 };
 
 export function generateStaticParams() {
