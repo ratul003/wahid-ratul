@@ -77,6 +77,7 @@ type Stop = {
   img?: string;
   alt?: string;
   wide?: boolean;
+  credit?: string;
 };
 
 const STOPS: Stop[] = [
@@ -105,7 +106,10 @@ const STOPS: Stop[] = [
   {
     n: "03",
     place: "Batu Ferringhi",
-    note: "The only couple staying in the building. Romantic for one evening, a little eerie by the second.",
+    note: "We were the only couple staying in the building. This is the same beach on a holiday eve in April 2024, every chair taken.",
+    img: "frailty-batu-ferringhi.jpg",
+    alt: "A beach at Batu Ferringhi at sunset in April 2024, crowded with people at white plastic restaurant tables and chairs on the sand.",
+    credit: "Not my photograph. Philip Mallis, CC BY-SA 2.0",
   },
   {
     n: "04",
@@ -178,7 +182,7 @@ export function FrailtyWeek() {
             </div>
             <p className="absolute inset-x-0 bottom-0 m-0 px-3.5 pb-3 text-[13px] leading-snug text-white/85">
               {s.note}
-              {!s.img && <span className="block mt-1 text-white/40">No photograph. There was nobody to put in it.</span>}
+              {s.credit && <span className="block mt-1 text-white/45">{s.credit}</span>}
             </p>
           </div>
         ))}
