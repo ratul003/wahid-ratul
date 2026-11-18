@@ -29,7 +29,7 @@ export const articles: Article[] = [
       "Two of us spent a week in Malaysia and found half the chairs empty. I went looking for whoever was meant to be sitting in them, and part of the answer turned out to be me.",
     topic: "AI · Economics · Statistics",
     date: "November 2026",
-    readTime: "7 min read",
+    readTime: "8 min read",
     excerpt:
       "The neon sign said FULLY BOOKED and we were the only two people in the room. A week of empty bars in Malaysia, a record fuel price, 206,000 jobs cut in a year of AI spending, and the eight jobs I now do alone. What I expect the next few years to feel like.",
     color: "#f87171",
