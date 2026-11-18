@@ -26,12 +26,12 @@ export const articles: Article[] = [
     slug: "the-frailty-in-the-economics-of-ai",
     title: "The Frailty in the Economics of AI",
     subtitle:
-      "The trip got dearer and the traveller got poorer. I am part of the reason, and I found out in an empty bar in Penang.",
+      "Two of us saved up for a week in Malaysia and found half the chairs empty. I went looking for whoever was meant to be sitting in them, and part of the answer turned out to be me.",
     topic: "AI · Economics · Statistics",
     date: "November 2026",
-    readTime: "6 min read",
+    readTime: "7 min read",
     excerpt:
-      "The neon sign said FULLY BOOKED and every chair was empty. A record fuel price, 206,000 tech jobs cut in a year of $700 billion spent on AI, and the eight jobs I do from one chair. Every job a machine takes is a chair left empty somewhere else.",
+      "The neon sign said FULLY BOOKED and we were the only two people in the room. A week of empty bars in Malaysia, a record fuel price, 206,000 jobs cut in a year of AI spending, and the eight jobs I now do alone. What I expect the next few years to feel like.",
     color: "#f87171",
     cover: "/writing/the-frailty-in-the-economics-of-ai/frailty-cover-fully-booked.jpg",
     thumb: "/writing/the-frailty-in-the-economics-of-ai/thumb.jpg",
