@@ -155,7 +155,7 @@ export function FrailtyWeek() {
                 <img src={`${BASE}/${s.img}`} alt={s.alt} loading="lazy" className="absolute inset-0 h-full w-full object-cover" />
                 <div
                   className="absolute inset-0"
-                  style={{ background: "linear-gradient(180deg, rgba(10,10,15,0.45) 0%, rgba(10,10,15,0) 30%, rgba(10,10,15,0) 55%, rgba(10,10,15,0.9) 100%)" }}
+                  style={{ background: "linear-gradient(180deg, rgba(10,10,15,0.78) 0%, rgba(10,10,15,0) 34%, rgba(10,10,15,0) 55%, rgba(10,10,15,0.9) 100%)" }}
                 />
               </div>
             ) : (
