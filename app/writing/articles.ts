@@ -26,7 +26,7 @@ export const articles: Article[] = [
     slug: "the-frailty-in-the-economics-of-ai",
     title: "The Frailty in the Economics of AI",
     subtitle:
-      "Two of us saved up for a week in Malaysia and found half the chairs empty. I went looking for whoever was meant to be sitting in them, and part of the answer turned out to be me.",
+      "Two of us spent a week in Malaysia and found half the chairs empty. I went looking for whoever was meant to be sitting in them, and part of the answer turned out to be me.",
     topic: "AI · Economics · Statistics",
     date: "November 2026",
     readTime: "7 min read",
